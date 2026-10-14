@@ -21,12 +21,12 @@
     --c-ink: 247 237 224;
     --c-ink-soft: 217 203 179;
     --c-ink-mute: 176 163 142;
-    --c-cream: 19 13 10;
-    --c-cream-deep: 30 20 13;
-    --c-cream-line: 58 42 28;
+    --c-cream: 47 34 24;
+    --c-cream-deep: 61 45 32;
+    --c-cream-line: 84 63 44;
     --c-clay: 212 175 90;
     --c-clay-dark: 184 145 46;
-    --c-clay-light: 61 47 21;
+    --c-clay-light: 74 56 36;
   }
 
   html { -webkit-tap-highlight-color: transparent; scroll-behavior: smooth; }
