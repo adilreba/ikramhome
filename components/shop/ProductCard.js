@@ -13,9 +13,12 @@ export default function ProductCard({ product, priority = false }) {
   const soldOut = settings.show_stock && product.stock <= 0;
 
   return (
-    <article className="group">
+    <article className="group transition-transform duration-300 ease-out hover:-translate-y-1.5">
       <div className="relative">
-      <Link href={`/urun/${product.slug}`} className="relative block aspect-[4/5] overflow-hidden rounded-2xl bg-cream-deep">
+      <Link
+        href={`/urun/${product.slug}`}
+        className="relative block aspect-[4/5] overflow-hidden rounded-2xl bg-cream-deep shadow-soft transition-shadow duration-300 group-hover:shadow-gold"
+      >
         {first ? (
           <>
             <img
@@ -32,7 +35,11 @@ export default function ProductCard({ product, priority = false }) {
           <div className="grain absolute inset-0" />
         )}
         <div className="absolute left-3 top-3 flex flex-col gap-1.5">
-          {off > 0 && <span className="rounded-full bg-clay px-2.5 py-1 text-[11px] font-bold text-white">%{off}</span>}
+          {off > 0 && (
+            <span className="rounded-full bg-gradient-to-r from-clay to-wine px-2.5 py-1 text-[11px] font-bold text-white shadow-gold">
+              %{off}
+            </span>
+          )}
           {soldOut && <span className="rounded-full bg-ink/80 px-2.5 py-1 text-[11px] font-semibold text-cream">Tükendi</span>}
         </div>
       </Link>
@@ -42,7 +49,7 @@ export default function ProductCard({ product, priority = false }) {
         disabled={soldOut}
         aria-label="Sepete ekle"
         className={`absolute bottom-3 right-3 flex h-11 w-11 items-center justify-center rounded-full shadow-soft transition duration-300 ${
-          inCart ? 'bg-ink text-cream' : 'bg-white text-ink hover:bg-ink hover:text-cream sm:opacity-0 sm:group-hover:opacity-100'
+          inCart ? 'bg-[#1B1916] text-white' : 'bg-white text-[#1B1916] hover:bg-clay hover:text-white sm:opacity-0 sm:group-hover:opacity-100'
         } disabled:hidden`}
       >
         {inCart ? <CheckIcon className="h-5 w-5" /> : <BagIcon className="h-5 w-5" />}

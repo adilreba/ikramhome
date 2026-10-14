@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import ProductCard from '@/components/shop/ProductCard';
+import Reveal from '@/components/shop/Reveal';
 import { ArrowRightIcon, BagIcon, HeartIcon, WhatsAppIcon } from '@/components/Icons';
 import { getSettings, listCategories, listProducts } from '@/lib/queries';
 import { imageUrl } from '@/lib/utils';
@@ -18,7 +19,13 @@ export default async function HomePage() {
   return (
     <>
       {/* HERO */}
-      <section className="container-x pb-16 pt-8 sm:pt-12 lg:pb-24">
+      <section className="relative overflow-hidden">
+        <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+          <div className="absolute -left-24 -top-24 h-[420px] w-[420px] animate-blob rounded-full bg-clay/25 blur-[90px]" />
+          <div className="absolute -right-10 top-10 h-[360px] w-[360px] animate-blob-slow rounded-full bg-wine/25 blur-[100px]" />
+          <div className="absolute bottom-0 left-1/3 h-[320px] w-[320px] animate-blob rounded-full bg-clay/10 blur-[110px]" />
+        </div>
+        <div className="container-x pb-16 pt-8 sm:pt-12 lg:pb-24">
         <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
           <div className="animate-fade-up lg:col-span-6">
             <p className="eyebrow mb-5">{settings.tagline || 'Yeni sezon'}</p>
@@ -49,7 +56,7 @@ export default async function HomePage() {
                     style={{ animation: `fade-up .7s ${0.1 + i * 0.12}s both` }}
                   >
                     <img src={imageUrl(p.cover_image_id)} alt={p.name} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
-                    <span className="absolute bottom-3 left-3 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold backdrop-blur">{p.name}</span>
+                    <span className="absolute bottom-3 left-3 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-[#1B1916] backdrop-blur">{p.name}</span>
                   </Link>
                 ))}
               </div>
@@ -60,11 +67,12 @@ export default async function HomePage() {
             )}
           </div>
         </div>
+        </div>
       </section>
 
       {/* KATEGORİLER */}
       {categories.length > 0 && (
-        <section className="border-y border-cream-line bg-white/50">
+        <section className="border-y border-clay/10 bg-cream-deep/60">
           <div className="container-x no-scrollbar flex gap-2.5 overflow-x-auto py-5">
             <Link href="/urunler" className="chip chip-active">Tümü</Link>
             {categories.map((c) => (
@@ -79,45 +87,60 @@ export default async function HomePage() {
       {/* ÖNE ÇIKANLAR */}
       {featured.items.length > 0 && (
         <section className="container-x pt-20">
-          <SectionHead eyebrow="Seçkimiz" title="Öne çıkanlar" href="/urunler?sort=featured" />
+          <Reveal>
+            <SectionHead eyebrow="Seçkimiz" title="Öne çıkanlar" href="/urunler?sort=featured" />
+          </Reveal>
           <div className="grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 lg:grid-cols-4">
-            {featured.items.map((p, i) => <ProductCard key={p.id} product={p} priority={i < 4} />)}
+            {featured.items.map((p, i) => (
+              <Reveal key={p.id} delay={i * 60}>
+                <ProductCard product={p} priority={i < 4} />
+              </Reveal>
+            ))}
           </div>
         </section>
       )}
 
       {/* NASIL ÇALIŞIR */}
       <section id="nasil" className="container-x scroll-mt-24 pt-24">
-        <div className="overflow-hidden rounded-[32px] bg-ink px-6 py-14 text-cream sm:px-12 lg:px-16">
-          <p className="eyebrow text-clay-light/80">Kolay sipariş</p>
-          <h2 className="h-display mt-3 max-w-xl text-4xl sm:text-5xl">Üç adımda sipariş, sohbetle anlaşma</h2>
-          <div className="mt-12 grid gap-10 sm:grid-cols-3">
-            {[
-              [HeartIcon, 'Beğen', 'Ürün fotoğraflarına göz atın, detaylarını inceleyin.'],
-              [BagIcon, 'Sepete ekle', 'Beğendiklerinizi adetleriyle birlikte sepetinize ekleyin.'],
-              [WhatsAppIcon, 'WhatsApp’tan gönder', 'Fotoğraf, isim ve fiyatlar mesajınıza otomatik eklenir; ödeme ve teslimatı birlikte konuşuruz.'],
-            ].map(([Icon, title, text], i) => (
-              <div key={title}>
-                <div className="flex items-center gap-4">
-                  <span className="flex h-12 w-12 items-center justify-center rounded-full border border-white/15">
-                    <Icon className="h-5 w-5" />
-                  </span>
-                  <span className="h-display text-5xl text-white/15">0{i + 1}</span>
+        <Reveal>
+          <div className="relative overflow-hidden rounded-[32px] border border-clay/20 bg-cream-deep px-6 py-14 text-ink shadow-gold sm:px-12 lg:px-16">
+            <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 animate-blob-slow rounded-full bg-clay/15 blur-[90px]" />
+            <p className="eyebrow">Kolay sipariş</p>
+            <h2 className="h-display mt-3 max-w-xl text-4xl sm:text-5xl">Üç adımda sipariş, sohbetle anlaşma</h2>
+            <div className="mt-12 grid gap-10 sm:grid-cols-3">
+              {[
+                [HeartIcon, 'Beğen', 'Ürün fotoğraflarına göz atın, detaylarını inceleyin.'],
+                [BagIcon, 'Sepete ekle', 'Beğendiklerinizi adetleriyle birlikte sepetinize ekleyin.'],
+                [WhatsAppIcon, 'WhatsApp’tan gönder', 'Fotoğraf, isim ve fiyatlar mesajınıza otomatik eklenir; ödeme ve teslimatı birlikte konuşuruz.'],
+              ].map(([Icon, title, text], i) => (
+                <div key={title}>
+                  <div className="flex items-center gap-4">
+                    <span className="flex h-12 w-12 items-center justify-center rounded-full border border-clay/30 text-clay">
+                      <Icon className="h-5 w-5" />
+                    </span>
+                    <span className="h-display text-5xl text-clay/20">0{i + 1}</span>
+                  </div>
+                  <h3 className="mt-5 text-lg font-semibold">{title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-ink-mute">{text}</p>
                 </div>
-                <h3 className="mt-5 text-lg font-semibold">{title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-cream/60">{text}</p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
+        </Reveal>
       </section>
 
       {/* YENİLER */}
       <section className="container-x pt-24">
-        <SectionHead eyebrow="Yeni gelenler" title="Son eklenenler" href="/urunler" />
+        <Reveal>
+          <SectionHead eyebrow="Yeni gelenler" title="Son eklenenler" href="/urunler" />
+        </Reveal>
         {latest.items.length ? (
           <div className="grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 lg:grid-cols-4">
-            {latest.items.map((p) => <ProductCard key={p.id} product={p} />)}
+            {latest.items.map((p, i) => (
+              <Reveal key={p.id} delay={i * 60}>
+                <ProductCard product={p} />
+              </Reveal>
+            ))}
           </div>
         ) : (
           <p className="card p-10 text-center text-ink-mute">Henüz ürün eklenmemiş.</p>
@@ -127,10 +150,12 @@ export default async function HomePage() {
       {/* HAKKIMIZDA */}
       {settings.about && (
         <section className="container-x pt-24">
-          <div className="grid gap-8 lg:grid-cols-12">
-            <p className="eyebrow lg:col-span-3">Hakkımızda</p>
-            <p className="h-display text-3xl leading-snug text-ink-soft sm:text-4xl lg:col-span-9 whitespace-pre-line">{settings.about}</p>
-          </div>
+          <Reveal>
+            <div className="grid gap-8 lg:grid-cols-12">
+              <p className="eyebrow lg:col-span-3">Hakkımızda</p>
+              <p className="h-display text-3xl leading-snug text-ink-soft sm:text-4xl lg:col-span-9 whitespace-pre-line">{settings.about}</p>
+            </div>
+          </Reveal>
         </section>
       )}
     </>

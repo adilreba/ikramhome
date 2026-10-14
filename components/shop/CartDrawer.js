@@ -46,7 +46,7 @@ export default function CartDrawer() {
 
   return (
     <div className="fixed inset-0 z-50" role="dialog" aria-modal="true" aria-label="Sepetim">
-      <div className="absolute inset-0 bg-ink/40 backdrop-blur-[2px]" onClick={() => setOpen(false)} />
+      <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px]" onClick={() => setOpen(false)} />
       <aside className="absolute inset-y-0 right-0 flex w-full max-w-md animate-slide-in flex-col bg-cream shadow-lift">
         <div className="flex items-center justify-between border-b border-cream-line px-6 py-5">
           <div>
@@ -101,7 +101,7 @@ export default function CartDrawer() {
                     {it.color && <p className="mt-0.5 text-xs text-ink-mute">Renk: {it.color}</p>}
                     <p className="mt-1 text-sm text-ink-mute">{formatPrice(it.price, cur)}</p>
                     <div className="mt-auto flex items-center justify-between pt-2">
-                      <div className="flex items-center rounded-full border border-cream-line bg-white">
+                      <div className="flex items-center rounded-full border border-cream-line bg-cream">
                         <button className="p-2 hover:text-clay" onClick={() => setQty(it.product_id, it.qty - 1, it.variant_id)} aria-label="Azalt"><MinusIcon className="h-3.5 w-3.5" /></button>
                         <span className="w-6 text-center text-sm font-semibold tabular-nums">{it.qty}</span>
                         <button className="p-2 hover:text-clay" onClick={() => setQty(it.product_id, it.qty + 1, it.variant_id)} aria-label="Arttır"><PlusIcon className="h-3.5 w-3.5" /></button>
@@ -113,7 +113,7 @@ export default function CartDrawer() {
               ))}
             </ul>
 
-            <div className="border-t border-cream-line bg-white/70 px-6 pb-6 pt-4">
+            <div className="border-t border-cream-line bg-cream/90 px-6 pb-6 pt-4">
               <details className="group mb-3">
                 <summary className="cursor-pointer list-none text-xs font-semibold text-ink-soft">
                   <span className="group-open:hidden">+ İsim ve not ekle (isteğe bağlı)</span>

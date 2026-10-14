@@ -61,10 +61,10 @@ export default function ProductGallery({ images = [], name }) {
         </button>
         {n > 1 && (
           <>
-            <button onClick={() => go(-1)} className="absolute left-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/85 shadow-soft backdrop-blur hover:bg-white" aria-label="Önceki">
+            <button onClick={() => go(-1)} className="absolute left-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/85 text-[#1B1916] shadow-soft backdrop-blur hover:bg-white" aria-label="Önceki">
               <ArrowLeftIcon className="h-4 w-4" />
             </button>
-            <button onClick={() => go(1)} className="absolute right-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/85 shadow-soft backdrop-blur hover:bg-white" aria-label="Sonraki">
+            <button onClick={() => go(1)} className="absolute right-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/85 text-[#1B1916] shadow-soft backdrop-blur hover:bg-white" aria-label="Sonraki">
               <ArrowRightIcon className="h-4 w-4" />
             </button>
             <span className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-ink/70 px-3 py-1 text-xs font-semibold text-cream tabular-nums">
@@ -75,7 +75,7 @@ export default function ProductGallery({ images = [], name }) {
       </div>
 
       {zoom && (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-ink/95 p-4" onClick={() => setZoom(false)} {...swipe}>
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/95 p-4" onClick={() => setZoom(false)} {...swipe}>
           <img src={imageUrl(images[active])} alt={name} className="max-h-full max-w-full object-contain" onClick={(e) => e.stopPropagation()} />
           <button className="absolute right-4 top-4 rounded-full bg-white/10 p-3 text-white hover:bg-white/20" aria-label="Kapat">
             <CloseIcon className="h-6 w-6" />

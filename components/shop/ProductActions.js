@@ -91,7 +91,7 @@ export default function ProductActions({ product }) {
                   disabled={unavailable}
                   onClick={() => setVariantId(v.id)}
                   className={`rounded-full border px-3.5 py-2 text-sm font-medium transition ${
-                    v.id === variantId ? 'border-ink bg-ink text-cream' : 'border-cream-line hover:border-ink/30'
+                    v.id === variantId ? 'border-clay bg-clay text-[#1B1916]' : 'border-cream-line hover:border-clay/40'
                   } ${unavailable ? 'cursor-not-allowed opacity-40 line-through' : ''}`}
                 >
                   {v.color}
@@ -103,7 +103,7 @@ export default function ProductActions({ product }) {
       )}
 
       <div className="flex gap-3">
-        <div className="flex items-center rounded-full border border-cream-line bg-white">
+        <div className="flex items-center rounded-full border border-cream-line bg-cream">
           <button className="p-3.5 hover:text-clay" onClick={() => setQty((q) => Math.max(1, q - 1))} aria-label="Azalt"><MinusIcon className="h-4 w-4" /></button>
           <span className="w-8 text-center font-semibold tabular-nums">{qty}</span>
           <button className="p-3.5 hover:text-clay" onClick={() => setQty((q) => Math.min(99, q + 1))} aria-label="Arttır"><PlusIcon className="h-4 w-4" /></button>

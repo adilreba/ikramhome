@@ -20,11 +20,13 @@ export default async function ShopLayout({ children }) {
   const [settings, categories] = await Promise.all([getSettings(), listCategories()]);
   return (
     <CartProvider settings={settings}>
-      <Header settings={settings} categories={categories} />
-      <main className="min-h-[60vh]">{children}</main>
-      <Footer settings={settings} categories={categories} />
-      <CartDrawer />
-      <FloatingUI />
+      <div data-theme="dark-lux" className="min-h-screen bg-cream text-ink">
+        <Header settings={settings} categories={categories} />
+        <main className="min-h-[60vh]">{children}</main>
+        <Footer settings={settings} categories={categories} />
+        <CartDrawer />
+        <FloatingUI />
+      </div>
     </CartProvider>
   );
 }

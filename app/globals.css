@@ -3,6 +3,32 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --c-ink: 27 25 22;
+    --c-ink-soft: 58 54 49;
+    --c-ink-mute: 122 115 106;
+    --c-cream: 247 243 238;
+    --c-cream-deep: 239 232 223;
+    --c-cream-line: 228 219 207;
+    --c-clay: 181 96 58;
+    --c-clay-dark: 148 73 42;
+    --c-clay-light: 243 226 216;
+  }
+
+  /* Mağaza vitrini: koyu + altın "bold lüks" tema. Aynı renk adları (ink/cream/clay)
+     bu kapsamda tersine döner — admin paneli ve giriş sayfası bundan etkilenmez. */
+  [data-theme='dark-lux'] {
+    --c-ink: 247 237 224;
+    --c-ink-soft: 217 203 179;
+    --c-ink-mute: 176 163 142;
+    --c-cream: 19 13 10;
+    --c-cream-deep: 30 20 13;
+    --c-cream-line: 58 42 28;
+    --c-clay: 212 175 90;
+    --c-clay-dark: 184 145 46;
+    --c-clay-light: 61 47 21;
+  }
+
   html { -webkit-tap-highlight-color: transparent; scroll-behavior: smooth; }
   body { @apply bg-cream text-ink font-sans antialiased; font-feature-settings: 'ss01', 'cv11'; }
   ::selection { @apply bg-clay text-white; }
@@ -16,21 +42,32 @@
 
   .btn { @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition duration-200 disabled:cursor-not-allowed disabled:opacity-50 active:scale-[.98]; }
   .btn-primary { @apply btn bg-ink text-cream hover:bg-ink-soft; }
-  .btn-outline { @apply btn border border-ink/15 bg-white/60 text-ink hover:border-ink/40 hover:bg-white; }
+  .btn-outline { @apply btn border border-ink/15 bg-cream/60 text-ink hover:border-ink/40 hover:bg-cream; }
   .btn-wa { @apply btn bg-wa text-white shadow-[0_10px_30px_-10px_rgba(37,211,102,.7)] hover:bg-wa-dark; }
-  .btn-clay { @apply btn bg-clay text-white hover:bg-clay-dark; }
+  .btn-clay { @apply btn bg-clay text-[#1B1916] hover:bg-clay-dark; }
   .btn-ghost { @apply btn px-3 text-ink-soft hover:bg-ink/5; }
   .btn-sm { @apply px-3.5 py-2 text-xs; }
 
-  .input { @apply w-full rounded-xl border border-cream-line bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition placeholder:text-ink-mute/70 focus:border-ink/40 focus:ring-4 focus:ring-ink/5; }
+  .input { @apply w-full rounded-xl border border-cream-line bg-cream px-3.5 py-2.5 text-sm text-ink outline-none transition placeholder:text-ink-mute/70 focus:border-clay/50 focus:ring-4 focus:ring-clay/10; }
   .label { @apply mb-1.5 block text-xs font-semibold text-ink-soft; }
-  .card { @apply rounded-2xl border border-cream-line bg-white; }
-  .chip { @apply inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-ink/10 bg-white/70 px-4 py-2 text-sm text-ink-soft transition hover:border-ink/30; }
-  .chip-active { @apply border-ink bg-ink text-cream hover:border-ink; }
+  .card { @apply rounded-2xl border border-cream-line bg-cream; }
+  .chip { @apply inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-ink/10 bg-cream/70 px-4 py-2 text-sm text-ink-soft backdrop-blur transition hover:border-clay/40; }
+  .chip-active { @apply border-clay bg-clay text-ink hover:border-clay; }
+
+  /* Mağazadaki beyaz yüzeyler (ürün kartı vb.) her zaman açık renkli kalsın isteniyorsa
+     bu sınıf kullanılır; .card/.input temayla birlikte döndüğü için ayrı tutuyoruz. */
+  .surface-light { @apply bg-white text-[#1B1916]; }
 }
 
 @layer utilities {
   .no-scrollbar::-webkit-scrollbar { display: none; }
   .no-scrollbar { scrollbar-width: none; }
-  .grain { background-image: radial-gradient(rgba(27,25,22,.035) 1px, transparent 1px); background-size: 3px 3px; }
+  .grain { background-image: radial-gradient(rgba(127,127,127,.06) 1px, transparent 1px); background-size: 3px 3px; }
+  .text-shimmer {
+    background-image: linear-gradient(110deg, rgb(var(--c-clay)) 20%, #F6E7BE 40%, rgb(var(--c-clay)) 60%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
 }

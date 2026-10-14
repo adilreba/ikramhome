@@ -18,7 +18,7 @@ export default function FloatingUI() {
     <>
       <button
         onClick={onClick}
-        className="fixed bottom-5 right-5 z-40 flex items-center gap-3 rounded-full bg-wa py-2.5 pl-2.5 pr-5 text-white shadow-[0_18px_40px_-12px_rgba(18,140,75,.65)] transition hover:-translate-y-0.5 hover:bg-wa-dark sm:bottom-7 sm:right-7"
+        className="fixed bottom-5 right-5 z-40 flex animate-pulse-ring items-center gap-3 rounded-full bg-wa py-2.5 pl-2.5 pr-5 text-white shadow-[0_18px_40px_-12px_rgba(18,140,75,.65)] transition hover:-translate-y-0.5 hover:animate-none hover:bg-wa-dark sm:bottom-7 sm:right-7"
         aria-label="WhatsApp"
       >
         <span key={bump} className="relative flex h-10 w-10 animate-pop items-center justify-center rounded-full bg-white/15">
@@ -41,7 +41,7 @@ export default function FloatingUI() {
         aria-live="polite"
         className={`fixed bottom-24 left-1/2 z-50 -translate-x-1/2 transition-all duration-300 sm:bottom-8 ${toast ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-3 opacity-0'}`}
       >
-        <div className="flex items-center gap-3 rounded-full bg-ink py-2.5 pl-3 pr-2 text-sm text-cream shadow-lift">
+        <div className="flex items-center gap-3 rounded-full border border-clay/20 bg-cream-deep py-2.5 pl-3 pr-2 text-sm text-ink shadow-lift">
           <span className="flex h-6 w-6 items-center justify-center rounded-full bg-wa text-white">
             <CheckIcon className="h-4 w-4" />
           </span>

@@ -36,11 +36,11 @@ export default function Header({ settings, categories }) {
   return (
     <>
       {settings.announcement && (
-        <div className="bg-ink text-cream">
-          <p className="container-x py-2 text-center text-[12px] tracking-wide text-cream/80">{settings.announcement}</p>
+        <div className="border-b border-clay/20 bg-cream-deep">
+          <p className="container-x py-2 text-center text-[12px] tracking-wide text-clay">{settings.announcement}</p>
         </div>
       )}
-      <header className={`sticky top-0 z-40 transition-all duration-300 ${scrolled ? 'border-b border-cream-line bg-cream/85 backdrop-blur-xl' : 'bg-cream'}`}>
+      <header className={`sticky top-0 z-40 transition-all duration-300 ${scrolled ? 'border-b border-clay/20 bg-cream/90 backdrop-blur-xl' : 'bg-gradient-to-b from-cream/90 to-cream/0'}`}>
         <div className="container-x flex h-16 items-center gap-4 sm:h-20">
           <button className="btn-ghost -ml-3 lg:hidden" onClick={() => setMenu(true)} aria-label="Menü">
             <MenuIcon className="h-6 w-6" />
@@ -50,14 +50,14 @@ export default function Header({ settings, categories }) {
             {settings.logo_image_id ? (
               <img src={imageUrl(settings.logo_image_id)} alt={settings.store_name} className="h-9 w-auto sm:h-11" />
             ) : (
-              <span className="h-display text-[26px] sm:text-[30px]">{settings.store_name}</span>
+              <span className="h-display text-shimmer animate-shimmer text-[26px] sm:text-[30px]">{settings.store_name}</span>
             )}
           </Link>
 
           <nav className="ml-8 hidden items-center gap-7 text-sm text-ink-soft lg:flex">
-            <Link href="/urunler" className="hover:text-ink">Tüm Ürünler</Link>
+            <Link href="/urunler" className="transition hover:text-clay">Tüm Ürünler</Link>
             {categories.slice(0, 5).map((c) => (
-              <Link key={c.id} href={`/urunler?category=${c.slug}`} className="hover:text-ink">
+              <Link key={c.id} href={`/urunler?category=${c.slug}`} className="transition hover:text-clay">
                 {c.name}
               </Link>
             ))}
@@ -90,7 +90,7 @@ export default function Header({ settings, categories }) {
 
       {menu && (
         <div className="fixed inset-0 z-50 lg:hidden">
-          <div className="absolute inset-0 bg-ink/40 backdrop-blur-sm" onClick={() => setMenu(false)} />
+          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setMenu(false)} />
           <aside className="absolute inset-y-0 left-0 flex w-[82%] max-w-sm flex-col bg-cream p-6 shadow-lift" style={{ animation: 'fade-up .3s both' }}>
             <div className="mb-8 flex items-center justify-between">
               <span className="h-display text-2xl">{settings.store_name}</span>
@@ -99,10 +99,10 @@ export default function Header({ settings, categories }) {
               </button>
             </div>
             <nav className="flex flex-col divide-y divide-cream-line text-lg">
-              <Link href="/" className="py-3.5">Ana Sayfa</Link>
-              <Link href="/urunler" className="py-3.5">Tüm Ürünler</Link>
+              <Link href="/" className="py-3.5 transition hover:text-clay">Ana Sayfa</Link>
+              <Link href="/urunler" className="py-3.5 transition hover:text-clay">Tüm Ürünler</Link>
               {categories.map((c) => (
-                <Link key={c.id} href={`/urunler?category=${c.slug}`} className="flex items-center justify-between py-3.5">
+                <Link key={c.id} href={`/urunler?category=${c.slug}`} className="flex items-center justify-between py-3.5 transition hover:text-clay">
                   {c.name}
                   <span className="text-xs text-ink-mute">{c.product_count}</span>
                 </Link>
