@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useClerk } from '@clerk/nextjs';
 import ImageUploader from '@/components/admin/ImageUploader';
 import { Field, PageHeader, Spinner, Toggle, useAdminUI } from '@/components/admin/AdminUI';
 import { WhatsAppIcon } from '@/components/Icons';
@@ -9,11 +10,10 @@ import { normalizePhone } from '@/lib/utils';
 
 export default function SettingsPage() {
   const { notify } = useAdminUI();
+  const { openUserProfile } = useClerk();
   const [s, setS] = useState(null);
   const [errors, setErrors] = useState({});
   const [saving, setSaving] = useState(false);
-  const [pw, setPw] = useState({ current_password: '', new_password: '', confirm: '' });
-  const [pwErrors, setPwErrors] = useState({});
 
   useEffect(() => {
     api('/api/admin/settings').then((d) => {
@@ -41,20 +41,6 @@ export default function SettingsPage() {
       notify(err.message, 'error');
     } finally {
       setSaving(false);
-    }
-  };
-
-  const changePassword = async (e) => {
-    e.preventDefault();
-    setPwErrors({});
-    if (pw.new_password !== pw.confirm) return setPwErrors({ confirm: 'Şifreler eşleşmiyor.' });
-    try {
-      await api('/api/admin/password', { method: 'PUT', body: { current_password: pw.current_password, new_password: pw.new_password } });
-      setPw({ current_password: '', new_password: '', confirm: '' });
-      notify('Şifreniz değiştirildi');
-    } catch (err) {
-      setPwErrors(err.fields || {});
-      notify(err.message, 'error');
     }
   };
 
@@ -152,26 +138,17 @@ export default function SettingsPage() {
         </div>
       </form>
 
-      <form onSubmit={changePassword} className="card mt-10 grid gap-5 p-5 lg:grid-cols-3">
+      <div className="card mt-10 grid gap-5 p-5 lg:grid-cols-3">
         <div>
-          <h2 className="font-semibold">Şifre değiştir</h2>
-          <p className="mt-1 text-xs text-ink-mute">En az 8 karakter.</p>
+          <h2 className="font-semibold">Hesap ve şifre</h2>
+          <p className="mt-1 text-xs text-ink-mute">Giriş bilgileriniz Clerk üzerinden yönetilir.</p>
         </div>
-        <div className="grid gap-4 sm:grid-cols-3 lg:col-span-2">
-          <Field label="Mevcut şifre" error={pwErrors.current_password}>
-            <input type="password" className="input" autoComplete="current-password" value={pw.current_password} onChange={(e) => setPw({ ...pw, current_password: e.target.value })} />
-          </Field>
-          <Field label="Yeni şifre" error={pwErrors.new_password}>
-            <input type="password" className="input" autoComplete="new-password" value={pw.new_password} onChange={(e) => setPw({ ...pw, new_password: e.target.value })} />
-          </Field>
-          <Field label="Yeni şifre (tekrar)" error={pwErrors.confirm}>
-            <input type="password" className="input" autoComplete="new-password" value={pw.confirm} onChange={(e) => setPw({ ...pw, confirm: e.target.value })} />
-          </Field>
-          <div className="sm:col-span-3">
-            <button className="btn-outline btn-sm" disabled={!pw.current_password || !pw.new_password}>Şifreyi güncelle</button>
-          </div>
+        <div className="lg:col-span-2">
+          <button type="button" onClick={() => openUserProfile()} className="btn-outline btn-sm">
+            Hesap ayarlarını aç
+          </button>
         </div>
-      </form>
+      </div>
     </>
   );
 }

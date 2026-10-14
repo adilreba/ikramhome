@@ -1,8 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useClerk } from '@clerk/nextjs';
 import { AdminUIProvider } from './AdminUI';
 import { BoxIcon, CloseIcon, ExternalIcon, GridIcon, InboxIcon, LogoutIcon, MenuIcon, SettingsIcon, TagIcon } from '@/components/Icons';
 import { api } from '@/lib/client-api';
@@ -17,7 +18,7 @@ const NAV = [
 
 export default function AdminShell({ admin, storeName, children }) {
   const pathname = usePathname();
-  const router = useRouter();
+  const { signOut } = useClerk();
   const [open, setOpen] = useState(false);
   const [newCount, setNewCount] = useState(0);
 
@@ -38,11 +39,7 @@ export default function AdminShell({ admin, storeName, children }) {
     };
   }, [pathname]);
 
-  const logout = async () => {
-    await api('/api/auth/logout', { method: 'POST' }).catch(() => {});
-    router.replace('/admin/login');
-    router.refresh();
-  };
+  const logout = () => signOut({ redirectUrl: '/admin/login' });
 
   const isActive = (item) => (item.exact ? pathname === item.href : pathname.startsWith(item.href));
 
