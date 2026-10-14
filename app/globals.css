@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { -webkit-tap-highlight-color: transparent; scroll-behavior: smooth; }
+  body { @apply bg-cream text-ink font-sans antialiased; font-feature-settings: 'ss01', 'cv11'; }
+  ::selection { @apply bg-clay text-white; }
+  input, textarea, select { font: inherit; }
+}
+
+@layer components {
+  .container-x { @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-10; }
+  .eyebrow { @apply text-[11px] font-semibold uppercase tracking-[0.22em] text-clay; }
+  .h-display { @apply font-display font-medium tracking-[-0.01em] leading-[1.02]; }
+
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition duration-200 disabled:cursor-not-allowed disabled:opacity-50 active:scale-[.98]; }
+  .btn-primary { @apply btn bg-ink text-cream hover:bg-ink-soft; }
+  .btn-outline { @apply btn border border-ink/15 bg-white/60 text-ink hover:border-ink/40 hover:bg-white; }
+  .btn-wa { @apply btn bg-wa text-white shadow-[0_10px_30px_-10px_rgba(37,211,102,.7)] hover:bg-wa-dark; }
+  .btn-clay { @apply btn bg-clay text-white hover:bg-clay-dark; }
+  .btn-ghost { @apply btn px-3 text-ink-soft hover:bg-ink/5; }
+  .btn-sm { @apply px-3.5 py-2 text-xs; }
+
+  .input { @apply w-full rounded-xl border border-cream-line bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition placeholder:text-ink-mute/70 focus:border-ink/40 focus:ring-4 focus:ring-ink/5; }
+  .label { @apply mb-1.5 block text-xs font-semibold text-ink-soft; }
+  .card { @apply rounded-2xl border border-cream-line bg-white; }
+  .chip { @apply inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-ink/10 bg-white/70 px-4 py-2 text-sm text-ink-soft transition hover:border-ink/30; }
+  .chip-active { @apply border-ink bg-ink text-cream hover:border-ink; }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { scrollbar-width: none; }
+  .grain { background-image: radial-gradient(rgba(27,25,22,.035) 1px, transparent 1px); background-size: 3px 3px; }
+}
