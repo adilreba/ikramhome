@@ -118,19 +118,21 @@ export default function SettingsPage() {
               <p className="text-xs text-ink-mute">Kapak görseli seçmezseniz öne çıkan ürünlerden kolaj oluşturulur.</p>
             </div>
           </div>
-          <div className="mt-4 grid gap-4 sm:grid-cols-2">
-            <Field label="Büyük başlık" error={errors.hero_title}>{input('hero_title')}</Field>
-            <div>
+          <div className="mt-4 flex flex-col gap-5 sm:flex-row">
+            <div className="sm:w-[180px] sm:shrink-0">
               <span className="label">Kapak görseli</span>
               <ImageUploader single value={s.hero_image_id ? [s.hero_image_id] : []} onChange={(ids) => set('hero_image_id', ids[0] || null)} />
             </div>
-            <Field label="Alt metin" error={errors.hero_subtitle} className="sm:col-span-2">
-              <textarea className="input min-h-[80px]" value={s.hero_subtitle ?? ''} onChange={(e) => set('hero_subtitle', e.target.value)} />
-            </Field>
-            <Field label="Hakkımızda" error={errors.about} className="sm:col-span-2">
-              <textarea className="input min-h-[100px]" value={s.about ?? ''} onChange={(e) => set('about', e.target.value)} />
-            </Field>
+            <div className="flex-1 space-y-4">
+              <Field label="Büyük başlık" error={errors.hero_title}>{input('hero_title')}</Field>
+              <Field label="Alt metin" error={errors.hero_subtitle}>
+                <textarea className="input min-h-[80px]" value={s.hero_subtitle ?? ''} onChange={(e) => set('hero_subtitle', e.target.value)} />
+              </Field>
+            </div>
           </div>
+          <Field label="Hakkımızda" error={errors.about} className="mt-4">
+            <textarea className="input min-h-[100px]" value={s.about ?? ''} onChange={(e) => set('about', e.target.value)} />
+          </Field>
         </section>
 
         <section className="card p-5">
