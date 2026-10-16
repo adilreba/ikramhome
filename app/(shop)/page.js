@@ -209,14 +209,15 @@ export default async function HomePage() {
       {/* KAPANIŞ ÇAĞRISI */}
       <section className="container-x pt-16">
         <Reveal>
-          <div className="relative overflow-hidden rounded-[32px] bg-ink px-6 py-14 text-center text-cream sm:px-12">
-            <h2 className="h-display text-4xl sm:text-5xl">Evinize şıklık katın</h2>
-            <p className="mx-auto mt-4 max-w-md text-sm text-cream/70 sm:text-base">Beğendiğiniz ürünü sepete ekleyin, WhatsApp’tan bize ulaşın — siparişiniz dakikalar içinde onaylansın.</p>
+          <div className="relative overflow-hidden rounded-[32px] bg-gradient-to-br from-clay via-clay to-clay-dark px-6 py-14 text-center text-white sm:px-12">
+            <div className="pointer-events-none absolute inset-0 opacity-[0.07]" style={{ backgroundImage: 'radial-gradient(#fff 1.5px, transparent 1.5px)', backgroundSize: '22px 22px' }} />
+            <h2 className="h-display relative text-4xl sm:text-5xl">Evinize şıklık katın</h2>
+            <p className="relative mx-auto mt-4 max-w-md text-sm text-white/80 sm:text-base">Beğendiğiniz ürünü sepete ekleyin, WhatsApp’tan bize ulaşın — siparişiniz dakikalar içinde onaylansın.</p>
             <a
               href={`https://wa.me/${normalizePhone(settings.whatsapp_number)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-wa mx-auto mt-8 w-fit px-8 py-3.5"
+              className="btn-wa relative mx-auto mt-8 w-fit px-8 py-3.5"
             >
               <WhatsAppIcon className="h-5 w-5" /> WhatsApp’tan yazın
             </a>
