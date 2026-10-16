@@ -99,7 +99,7 @@ export default function ProductForm({ productId }) {
         : await api('/api/admin/products', { method: 'POST', body });
       setDirty(false);
       notify(productId ? 'Değişiklikler kaydedildi' : 'Ürün eklendi');
-      if (!productId) router.replace(`/admin/urunler/${saved.id}`);
+      if (!productId) router.replace('/admin/urunler');
       else setForm((f) => ({ ...f, slug: saved.slug }));
     } catch (err) {
       setErrors(err.fields || {});
