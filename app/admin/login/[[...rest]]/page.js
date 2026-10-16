@@ -8,12 +8,43 @@ export default function LoginPage() {
           <p className="eyebrow mb-3">Yönetim Paneli</p>
           <h1 className="h-display text-5xl">Hoş geldiniz</h1>
           <p className="mt-2 text-sm text-ink-mute">Mağazanızı yönetmek için giriş yapın.</p>
-          <div className="mt-8">
+          <div className="card mt-8 p-7 shadow-soft">
             <SignIn
               routing="path"
               path="/admin/login"
               fallbackRedirectUrl="/admin"
-              appearance={{ elements: { card: 'shadow-none p-0', rootBox: 'w-full' } }}
+              appearance={{
+                variables: {
+                  colorPrimary: '#C94F24',
+                  colorText: '#1A1613',
+                  colorTextSecondary: '#7C7066',
+                  colorBackground: '#FDFAF6',
+                  colorInputBackground: '#FDFAF6',
+                  colorInputText: '#1A1613',
+                  colorNeutral: '#1A1613',
+                  colorDanger: '#C94F24',
+                  borderRadius: '0.75rem',
+                  fontFamily: 'Manrope, system-ui, sans-serif',
+                },
+                elements: {
+                  rootBox: 'w-full',
+                  card: 'shadow-none p-0 bg-transparent w-full',
+                  header: 'hidden',
+                  socialButtonsBlockButton: 'border border-cream-line bg-cream hover:bg-cream-deep transition rounded-xl py-2.5 text-sm font-semibold normal-case',
+                  socialButtonsBlockButtonText: 'text-ink font-semibold',
+                  dividerLine: 'bg-cream-line',
+                  dividerText: 'text-ink-mute text-xs',
+                  formFieldLabel: 'text-xs font-semibold text-ink-soft',
+                  formFieldInput: 'input',
+                  formButtonPrimary: 'btn bg-clay text-white hover:bg-clay-dark normal-case text-sm shadow-none',
+                  footerAction: 'hidden',
+                  footer: 'hidden',
+                  identityPreviewEditButton: 'text-clay',
+                  formFieldAction: 'text-clay hover:text-clay-dark',
+                  otpCodeFieldInput: 'border-cream-line text-ink',
+                  formResendCodeLink: 'text-clay',
+                },
+              }}
             />
           </div>
         </div>
