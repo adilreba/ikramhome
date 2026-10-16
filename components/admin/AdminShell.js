@@ -55,7 +55,7 @@ export default function AdminShell({ admin, storeName, children }) {
             key={item.href}
             href={item.href}
             className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition ${
-              isActive(item) ? 'bg-white/10 font-semibold text-cream' : 'text-cream/60 hover:bg-white/5 hover:text-cream'
+              isActive(item) ? 'bg-clay/20 font-semibold text-cream' : 'text-cream/60 hover:bg-white/5 hover:text-cream'
             }`}
           >
             <item.icon className="h-[18px] w-[18px]" />

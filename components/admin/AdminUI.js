@@ -57,7 +57,7 @@ export function AdminUIProvider({ children }) {
             {confirmState.message && <p className="mt-2 text-sm text-ink-mute">{confirmState.message}</p>}
             <div className="mt-6 flex justify-end gap-2">
               <button className="btn-outline btn-sm" onClick={() => close(false)}>Vazgeç</button>
-              <button autoFocus className={`btn btn-sm ${confirmState.danger ? 'bg-red-600 text-white hover:bg-red-700' : 'bg-ink text-cream'}`} onClick={() => close(true)}>
+              <button autoFocus className={`btn btn-sm ${confirmState.danger ? 'bg-red-600 text-white hover:bg-red-700' : 'bg-clay text-white hover:bg-clay-dark'}`} onClick={() => close(true)}>
                 {confirmState.confirmText || 'Onayla'}
               </button>
             </div>
@@ -103,7 +103,7 @@ export function Toggle({ checked, onChange, label, description }) {
         <span className="block text-sm font-semibold">{label}</span>
         {description && <span className="block text-xs text-ink-mute">{description}</span>}
       </span>
-      <span className={`relative h-6 w-11 shrink-0 rounded-full transition ${checked ? 'bg-ink' : 'bg-cream-line'}`}>
+      <span className={`relative h-6 w-11 shrink-0 rounded-full transition ${checked ? 'bg-clay' : 'bg-cream-line'}`}>
         <span className={`absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-all ${checked ? 'left-[22px]' : 'left-0.5'}`} />
       </span>
     </button>
@@ -118,7 +118,7 @@ export function Pagination({ page, pages, onChange }) {
     <div className="flex items-center justify-center gap-1 pt-6">
       <button className="btn-ghost btn-sm" disabled={page <= 1} onClick={() => onChange(page - 1)}>‹ Önceki</button>
       {nums.map((p) => (
-        <button key={p} onClick={() => onChange(p)} className={`h-8 min-w-[32px] rounded-lg px-2 text-sm font-semibold ${p === page ? 'bg-ink text-cream' : 'hover:bg-ink/5'}`}>
+        <button key={p} onClick={() => onChange(p)} className={`h-8 min-w-[32px] rounded-lg px-2 text-sm font-semibold ${p === page ? 'bg-clay text-white' : 'hover:bg-ink/5'}`}>
           {p}
         </button>
       ))}

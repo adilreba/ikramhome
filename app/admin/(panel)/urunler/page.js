@@ -127,18 +127,18 @@ function ProductsList() {
       </div>
 
       {selected.length > 0 && (
-        <div className="mb-4 flex flex-wrap items-center gap-2 rounded-xl bg-ink px-4 py-2.5 text-sm text-cream">
+        <div className="mb-4 flex flex-wrap items-center gap-2 rounded-xl bg-clay px-4 py-2.5 text-sm text-white">
           <span className="mr-2 font-semibold">{selected.length} seçili</span>
-          <button className="rounded-lg px-2.5 py-1 hover:bg-white/10" onClick={() => bulk('activate')}>Yayınla</button>
-          <button className="rounded-lg px-2.5 py-1 hover:bg-white/10" onClick={() => bulk('deactivate')}>Gizle</button>
-          <button className="rounded-lg px-2.5 py-1 hover:bg-white/10" onClick={() => bulk('feature')}>Öne çıkar</button>
-          <button className="rounded-lg px-2.5 py-1 hover:bg-white/10" onClick={() => bulk('unfeature')}>Öne çıkarmayı kaldır</button>
-          <select className="rounded-lg bg-white/10 px-2 py-1 text-cream" value="" onChange={(e) => e.target.value && bulk('set_category', { category_id: e.target.value === 'none' ? null : Number(e.target.value) })}>
+          <button className="rounded-lg px-2.5 py-1 hover:bg-white/15" onClick={() => bulk('activate')}>Yayınla</button>
+          <button className="rounded-lg px-2.5 py-1 hover:bg-white/15" onClick={() => bulk('deactivate')}>Gizle</button>
+          <button className="rounded-lg px-2.5 py-1 hover:bg-white/15" onClick={() => bulk('feature')}>Öne çıkar</button>
+          <button className="rounded-lg px-2.5 py-1 hover:bg-white/15" onClick={() => bulk('unfeature')}>Öne çıkarmayı kaldır</button>
+          <select className="rounded-lg bg-white/15 px-2 py-1 text-white" value="" onChange={(e) => e.target.value && bulk('set_category', { category_id: e.target.value === 'none' ? null : Number(e.target.value) })}>
             <option value="" className="text-ink">Kategoriye taşı…</option>
             <option value="none" className="text-ink">Kategorisiz</option>
             {categories.map((c) => <option key={c.id} value={c.id} className="text-ink">{c.name}</option>)}
           </select>
-          <button className="ml-auto rounded-lg px-2.5 py-1 text-red-300 hover:bg-white/10" onClick={() => bulk('delete')}>Sil</button>
+          <button className="ml-auto rounded-lg px-2.5 py-1 text-white hover:bg-white/15" onClick={() => bulk('delete')}>Sil</button>
         </div>
       )}
 
@@ -154,7 +154,7 @@ function ProductsList() {
             <thead className="hidden border-b border-cream-line bg-cream/60 text-left text-xs text-ink-mute md:table-header-group">
               <tr>
                 <th className="w-10 px-4 py-3">
-                  <input type="checkbox" checked={allChecked} onChange={() => setSelected(allChecked ? [] : items.map((i) => i.id))} className="accent-ink" />
+                  <input type="checkbox" checked={allChecked} onChange={() => setSelected(allChecked ? [] : items.map((i) => i.id))} className="accent-clay" />
                 </th>
                 <th className="py-3 font-medium">Ürün</th>
                 <th className="py-3 font-medium">Fiyat</th>
@@ -167,7 +167,7 @@ function ProductsList() {
               {items.map((p) => (
                 <tr key={p.id} className="flex flex-wrap items-center gap-x-3 gap-y-2 p-3 md:table-row md:p-0">
                   <td className="md:px-4 md:py-3">
-                    <input type="checkbox" checked={selected.includes(p.id)} onChange={() => setSelected((s) => (s.includes(p.id) ? s.filter((x) => x !== p.id) : [...s, p.id]))} className="accent-ink" />
+                    <input type="checkbox" checked={selected.includes(p.id)} onChange={() => setSelected((s) => (s.includes(p.id) ? s.filter((x) => x !== p.id) : [...s, p.id]))} className="accent-clay" />
                   </td>
                   <td className="min-w-0 flex-1 md:py-3">
                     <Link href={`/admin/urunler/${p.id}`} className="flex items-center gap-3">

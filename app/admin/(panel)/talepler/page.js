@@ -127,7 +127,7 @@ function Inquiries() {
                 <p className="label">Durum</p>
                 <div className="grid grid-cols-2 gap-2">
                   {Object.entries(INQUIRY_STATUS).map(([k, v]) => (
-                    <button key={k} onClick={() => update(active, { status: k })} className={`rounded-xl border px-3 py-2 text-sm font-semibold transition ${active.status === k ? 'border-ink bg-ink text-cream' : 'border-cream-line hover:border-ink/30'}`}>
+                    <button key={k} onClick={() => update(active, { status: k })} className={`rounded-xl border px-3 py-2 text-sm font-semibold transition ${active.status === k ? 'border-clay bg-clay text-white' : 'border-cream-line hover:border-ink/30'}`}>
                       {v.label}
                     </button>
                   ))}

@@ -92,7 +92,7 @@ export default function ImageUploader({ value = [], onChange, max = 12, single =
             className={`group relative aspect-[4/5] overflow-hidden rounded-xl bg-cream-deep ${!single ? 'cursor-grab active:cursor-grabbing' : ''} ${dragIndex === i ? 'opacity-40' : ''}`}
           >
             <img src={imageUrl(id)} alt="" className="h-full w-full object-cover" draggable={false} />
-            {i === 0 && !single && <span className="absolute left-2 top-2 rounded-full bg-ink px-2 py-0.5 text-[10px] font-bold text-cream">Kapak</span>}
+            {i === 0 && !single && <span className="absolute left-2 top-2 rounded-full bg-clay px-2 py-0.5 text-[10px] font-bold text-white">Kapak</span>}
             <button type="button" onClick={() => removeAt(i)} className="absolute right-1.5 top-1.5 rounded-full bg-white/90 p-1.5 text-ink shadow hover:bg-red-600 hover:text-white" aria-label="Kaldır">
               <CloseIcon className="h-3.5 w-3.5" />
             </button>

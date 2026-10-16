@@ -27,7 +27,7 @@
   .h-display { @apply font-display font-medium tracking-[-0.01em] leading-[1.02]; }
 
   .btn { @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition duration-200 disabled:cursor-not-allowed disabled:opacity-50 active:scale-[.98]; }
-  .btn-primary { @apply btn bg-ink text-cream hover:bg-ink-soft; }
+  .btn-primary { @apply btn bg-clay text-white hover:bg-clay-dark; }
   .btn-outline { @apply btn border border-ink/15 bg-cream/60 text-ink hover:border-ink/40 hover:bg-cream; }
   .btn-wa { @apply btn bg-wa text-white shadow-[0_10px_30px_-10px_rgba(37,211,102,.7)] hover:bg-wa-dark; }
   .btn-clay { @apply btn bg-clay text-[#1B1916] hover:bg-clay-dark; }
