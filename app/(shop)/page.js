@@ -165,21 +165,21 @@ export default async function HomePage() {
           {STEPS.map(([Icon, title, text], i) => (
             <div key={title} className="flex flex-1 items-start sm:items-stretch">
               <Reveal delay={i * 220} className="flex-1">
-                <div className="h-full rounded-2xl border border-cream-line bg-cream p-7">
-                  <div className="flex items-center gap-4">
-                    <span className="flex h-12 w-12 items-center justify-center rounded-full bg-clay-light text-clay">
-                      <Icon className="h-5 w-5" />
+                <div className="h-full rounded-2xl border border-cream-line bg-cream p-5">
+                  <div className="flex items-center gap-3">
+                    <span className="flex h-9 w-9 items-center justify-center rounded-full bg-clay-light text-clay">
+                      <Icon className="h-4 w-4" />
                     </span>
-                    <span className="h-display text-4xl text-clay/30">0{i + 1}</span>
+                    <span className="h-display text-2xl text-clay/30">0{i + 1}</span>
                   </div>
-                  <h3 className="mt-5 text-lg font-semibold">{title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-ink-mute">{text}</p>
+                  <h3 className="mt-3 text-base font-semibold">{title}</h3>
+                  <p className="mt-1.5 text-xs leading-relaxed text-ink-mute">{text}</p>
                 </div>
               </Reveal>
               {i < STEPS.length - 1 && (
-                <Reveal delay={i * 220 + 160} className="hidden shrink-0 items-center justify-center px-4 sm:flex">
-                  <span className="flex h-9 w-9 items-center justify-center rounded-full bg-clay-light text-clay">
-                    <ArrowRightIcon className="h-4 w-4" />
+                <Reveal delay={i * 220 + 160} className="hidden shrink-0 items-center justify-center px-2.5 sm:flex">
+                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-clay-light text-clay">
+                    <ArrowRightIcon className="h-3.5 w-3.5" />
                   </span>
                 </Reveal>
               )}
