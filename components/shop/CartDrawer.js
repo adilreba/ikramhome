@@ -68,7 +68,7 @@ export default function CartDrawer() {
               Mesajı göndermeyi unutmayın. {typeof sent === 'number' && <>Talep numaranız <b className="text-ink">#{sent}</b>.</>} En kısa sürede size dönüş yapacağız.
             </p>
             <div className="mt-8 flex w-full flex-col gap-2">
-              <button className="btn-primary" onClick={() => { clear(); setSent(null); setOpen(false); }}>
+              <button className="btn bg-clay text-white hover:bg-clay-dark" onClick={() => { clear(); setSent(null); setOpen(false); }}>
                 Sepeti temizle ve kapat
               </button>
               <button className="btn-outline" onClick={() => setSent(null)}>Sepete geri dön</button>
@@ -79,7 +79,7 @@ export default function CartDrawer() {
             <BagIcon className="mb-4 h-12 w-12 text-ink-mute/50" />
             <h3 className="h-display text-3xl">Sepetiniz boş</h3>
             <p className="mt-2 text-sm text-ink-mute">Beğendiğiniz ürünleri ekleyin, tek dokunuşla WhatsApp’tan bize iletin.</p>
-            <Link href="/urunler" onClick={() => setOpen(false)} className="btn-primary mt-6">Ürünleri keşfet</Link>
+            <Link href="/urunler" onClick={() => setOpen(false)} className="btn mt-6 bg-clay text-white hover:bg-clay-dark">Ürünleri keşfet</Link>
           </div>
         ) : (
           <>

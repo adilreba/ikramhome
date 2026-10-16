@@ -38,7 +38,7 @@
   .label { @apply mb-1.5 block text-xs font-semibold text-ink-soft; }
   .card { @apply rounded-2xl border border-cream-line bg-cream; }
   .chip { @apply inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-ink/10 bg-cream px-4 py-2 text-sm text-ink-soft transition hover:border-clay/40; }
-  .chip-active { @apply border-ink bg-ink text-cream hover:border-ink; }
+  .chip-active { @apply border-clay bg-clay text-white hover:border-clay; }
 
   /* Beyaz dolgulu, koyu metinli hap buton — renkli/fotoğraflı zeminlerde (hero, banner) kullanılır */
   .btn-white { @apply btn bg-white text-[#1B1916] shadow-soft hover:bg-cream; }

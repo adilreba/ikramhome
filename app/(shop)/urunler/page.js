@@ -32,11 +32,11 @@ export default async function ProductsPage({ searchParams }) {
   };
 
   return (
-    <div className="container-x pt-10">
-      <div className="mb-8">
-        <p className="eyebrow mb-2">{data.total} ürün</p>
-        <h1 className="h-display text-5xl sm:text-6xl">{current?.name || (sp.q ? `“${sp.q}”` : 'Tüm Ürünler')}</h1>
-        {current?.description && <p className="mt-3 max-w-xl text-ink-mute">{current.description}</p>}
+    <div className="container-x pt-6">
+      <div className="mb-5">
+        <p className="eyebrow mb-1.5">{data.total} ürün</p>
+        <h1 className="h-display text-4xl sm:text-5xl">{current?.name || (sp.q ? `“${sp.q}”` : 'Tüm Ürünler')}</h1>
+        {current?.description && <p className="mt-2 max-w-xl text-ink-mute">{current.description}</p>}
       </div>
 
       <ShopFilters categories={categories} current={sp} />
