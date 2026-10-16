@@ -49,7 +49,7 @@ export default function ProductGallery({ images = [], name }) {
               onClick={() => setActive(i)}
               className={`aspect-[4/5] w-16 shrink-0 overflow-hidden rounded-xl border-2 transition sm:w-full ${i === active ? 'border-ink' : 'border-transparent opacity-60 hover:opacity-100'}`}
             >
-              <img src={imageUrl(id)} alt="" className="h-full w-full object-cover" />
+              <img src={imageUrl(id)} alt="" className="h-full w-full object-contain" />
             </button>
           ))}
         </div>
@@ -57,7 +57,7 @@ export default function ProductGallery({ images = [], name }) {
 
       <div className="relative flex-1 overflow-hidden rounded-[24px] bg-cream-deep" {...swipe}>
         <button onClick={() => setZoom(true)} className="block aspect-[4/5] w-full cursor-zoom-in">
-          <img key={images[active]} src={imageUrl(images[active])} alt={name} className="h-full w-full animate-fade-up object-cover" />
+          <img key={images[active]} src={imageUrl(images[active])} alt={name} className="h-full w-full animate-fade-up object-contain" />
         </button>
         {n > 1 && (
           <>
