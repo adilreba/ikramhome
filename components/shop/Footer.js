@@ -7,8 +7,8 @@ export default function Footer({ settings, categories }) {
   return (
     <footer className="relative mt-24 overflow-hidden bg-gradient-to-br from-clay via-clay to-clay-dark text-white/85">
       <div className="pointer-events-none absolute inset-0 opacity-[0.07]" style={{ backgroundImage: 'radial-gradient(#fff 1.5px, transparent 1.5px)', backgroundSize: '22px 22px' }} />
-      <div className="container-x relative grid gap-12 py-16 md:grid-cols-12">
-        <div className="md:col-span-5">
+      <div className="container-x relative grid grid-cols-2 gap-x-6 gap-y-10 py-16 md:grid-cols-12">
+        <div className="col-span-2 md:col-span-5">
           <p className="h-display text-4xl uppercase tracking-[0.06em] text-white">{settings.store_name}</p>
           {settings.tagline && <p className="mt-3 max-w-sm text-sm leading-relaxed text-white/70">{settings.tagline}</p>}
           <a
