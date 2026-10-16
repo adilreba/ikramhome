@@ -108,7 +108,7 @@ export default function ProductActions({ product }) {
           <span className="w-8 text-center font-semibold tabular-nums">{qty}</span>
           <button className="p-3.5 hover:text-clay" onClick={() => setQty((q) => Math.min(99, q + 1))} aria-label="Arttır"><PlusIcon className="h-4 w-4" /></button>
         </div>
-        <button disabled={soldOut} onClick={addToCart} className="btn-primary flex-1 py-3.5 text-[15px]">
+        <button disabled={soldOut} onClick={addToCart} className="btn flex-1 bg-clay py-3.5 text-[15px] text-white hover:bg-clay-dark">
           {inCart ? <CheckIcon className="h-5 w-5" /> : <BagIcon className="h-5 w-5" />}
           {addLabel}
         </button>

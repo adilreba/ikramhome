@@ -46,7 +46,7 @@ export default function ProductCard({ product, priority = false }) {
         disabled={soldOut}
         aria-label="Sepete ekle"
         className={`absolute bottom-3 right-3 flex h-11 w-11 items-center justify-center rounded-full shadow-soft transition duration-300 ${
-          inCart ? 'bg-ink text-cream' : 'bg-white text-ink hover:bg-ink hover:text-cream sm:opacity-0 sm:group-hover:opacity-100'
+          inCart ? 'bg-clay text-white' : 'bg-white text-clay hover:bg-clay hover:text-white sm:opacity-0 sm:group-hover:opacity-100'
         } disabled:hidden`}
       >
         {inCart ? <CheckIcon className="h-5 w-5" /> : <BagIcon className="h-5 w-5" />}
