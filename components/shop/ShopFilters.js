@@ -47,10 +47,10 @@ export default function ShopFilters({ categories, current }) {
         </form>
 
         <form onSubmit={(e) => { e.preventDefault(); go({ min, max }); }} className="flex items-center gap-2">
-          <input value={min} onChange={(e) => setMin(e.target.value.replace(/[^\d]/g, ''))} inputMode="numeric" placeholder="En az ₺" className="input w-28 rounded-full" />
-          <span className="text-ink-mute">–</span>
-          <input value={max} onChange={(e) => setMax(e.target.value.replace(/[^\d]/g, ''))} inputMode="numeric" placeholder="En çok ₺" className="input w-28 rounded-full" />
-          <button className="btn-outline btn-sm py-2.5">Uygula</button>
+          <input value={min} onChange={(e) => setMin(e.target.value.replace(/[^\d]/g, ''))} inputMode="numeric" placeholder="En az ₺" className="input w-0 min-w-0 flex-1 rounded-full sm:w-28 sm:flex-none" />
+          <span className="shrink-0 text-ink-mute">–</span>
+          <input value={max} onChange={(e) => setMax(e.target.value.replace(/[^\d]/g, ''))} inputMode="numeric" placeholder="En çok ₺" className="input w-0 min-w-0 flex-1 rounded-full sm:w-28 sm:flex-none" />
+          <button className="btn-outline btn-sm shrink-0 py-2.5">Uygula</button>
         </form>
 
         <label className="flex items-center gap-2 text-sm md:ml-auto">

@@ -2,9 +2,9 @@ import { SignIn } from '@clerk/nextjs';
 
 export default function LoginPage() {
   return (
-    <div className="grid min-h-screen lg:grid-cols-2">
-      <div className="flex items-center justify-center px-6 py-16">
-        <div className="w-full max-w-sm animate-fade-up">
+    <div className="grid min-h-screen overflow-x-hidden lg:grid-cols-2">
+      <div className="flex min-w-0 items-center justify-center px-6 py-16">
+        <div className="w-full min-w-0 max-w-sm animate-fade-up">
           <p className="eyebrow mb-3">Yönetim Paneli</p>
           <h1 className="h-display text-5xl">Hoş geldiniz</h1>
           <p className="mt-2 text-sm text-ink-mute">Mağazanızı yönetmek için giriş yapın.</p>

@@ -41,16 +41,16 @@ export default function Header({ settings, categories }) {
         </p>
       </div>
       <header className={`sticky top-0 z-40 bg-cream transition-shadow duration-300 ${scrolled ? 'shadow-soft' : ''}`}>
-        <div className="container-x flex h-16 items-center gap-4 border-b border-cream-line sm:h-20">
-          <button className="btn-ghost -ml-3 lg:hidden" onClick={() => setMenu(true)} aria-label="Menü">
+        <div className="container-x flex h-16 items-center gap-2 border-b border-cream-line sm:h-20 sm:gap-4">
+          <button className="btn-ghost -ml-3 shrink-0 lg:hidden" onClick={() => setMenu(true)} aria-label="Menü">
             <MenuIcon className="h-6 w-6" />
           </button>
 
-          <Link href="/" className="flex items-center gap-3">
+          <Link href="/" className="flex min-w-0 items-center gap-3">
             {settings.logo_image_id ? (
               <img src={imageUrl(settings.logo_image_id)} alt={settings.store_name} className="h-9 w-auto sm:h-11" />
             ) : (
-              <span className="h-display text-[24px] uppercase tracking-[0.08em] sm:text-[28px]">{settings.store_name}</span>
+              <span className="h-display truncate text-[19px] uppercase tracking-[0.04em] sm:text-[24px] sm:tracking-[0.08em] lg:text-[28px]">{settings.store_name}</span>
             )}
           </Link>
 
@@ -63,12 +63,12 @@ export default function Header({ settings, categories }) {
             ))}
           </nav>
 
-          <form onSubmit={submit} className="relative ml-auto hidden w-64 xl:block">
+          <form onSubmit={submit} className="relative ml-auto hidden w-64 shrink-0 xl:block">
             <SearchIcon className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-mute" />
             <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Ürün ara…" className="input rounded-full py-2.5 pl-9 text-sm" />
           </form>
 
-          <div className="flex items-center gap-1 xl:ml-2">
+          <div className="ml-auto flex shrink-0 items-center gap-1 xl:ml-2">
             <button className="btn-ghost xl:hidden" onClick={() => setSearch((s) => !s)} aria-label="Ara">
               <SearchIcon className="h-[22px] w-[22px]" />
             </button>
