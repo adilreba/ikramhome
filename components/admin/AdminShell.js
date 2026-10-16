@@ -101,7 +101,7 @@ export default function AdminShell({ admin, storeName, children }) {
               <Link href="/admin/talepler" className="ml-auto rounded-full bg-clay px-2.5 py-1 text-xs font-bold text-white">{newCount} yeni</Link>
             )}
           </header>
-          <main className="px-4 py-8 sm:px-8">{children}</main>
+          <main className="px-4 py-6 sm:px-6">{children}</main>
         </div>
       </div>
     </AdminUIProvider>

@@ -53,35 +53,35 @@ export default function SettingsPage() {
       <PageHeader title="Ayarlar" subtitle="Mağaza bilgileri, WhatsApp numarası ve site görünümü" />
 
       <form onSubmit={save} className="space-y-6">
-        <section className="card grid gap-5 p-5 lg:grid-cols-3">
-          <div>
-            <h2 className="flex items-center gap-2 font-semibold"><WhatsAppIcon className="h-5 w-5 text-wa" /> WhatsApp</h2>
-            <p className="mt-1 text-xs text-ink-mute">Siparişlerin gideceği numara. Ülke koduyla birlikte yazın.</p>
-          </div>
-          <div className="space-y-4 lg:col-span-2">
+        <section className="card p-5">
+          <h2 className="flex items-center gap-2 font-semibold"><WhatsAppIcon className="h-5 w-5 text-wa" /> WhatsApp</h2>
+          <p className="mt-1 text-xs text-ink-mute">Siparişlerin gideceği numara. Ülke koduyla birlikte yazın.</p>
+          <div className="mt-4 grid gap-4 sm:grid-cols-2">
             <Field label="WhatsApp numarası *" error={errors.whatsapp_number} hint={s.whatsapp_number ? `Bağlantı: wa.me/${normalizePhone(s.whatsapp_number)}` : 'Ör. 0532 123 45 67 veya 905321234567'}>
               {input('whatsapp_number', { inputMode: 'tel', placeholder: '905321234567' })}
             </Field>
             <Field label="Mesajın başlangıç cümlesi" error={errors.whatsapp_greeting}>
               {input('whatsapp_greeting')}
             </Field>
-            {s.whatsapp_number && (
-              <a href={`https://wa.me/${normalizePhone(s.whatsapp_number)}?text=${encodeURIComponent('Test mesajı')}`} target="_blank" rel="noopener noreferrer" className="btn-outline btn-sm">
-                Numarayı test et
-              </a>
-            )}
           </div>
+          {s.whatsapp_number && (
+            <a href={`https://wa.me/${normalizePhone(s.whatsapp_number)}?text=${encodeURIComponent('Test mesajı')}`} target="_blank" rel="noopener noreferrer" className="btn-outline btn-sm mt-4 inline-flex">
+              Numarayı test et
+            </a>
+          )}
         </section>
 
-        <section className="card grid gap-5 p-5 lg:grid-cols-3">
-          <div>
-            <h2 className="font-semibold">Mağaza</h2>
-            <p className="mt-1 text-xs text-ink-mute">Sitenin üst kısmında ve başlıklarda görünür.</p>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:col-span-2">
+        <section className="card p-5">
+          <h2 className="font-semibold">Mağaza</h2>
+          <p className="mt-1 text-xs text-ink-mute">Sitenin üst kısmında ve başlıklarda görünür.</p>
+          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+            <div>
+              <span className="label">Logo (isteğe bağlı)</span>
+              <ImageUploader single value={s.logo_image_id ? [s.logo_image_id] : []} onChange={(ids) => set('logo_image_id', ids[0] || null)} />
+            </div>
             <Field label="Mağaza adı *" error={errors.store_name}>{input('store_name')}</Field>
             <Field label="Slogan" error={errors.tagline}>{input('tagline')}</Field>
-            <Field label="Duyuru çubuğu" error={errors.announcement} hint="Boş bırakırsanız gizlenir" className="sm:col-span-2">{input('announcement')}</Field>
+            <Field label="Duyuru çubuğu" error={errors.announcement} hint="Boş bırakırsanız gizlenir">{input('announcement')}</Field>
             <Field label="Para birimi" error={errors.currency}>
               <select className="input" value={s.currency} onChange={(e) => set('currency', e.target.value)}>
                 <option value="₺">₺ Türk Lirası</option>
@@ -92,40 +92,32 @@ export default function SettingsPage() {
             <div className="flex items-end">
               <Toggle checked={!!s.show_stock} onChange={(v) => set('show_stock', v)} label="Stok bilgisini göster" description="“Son 2 adet”, “Tükendi” gibi" />
             </div>
-            <div>
-              <span className="label">Logo (isteğe bağlı)</span>
-              <ImageUploader single value={s.logo_image_id ? [s.logo_image_id] : []} onChange={(ids) => set('logo_image_id', ids[0] || null)} />
-            </div>
           </div>
         </section>
 
-        <section className="card grid gap-5 p-5 lg:grid-cols-3">
-          <div>
-            <h2 className="font-semibold">Ana sayfa</h2>
-            <p className="mt-1 text-xs text-ink-mute">Kapak görseli seçmezseniz öne çıkan ürünlerden kolaj oluşturulur.</p>
-          </div>
-          <div className="space-y-4 lg:col-span-2">
+        <section className="card p-5">
+          <h2 className="font-semibold">Ana sayfa</h2>
+          <p className="mt-1 text-xs text-ink-mute">Kapak görseli seçmezseniz öne çıkan ürünlerden kolaj oluşturulur.</p>
+          <div className="mt-4 grid gap-4 sm:grid-cols-2">
             <Field label="Büyük başlık" error={errors.hero_title}>{input('hero_title')}</Field>
-            <Field label="Alt metin" error={errors.hero_subtitle}>
-              <textarea className="input min-h-[80px]" value={s.hero_subtitle ?? ''} onChange={(e) => set('hero_subtitle', e.target.value)} />
-            </Field>
             <div>
               <span className="label">Kapak görseli</span>
               <ImageUploader single value={s.hero_image_id ? [s.hero_image_id] : []} onChange={(ids) => set('hero_image_id', ids[0] || null)} />
             </div>
-            <Field label="Hakkımızda" error={errors.about}>
+            <Field label="Alt metin" error={errors.hero_subtitle} className="sm:col-span-2">
+              <textarea className="input min-h-[80px]" value={s.hero_subtitle ?? ''} onChange={(e) => set('hero_subtitle', e.target.value)} />
+            </Field>
+            <Field label="Hakkımızda" error={errors.about} className="sm:col-span-2">
               <textarea className="input min-h-[100px]" value={s.about ?? ''} onChange={(e) => set('about', e.target.value)} />
             </Field>
           </div>
         </section>
 
-        <section className="card grid gap-5 p-5 lg:grid-cols-3">
-          <div>
-            <h2 className="font-semibold">İletişim</h2>
-            <p className="mt-1 text-xs text-ink-mute">Sitenin alt kısmında görünür.</p>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:col-span-2">
-            <Field label="Adres" error={errors.address} className="sm:col-span-2">{input('address')}</Field>
+        <section className="card p-5">
+          <h2 className="font-semibold">İletişim</h2>
+          <p className="mt-1 text-xs text-ink-mute">Sitenin alt kısmında görünür.</p>
+          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+            <Field label="Adres" error={errors.address}>{input('address')}</Field>
             <Field label="Telefon" error={errors.phone}>{input('phone')}</Field>
             <Field label="E-posta" error={errors.email}>{input('email')}</Field>
             <Field label="Instagram kullanıcı adı" error={errors.instagram}>{input('instagram', { placeholder: '@magazam' })}</Field>
@@ -138,16 +130,12 @@ export default function SettingsPage() {
         </div>
       </form>
 
-      <div className="card mt-10 grid gap-5 p-5 lg:grid-cols-3">
-        <div>
-          <h2 className="font-semibold">Hesap ve şifre</h2>
-          <p className="mt-1 text-xs text-ink-mute">Giriş bilgileriniz Clerk üzerinden yönetilir.</p>
-        </div>
-        <div className="lg:col-span-2">
-          <button type="button" onClick={() => openUserProfile()} className="btn-outline btn-sm">
-            Hesap ayarlarını aç
-          </button>
-        </div>
+      <div className="card mt-10 p-5">
+        <h2 className="font-semibold">Hesap ve şifre</h2>
+        <p className="mt-1 text-xs text-ink-mute">Giriş bilgileriniz Clerk üzerinden yönetilir.</p>
+        <button type="button" onClick={() => openUserProfile()} className="btn-outline btn-sm mt-4">
+          Hesap ayarlarını aç
+        </button>
       </div>
     </>
   );
