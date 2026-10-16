@@ -161,19 +161,19 @@ export default async function HomePage() {
       {/* NASIL ÇALIŞIR */}
       <section id="nasil" className="container-x scroll-mt-24 pt-8">
         <SectionHead title="Üç adımda sipariş, sohbetle anlaşma" />
-        <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:gap-0">
+        <div className="flex items-stretch gap-2 sm:gap-0">
           {STEPS.map(([Icon, title, text], i) => (
-            <div key={title} className="flex flex-1 items-start sm:items-stretch">
-              <Reveal delay={i * 220} className="flex-1">
-                <div className="h-full rounded-2xl border border-cream-line bg-cream p-5">
-                  <div className="flex items-center gap-3">
-                    <span className="flex h-9 w-9 items-center justify-center rounded-full bg-clay-light text-clay">
-                      <Icon className="h-4 w-4" />
+            <div key={title} className="flex flex-1 items-stretch">
+              <Reveal delay={i * 220} className="min-w-0 flex-1">
+                <div className="h-full rounded-2xl border border-cream-line bg-cream p-2.5 sm:p-5">
+                  <div className="flex items-center gap-1.5 sm:gap-3">
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-clay-light text-clay sm:h-9 sm:w-9">
+                      <Icon className="h-3 w-3 sm:h-4 sm:w-4" />
                     </span>
-                    <span className="h-display text-2xl text-clay/30">0{i + 1}</span>
+                    <span className="h-display text-base text-clay/30 sm:text-2xl">0{i + 1}</span>
                   </div>
-                  <h3 className="mt-3 text-base font-semibold">{title}</h3>
-                  <p className="mt-1.5 text-xs leading-relaxed text-ink-mute">{text}</p>
+                  <h3 className="mt-2 text-[11px] font-semibold leading-tight sm:mt-3 sm:text-base">{title}</h3>
+                  <p className="mt-1 line-clamp-2 text-[10px] leading-snug text-ink-mute sm:mt-1.5 sm:line-clamp-none sm:text-xs sm:leading-relaxed">{text}</p>
                 </div>
               </Reveal>
               {i < STEPS.length - 1 && (
