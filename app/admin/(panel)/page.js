@@ -28,14 +28,14 @@ export default function Dashboard() {
       </PageHeader>
 
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-        <Stat label="Yeni talepler" value={s.inquiries.new} accent href="/admin/talepler?status=new" />
-        <Stat label="Satışa dönen" value={`${s.inquiries.sold}`} sub={`%${conversion} dönüşüm`} />
-        <Stat label="Satış tutarı" value={formatPrice(s.inquiries.sold_total)} sub="“Satıldı” işaretlenenler" />
-        <Stat label="Ürün görüntülenme" value={s.total_views.toLocaleString('tr-TR')} />
-        <Stat label="Aktif ürün" value={`${s.active_products} / ${s.products}`} href="/admin/urunler" />
-        <Stat label="Stokta olmayan" value={s.out_of_stock} href="/admin/urunler?status=out_of_stock" />
-        <Stat label="Kategori" value={s.categories} href="/admin/kategoriler" />
-        <Stat label="Son 30 gün talep" value={s.inquiries.last30} />
+        <Stat label="Yeni talepler" value={s.inquiries.new} tone="clay" href="/admin/talepler?status=new" />
+        <Stat label="Satışa dönen" value={`${s.inquiries.sold}`} sub={`%${conversion} dönüşüm`} tone="wa" />
+        <Stat label="Satış tutarı" value={formatPrice(s.inquiries.sold_total)} sub="“Satıldı” işaretlenenler" tone="wa" />
+        <Stat label="Ürün görüntülenme" value={s.total_views.toLocaleString('tr-TR')} tone="clay" />
+        <Stat label="Aktif ürün" value={`${s.active_products} / ${s.products}`} tone="wa" href="/admin/urunler" />
+        <Stat label="Stokta olmayan" value={s.out_of_stock} tone="red" href="/admin/urunler?status=out_of_stock" />
+        <Stat label="Kategori" value={s.categories} tone="clay" href="/admin/kategoriler" />
+        <Stat label="Son 30 gün talep" value={s.inquiries.last30} tone="clay" />
       </div>
 
       <div className="mt-6 grid gap-6 lg:grid-cols-5">
@@ -109,9 +109,15 @@ export default function Dashboard() {
   );
 }
 
-function Stat({ label, value, sub, accent, href }) {
+const STAT_TONES = {
+  clay: 'border-clay/30 bg-clay-light/40',
+  wa: 'border-wa/30 bg-wa/10',
+  red: 'border-red-200 bg-red-50',
+};
+
+function Stat({ label, value, sub, tone, href }) {
   const body = (
-    <div className={`card h-full p-4 transition ${href ? 'hover:border-ink/20' : ''} ${accent ? 'border-clay/30 bg-clay-light/40' : ''}`}>
+    <div className={`card h-full p-4 transition ${href ? 'hover:border-ink/20' : ''} ${tone ? STAT_TONES[tone] : ''}`}>
       <p className="text-xs text-ink-mute">{label}</p>
       <p className="mt-1.5 text-2xl font-semibold tabular-nums">{value}</p>
       {sub && <p className="mt-0.5 text-[11px] text-ink-mute">{sub}</p>}
