@@ -159,7 +159,7 @@ export default async function HomePage() {
       )}
 
       {/* NASIL ÇALIŞIR */}
-      <section id="nasil" className="container-x scroll-mt-24 pt-16">
+      <section id="nasil" className="container-x scroll-mt-24 pt-8">
         <SectionHead title="Üç adımda sipariş, sohbetle anlaşma" />
         <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:gap-0">
           {STEPS.map(([Icon, title, text], i) => (
@@ -189,7 +189,7 @@ export default async function HomePage() {
       </section>
 
       {/* YENİLER */}
-      <section className="container-x pt-16">
+      <section className="container-x pt-10">
         <Reveal>
           <SectionHead title="Son eklenenler" href="/urunler" />
         </Reveal>
