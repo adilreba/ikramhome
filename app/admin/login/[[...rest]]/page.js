@@ -4,11 +4,11 @@ export default function LoginPage() {
   return (
     <div className="grid min-h-screen overflow-x-hidden lg:grid-cols-2">
       <div className="flex min-w-0 items-center justify-center px-6 py-16">
-        <div className="w-full min-w-0 max-w-sm animate-fade-up">
+        <div className="w-full min-w-0 max-w-sm animate-fade-up text-center">
           <p className="eyebrow mb-3">Yönetim Paneli</p>
           <h1 className="h-display text-5xl">Hoş geldiniz</h1>
           <p className="mt-2 text-sm text-ink-mute">Mağazanızı yönetmek için giriş yapın.</p>
-          <div className="mt-8">
+          <div className="mt-8 text-left">
             <SignIn
               routing="path"
               path="/admin/login"
@@ -49,11 +49,11 @@ export default function LoginPage() {
           </div>
         </div>
       </div>
-      <div className="relative hidden overflow-hidden bg-ink lg:block">
-        <div className="absolute inset-0 opacity-30" style={{ background: 'radial-gradient(circle at 30% 30%, #B5603A 0, transparent 45%), radial-gradient(circle at 75% 70%, #25D366 0, transparent 40%)' }} />
-        <div className="relative flex h-full flex-col justify-end p-14 text-cream">
+      <div className="relative hidden overflow-hidden bg-gradient-to-br from-clay via-clay to-clay-dark lg:block">
+        <div className="pointer-events-none absolute inset-0 opacity-[0.07]" style={{ backgroundImage: 'radial-gradient(#fff 1.5px, transparent 1.5px)', backgroundSize: '22px 22px' }} />
+        <div className="relative flex h-full flex-col justify-end p-14 text-white">
           <p className="h-display max-w-md text-5xl leading-tight">Ürünlerinizi yükleyin, siparişler WhatsApp’a gelsin.</p>
-          <p className="mt-4 max-w-sm text-sm text-cream/60">Ürün, kategori, talep ve mağaza ayarlarınızın tamamı tek panelde.</p>
+          <p className="mt-4 max-w-sm text-sm text-white/70">Ürün, kategori, talep ve mağaza ayarlarınızın tamamı tek panelde.</p>
         </div>
       </div>
     </div>
