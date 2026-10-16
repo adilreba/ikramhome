@@ -8,10 +8,10 @@ import { imageUrl, normalizePhone } from '@/lib/utils';
 export const dynamic = 'force-dynamic';
 
 const TRUST_ITEMS = [
-  [TruckIcon, 'Hızlı Kargo', 'Türkiye geneline kapınıza kadar'],
-  [WhatsAppIcon, 'WhatsApp’tan Kolay Sipariş', 'Tek mesajla talebinizi iletin'],
-  [ShieldIcon, 'Orijinal Ürün', 'Kaliteli kumaş ve işçilik'],
-  [BoxIcon, 'Kolay Değişim', 'Sorun olursa birlikte çözeriz'],
+  [TruckIcon, 'Hızlı Kargo'],
+  [WhatsAppIcon, 'Kolay Sipariş'],
+  [ShieldIcon, 'Orijinal Ürün'],
+  [BoxIcon, 'Kolay Değişim'],
 ];
 
 const STEPS = [
@@ -75,21 +75,6 @@ export default async function HomePage() {
               </div>
             )}
           </div>
-        </div>
-      </section>
-
-      {/* GÜVEN ROZETLERİ */}
-      <section className="border-b border-cream-line bg-cream">
-        <div className="container-x grid grid-cols-2 gap-x-4 gap-y-5 py-6 sm:grid-cols-4">
-          {TRUST_ITEMS.map(([Icon, title, text]) => (
-            <div key={title} className="trust-item">
-              <Icon className="h-7 w-7 shrink-0 text-clay" />
-              <div className="min-w-0">
-                <p className="truncate text-sm font-semibold">{title}</p>
-                <p className="truncate text-xs text-ink-mute">{text}</p>
-              </div>
-            </div>
-          ))}
         </div>
       </section>
 
@@ -206,8 +191,22 @@ export default async function HomePage() {
         )}
       </section>
 
-      {/* KAPANIŞ ÇAĞRISI */}
+      {/* GÜVEN ROZETLERİ */}
       <section className="container-x pt-16">
+        <Reveal>
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+            {TRUST_ITEMS.map(([Icon, title]) => (
+              <div key={title} className="flex flex-col items-center gap-2 rounded-2xl border border-cream-line bg-cream py-6 text-center">
+                <Icon className="h-7 w-7 text-clay" />
+                <p className="text-sm font-semibold">{title}</p>
+              </div>
+            ))}
+          </div>
+        </Reveal>
+      </section>
+
+      {/* KAPANIŞ ÇAĞRISI */}
+      <section className="container-x pt-10">
         <Reveal>
           <div className="relative overflow-hidden rounded-[32px] bg-gradient-to-br from-clay via-clay to-clay-dark px-6 py-14 text-center text-white sm:px-12">
             <div className="pointer-events-none absolute inset-0 opacity-[0.07]" style={{ backgroundImage: 'radial-gradient(#fff 1.5px, transparent 1.5px)', backgroundSize: '22px 22px' }} />

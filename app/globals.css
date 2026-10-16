@@ -43,9 +43,6 @@
   /* Beyaz dolgulu, koyu metinli hap buton — renkli/fotoğraflı zeminlerde (hero, banner) kullanılır */
   .btn-white { @apply btn bg-white text-[#1B1916] shadow-soft hover:bg-cream; }
 
-  /* Güven rozetleri satırı (Ücretsiz Kargo, Güvenli Alışveriş vb.) */
-  .trust-item { @apply flex items-center gap-3; }
-
   /* Kategori/ürün rengi için küçük renk noktası */
   .swatch-dot { @apply h-3.5 w-3.5 shrink-0 rounded-full ring-1 ring-black/10; }
 }
