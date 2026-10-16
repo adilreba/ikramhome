@@ -98,14 +98,16 @@ export default function SettingsPage() {
               <Field label="Mağaza adı *" error={errors.store_name}>{input('store_name')}</Field>
               <Field label="Slogan" error={errors.tagline}>{input('tagline')}</Field>
               <Field label="Duyuru çubuğu" error={errors.announcement} hint="Boş bırakırsanız gizlenir">{input('announcement')}</Field>
-              <Field label="Para birimi" error={errors.currency}>
-                <select className="input" value={s.currency} onChange={(e) => set('currency', e.target.value)}>
-                  <option value="₺">₺ Türk Lirası</option>
-                  <option value="$">$ Dolar</option>
-                  <option value="€">€ Euro</option>
-                </select>
-              </Field>
-              <Toggle checked={!!s.show_stock} onChange={(v) => set('show_stock', v)} label="Stok bilgisini göster" description="“Son 2 adet”, “Tükendi” gibi" />
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+                <Field label="Para birimi" error={errors.currency} className="sm:w-40 sm:shrink-0">
+                  <select className="input" value={s.currency} onChange={(e) => set('currency', e.target.value)}>
+                    <option value="₺">₺ Türk Lirası</option>
+                    <option value="$">$ Dolar</option>
+                    <option value="€">€ Euro</option>
+                  </select>
+                </Field>
+                <Toggle checked={!!s.show_stock} onChange={(v) => set('show_stock', v)} label="Stok bilgisini göster" description="“Son 2 adet”, “Tükendi” gibi" />
+              </div>
             </div>
           </div>
         </section>
