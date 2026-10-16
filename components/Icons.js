@@ -38,6 +38,8 @@ export const StarIcon = make(<path d="m12 4 2.4 5 5.4.6-4 3.7 1.1 5.3L12 16l-4.9
 export const PhoneIcon = make(<path d="M5 4h3.5l1.5 4-2 1.5a11 11 0 0 0 6.5 6.5L16 14l4 1.5V19a1.5 1.5 0 0 1-1.6 1.5C10.6 20 4 13.4 3.5 5.6A1.5 1.5 0 0 1 5 4Z" />);
 export const PinIcon = make(<><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z" /><circle cx="12" cy="10" r="2.3" /></>);
 export const ClockIcon = make(<><circle cx="12" cy="12" r="8.5" /><path d="M12 7.5V12l3 2" /></>);
+export const TruckIcon = make(<><path d="M2.5 7h11v9h-11z" /><path d="M13.5 10h4l3 3v3h-7z" /><circle cx="7" cy="18" r="1.8" /><circle cx="17" cy="18" r="1.8" /></>);
+export const ShieldIcon = make(<><path d="M12 3.5 19 6v6c0 5-3 7.8-7 8.5-4-.7-7-3.5-7-8.5V6l7-2.5Z" /><path d="m9 12 2 2 4-4.5" /></>);
 export const InstagramIcon = make(<><rect x="4" y="4" width="16" height="16" rx="4.5" /><circle cx="12" cy="12" r="3.6" /><circle cx="17" cy="7" r=".6" fill="currentColor" /></>);
 export const DragIcon = make(<><circle cx="9" cy="6" r=".9" fill="currentColor" /><circle cx="15" cy="6" r=".9" fill="currentColor" /><circle cx="9" cy="12" r=".9" fill="currentColor" /><circle cx="15" cy="12" r=".9" fill="currentColor" /><circle cx="9" cy="18" r=".9" fill="currentColor" /><circle cx="15" cy="18" r=".9" fill="currentColor" /></>);
 

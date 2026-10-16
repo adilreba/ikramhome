@@ -91,7 +91,7 @@ export default function ProductActions({ product }) {
                   disabled={unavailable}
                   onClick={() => setVariantId(v.id)}
                   className={`rounded-full border px-3.5 py-2 text-sm font-medium transition ${
-                    v.id === variantId ? 'border-clay bg-clay text-[#1B1916]' : 'border-cream-line hover:border-clay/40'
+                    v.id === variantId ? 'border-clay bg-clay text-white' : 'border-cream-line hover:border-clay/40'
                   } ${unavailable ? 'cursor-not-allowed opacity-40 line-through' : ''}`}
                 >
                   {v.color}

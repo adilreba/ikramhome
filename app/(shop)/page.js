@@ -1,11 +1,18 @@
 import Link from 'next/link';
 import ProductCard from '@/components/shop/ProductCard';
 import Reveal from '@/components/shop/Reveal';
-import { ArrowRightIcon, BagIcon, HeartIcon, WhatsAppIcon } from '@/components/Icons';
+import { ArrowRightIcon, BagIcon, BoxIcon, HeartIcon, ShieldIcon, TruckIcon, WhatsAppIcon } from '@/components/Icons';
 import { getSettings, listCategories, listProducts } from '@/lib/queries';
-import { imageUrl } from '@/lib/utils';
+import { imageUrl, normalizePhone } from '@/lib/utils';
 
 export const dynamic = 'force-dynamic';
+
+const TRUST_ITEMS = [
+  [TruckIcon, 'Hızlı Kargo', 'Türkiye geneline kapınıza kadar'],
+  [WhatsAppIcon, 'WhatsApp’tan Kolay Sipariş', 'Tek mesajla talebinizi iletin'],
+  [ShieldIcon, 'Orijinal Ürün', 'Kaliteli kumaş ve işçilik'],
+  [BoxIcon, 'Kolay Değişim', 'Sorun olursa birlikte çözeriz'],
+];
 
 export default async function HomePage() {
   const [settings, categories, featured, latest] = await Promise.all([
@@ -15,33 +22,29 @@ export default async function HomePage() {
     listProducts({ limit: 8, sort: 'new' }),
   ]);
   const heroProducts = (featured.items.length ? featured.items : latest.items).filter((p) => p.cover_image_id).slice(0, 3);
+  const promoCategories = categories.filter((c) => c.image_id).slice(0, 2);
 
   return (
     <>
       {/* HERO */}
-      <section className="relative overflow-hidden">
-        <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-          <div className="absolute -left-24 -top-24 h-[420px] w-[420px] animate-blob rounded-full bg-clay/25 blur-[90px]" />
-          <div className="absolute -right-10 top-10 h-[360px] w-[360px] animate-blob-slow rounded-full bg-wine/25 blur-[100px]" />
-          <div className="absolute bottom-0 left-1/3 h-[320px] w-[320px] animate-blob rounded-full bg-clay/10 blur-[110px]" />
-        </div>
-        <div className="container-x pb-16 pt-8 sm:pt-12 lg:pb-24">
-        <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
+      <section className="relative overflow-hidden bg-gradient-to-br from-clay via-clay to-clay-dark text-white">
+        <div className="pointer-events-none absolute inset-0 opacity-[0.07]" style={{ backgroundImage: 'radial-gradient(#fff 1.5px, transparent 1.5px)', backgroundSize: '22px 22px' }} />
+        <div className="container-x relative grid items-center gap-10 py-16 lg:grid-cols-12 lg:gap-14 lg:py-24">
           <div className="animate-fade-up lg:col-span-6">
-            <p className="eyebrow mb-5">{settings.tagline || 'Yeni sezon'}</p>
-            <h1 className="h-display text-[44px] sm:text-6xl lg:text-[76px]">{settings.hero_title}</h1>
-            {settings.hero_subtitle && <p className="mt-6 max-w-lg text-base leading-relaxed text-ink-mute sm:text-lg">{settings.hero_subtitle}</p>}
+            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/80">{settings.tagline || 'Yeni Koleksiyon'}</p>
+            <h1 className="h-display mt-5 text-[42px] leading-[1.05] sm:text-6xl lg:text-[70px]">{settings.hero_title}</h1>
+            {settings.hero_subtitle && <p className="mt-6 max-w-lg text-base leading-relaxed text-white/85 sm:text-lg">{settings.hero_subtitle}</p>}
             <div className="mt-9 flex flex-wrap gap-3">
-              <Link href="/urunler" className="btn-primary px-7 py-3.5">
+              <Link href="/urunler" className="btn-white px-7 py-3.5">
                 Ürünleri keşfet <ArrowRightIcon className="h-4 w-4" />
               </Link>
-              <a href="#nasil" className="btn-outline px-7 py-3.5">Nasıl sipariş verilir?</a>
+              <a href="#nasil" className="btn px-7 py-3.5 text-white ring-1 ring-inset ring-white/40 hover:bg-white/10">Nasıl sipariş verilir?</a>
             </div>
           </div>
 
           <div className="relative lg:col-span-6">
             {settings.hero_image_id || (heroProducts.length > 0 && heroProducts.length < 3) ? (
-              <div className="aspect-[5/6] overflow-hidden rounded-[28px] bg-cream-deep sm:aspect-[4/3] lg:aspect-[5/6]">
+              <div className="aspect-[5/6] overflow-hidden rounded-[28px] shadow-lift sm:aspect-[4/3] lg:aspect-[5/6]">
                 <img src={imageUrl(settings.hero_image_id || heroProducts[0].cover_image_id)} alt="" className="h-full w-full object-cover" />
               </div>
             ) : heroProducts.length ? (
@@ -50,8 +53,8 @@ export default async function HomePage() {
                   <Link
                     key={p.id}
                     href={`/urun/${p.slug}`}
-                    className={`group relative overflow-hidden rounded-[22px] bg-cream-deep ${
-                      i === 0 ? 'col-span-3 row-span-6' : i === 1 ? 'col-span-2 row-span-3' : 'col-span-2 row-span-3'
+                    className={`group relative overflow-hidden rounded-[22px] shadow-lift ${
+                      i === 0 ? 'col-span-3 row-span-6' : 'col-span-2 row-span-3'
                     }`}
                     style={{ animation: `fade-up .7s ${0.1 + i * 0.12}s both` }}
                   >
@@ -61,24 +64,49 @@ export default async function HomePage() {
                 ))}
               </div>
             ) : (
-              <div className="grain flex aspect-square items-center justify-center rounded-[28px] bg-cream-deep text-ink-mute">
+              <div className="grain flex aspect-square items-center justify-center rounded-[28px] bg-white/10 text-white/70">
                 Admin panelinden ürün ekleyin
               </div>
             )}
           </div>
         </div>
+      </section>
+
+      {/* GÜVEN ROZETLERİ */}
+      <section className="border-b border-cream-line bg-cream">
+        <div className="container-x grid grid-cols-2 gap-x-4 gap-y-6 py-8 sm:grid-cols-4">
+          {TRUST_ITEMS.map(([Icon, title, text]) => (
+            <div key={title} className="trust-item">
+              <Icon className="h-7 w-7 shrink-0 text-clay" />
+              <div className="min-w-0">
+                <p className="truncate text-sm font-semibold">{title}</p>
+                <p className="truncate text-xs text-ink-mute">{text}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* KATEGORİLER */}
+      {/* KATEGORİYE GÖRE ALIŞVERİŞ */}
       {categories.length > 0 && (
-        <section className="border-y border-clay/10 bg-cream-deep/60">
-          <div className="container-x no-scrollbar flex gap-2.5 overflow-x-auto py-5">
-            <Link href="/urunler" className="chip chip-active">Tümü</Link>
-            {categories.map((c) => (
-              <Link key={c.id} href={`/urunler?category=${c.slug}`} className="chip">
-                {c.name} <span className="text-xs text-ink-mute">{c.product_count}</span>
-              </Link>
+        <section className="container-x pt-20">
+          <Reveal>
+            <SectionHead eyebrow="Koleksiyonlar" title="Kategoriye göre alışveriş" href="/urunler" />
+          </Reveal>
+          <div className="no-scrollbar -mx-4 flex gap-6 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:grid-cols-4 sm:gap-x-6 sm:gap-y-8 sm:overflow-visible sm:px-0 lg:grid-cols-6">
+            {categories.map((c, i) => (
+              <Reveal key={c.id} delay={i * 50} className="w-24 shrink-0 sm:w-auto">
+                <Link href={`/urunler?category=${c.slug}`} className="group flex flex-col items-center gap-3 text-center">
+                  <span className="h-24 w-24 overflow-hidden rounded-full bg-cream-deep shadow-soft ring-1 ring-cream-line transition group-hover:ring-clay sm:h-28 sm:w-28">
+                    {c.image_id ? (
+                      <img src={imageUrl(c.image_id)} alt={c.name} className="h-full w-full object-cover transition duration-500 group-hover:scale-110" />
+                    ) : (
+                      <span className="flex h-full w-full items-center justify-center font-display text-3xl text-clay">{c.name[0]}</span>
+                    )}
+                  </span>
+                  <span className="text-sm font-medium">{c.name}</span>
+                </Link>
+              </Reveal>
             ))}
           </div>
         </section>
@@ -100,31 +128,51 @@ export default async function HomePage() {
         </section>
       )}
 
+      {/* PROMOSYON KARTLARI */}
+      {promoCategories.length > 0 && (
+        <section className="container-x pt-20">
+          <div className="grid gap-6 sm:grid-cols-2">
+            {promoCategories.map((c, i) => (
+              <Reveal key={c.id} delay={i * 80}>
+                <Link
+                  href={`/urunler?category=${c.slug}`}
+                  className="group relative block aspect-[4/3] overflow-hidden rounded-[28px] shadow-soft sm:aspect-[16/11]"
+                >
+                  <img src={imageUrl(c.image_id)} alt={c.name} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+                  <div className="absolute inset-x-0 bottom-0 p-7 sm:p-9">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/80">Koleksiyon</p>
+                    <h3 className="h-display mt-2 text-3xl text-white sm:text-4xl">{c.name}</h3>
+                    <span className="btn-white mt-5 px-6 py-2.5 text-xs">Şimdi keşfet <ArrowRightIcon className="h-3.5 w-3.5" /></span>
+                  </div>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* NASIL ÇALIŞIR */}
       <section id="nasil" className="container-x scroll-mt-24 pt-24">
         <Reveal>
-          <div className="relative overflow-hidden rounded-[32px] border border-clay/20 bg-cream-deep px-6 py-14 text-ink shadow-gold sm:px-12 lg:px-16">
-            <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 animate-blob-slow rounded-full bg-clay/15 blur-[90px]" />
-            <p className="eyebrow">Kolay sipariş</p>
-            <h2 className="h-display mt-3 max-w-xl text-4xl sm:text-5xl">Üç adımda sipariş, sohbetle anlaşma</h2>
-            <div className="mt-12 grid gap-10 sm:grid-cols-3">
-              {[
-                [HeartIcon, 'Beğen', 'Ürün fotoğraflarına göz atın, detaylarını inceleyin.'],
-                [BagIcon, 'Sepete ekle', 'Beğendiklerinizi adetleriyle birlikte sepetinize ekleyin.'],
-                [WhatsAppIcon, 'WhatsApp’tan gönder', 'Fotoğraf, isim ve fiyatlar mesajınıza otomatik eklenir; ödeme ve teslimatı birlikte konuşuruz.'],
-              ].map(([Icon, title, text], i) => (
-                <div key={title}>
-                  <div className="flex items-center gap-4">
-                    <span className="flex h-12 w-12 items-center justify-center rounded-full border border-clay/30 text-clay">
-                      <Icon className="h-5 w-5" />
-                    </span>
-                    <span className="h-display text-5xl text-clay/20">0{i + 1}</span>
-                  </div>
-                  <h3 className="mt-5 text-lg font-semibold">{title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-ink-mute">{text}</p>
+          <SectionHead eyebrow="Kolay sipariş" title="Üç adımda sipariş, sohbetle anlaşma" />
+          <div className="grid gap-10 sm:grid-cols-3">
+            {[
+              [HeartIcon, 'Beğen', 'Ürün fotoğraflarına göz atın, kumaş ve renk seçeneklerini inceleyin.'],
+              [BagIcon, 'Sepete ekle', 'Beğendiklerinizi adet ve renkleriyle birlikte sepetinize ekleyin.'],
+              [WhatsAppIcon, 'WhatsApp’tan gönder', 'Fotoğraf, isim ve fiyatlar mesajınıza otomatik eklenir; ödeme ve teslimatı birlikte konuşuruz.'],
+            ].map(([Icon, title, text], i) => (
+              <div key={title} className="rounded-2xl border border-cream-line bg-cream p-7">
+                <div className="flex items-center gap-4">
+                  <span className="flex h-12 w-12 items-center justify-center rounded-full bg-clay-light text-clay">
+                    <Icon className="h-5 w-5" />
+                  </span>
+                  <span className="h-display text-4xl text-clay/30">0{i + 1}</span>
                 </div>
-              ))}
-            </div>
+                <h3 className="mt-5 text-lg font-semibold">{title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-ink-mute">{text}</p>
+              </div>
+            ))}
           </div>
         </Reveal>
       </section>
@@ -145,6 +193,24 @@ export default async function HomePage() {
         ) : (
           <p className="card p-10 text-center text-ink-mute">Henüz ürün eklenmemiş.</p>
         )}
+      </section>
+
+      {/* KAPANIŞ ÇAĞRISI */}
+      <section className="container-x pt-24">
+        <Reveal>
+          <div className="relative overflow-hidden rounded-[32px] bg-ink px-6 py-16 text-center text-cream sm:px-12">
+            <h2 className="h-display text-4xl sm:text-5xl">Evinize şıklık katın</h2>
+            <p className="mx-auto mt-4 max-w-md text-sm text-cream/70 sm:text-base">Beğendiğiniz ürünü sepete ekleyin, WhatsApp’tan bize ulaşın — siparişiniz dakikalar içinde onaylansın.</p>
+            <a
+              href={`https://wa.me/${normalizePhone(settings.whatsapp_number)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-wa mx-auto mt-8 w-fit px-8 py-3.5"
+            >
+              <WhatsAppIcon className="h-5 w-5" /> WhatsApp’tan yazın
+            </a>
+          </div>
+        </Reveal>
       </section>
 
       {/* HAKKIMIZDA */}

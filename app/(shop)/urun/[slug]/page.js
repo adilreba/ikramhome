@@ -62,13 +62,13 @@ export default async function ProductPage({ params }) {
               {off > 0 && (
                 <>
                   <span className="text-lg text-ink-mute line-through tabular-nums">{formatPrice(product.old_price, settings.currency)}</span>
-                  <span className="rounded-full bg-clay px-2.5 py-1 text-xs font-bold text-[#1B1916]">%{off} indirim</span>
+                  <span className="rounded-full bg-clay px-2.5 py-1 text-xs font-bold text-white">%{off} indirim</span>
                 </>
               )}
             </div>
             {product.sku && <p className="mt-2 text-xs text-ink-mute">Ürün kodu: {product.sku}</p>}
             {settings.show_stock && (
-              <p className={`mt-3 text-sm font-medium ${product.stock > 0 ? 'text-emerald-400' : 'text-wine-light'}`}>
+              <p className={`mt-3 text-sm font-medium ${product.stock > 0 ? 'text-emerald-700' : 'text-red-600'}`}>
                 {product.stock > 0 ? (product.stock <= 3 ? `Son ${product.stock} adet` : 'Stokta') : 'Tükendi — WhatsApp’tan sorabilirsiniz'}
               </p>
             )}

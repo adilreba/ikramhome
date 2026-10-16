@@ -35,13 +35,13 @@ export default function Header({ settings, categories }) {
 
   return (
     <>
-      {settings.announcement && (
-        <div className="border-b border-clay/20 bg-cream-deep">
-          <p className="container-x py-2 text-center text-[12px] tracking-wide text-clay">{settings.announcement}</p>
-        </div>
-      )}
-      <header className={`sticky top-0 z-40 transition-all duration-300 ${scrolled ? 'border-b border-clay/20 bg-cream/90 backdrop-blur-xl' : 'bg-gradient-to-b from-cream/90 to-cream/0'}`}>
-        <div className="container-x flex h-16 items-center gap-4 sm:h-20">
+      <div className="bg-ink text-cream">
+        <p className="container-x py-2 text-center text-[12px] tracking-wide text-cream/80">
+          {settings.announcement || 'Siparişleriniz WhatsApp üzerinden hızlıca onaylanır'}
+        </p>
+      </div>
+      <header className={`sticky top-0 z-40 bg-cream transition-shadow duration-300 ${scrolled ? 'shadow-soft' : ''}`}>
+        <div className="container-x flex h-16 items-center gap-4 border-b border-cream-line sm:h-20">
           <button className="btn-ghost -ml-3 lg:hidden" onClick={() => setMenu(true)} aria-label="Menü">
             <MenuIcon className="h-6 w-6" />
           </button>
@@ -50,11 +50,11 @@ export default function Header({ settings, categories }) {
             {settings.logo_image_id ? (
               <img src={imageUrl(settings.logo_image_id)} alt={settings.store_name} className="h-9 w-auto sm:h-11" />
             ) : (
-              <span className="h-display text-shimmer animate-shimmer text-[26px] sm:text-[30px]">{settings.store_name}</span>
+              <span className="h-display text-[24px] uppercase tracking-[0.08em] sm:text-[28px]">{settings.store_name}</span>
             )}
           </Link>
 
-          <nav className="ml-8 hidden items-center gap-7 text-sm text-ink-soft lg:flex">
+          <nav className="ml-8 hidden items-center gap-7 text-sm font-medium text-ink-soft lg:flex">
             <Link href="/urunler" className="transition hover:text-clay">Tüm Ürünler</Link>
             {categories.slice(0, 5).map((c) => (
               <Link key={c.id} href={`/urunler?category=${c.slug}`} className="transition hover:text-clay">
@@ -63,8 +63,13 @@ export default function Header({ settings, categories }) {
             ))}
           </nav>
 
-          <div className="ml-auto flex items-center gap-1">
-            <button className="btn-ghost" onClick={() => setSearch((s) => !s)} aria-label="Ara">
+          <form onSubmit={submit} className="relative ml-auto hidden w-64 xl:block">
+            <SearchIcon className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-mute" />
+            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Ürün ara…" className="input rounded-full py-2.5 pl-9 text-sm" />
+          </form>
+
+          <div className="flex items-center gap-1 xl:ml-2">
+            <button className="btn-ghost xl:hidden" onClick={() => setSearch((s) => !s)} aria-label="Ara">
               <SearchIcon className="h-[22px] w-[22px]" />
             </button>
             <button className="btn-ghost relative" onClick={() => setOpen(true)} aria-label="Sepet">
@@ -79,7 +84,7 @@ export default function Header({ settings, categories }) {
         </div>
 
         {search && (
-          <form onSubmit={submit} className="container-x animate-fade-up pb-4">
+          <form onSubmit={submit} className="container-x animate-fade-up py-4 xl:hidden">
             <div className="relative">
               <SearchIcon className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-ink-mute" />
               <input autoFocus value={q} onChange={(e) => setQ(e.target.value)} placeholder="Ürün, kategori veya etiket ara…" className="input rounded-full py-3.5 pl-12 text-base" />

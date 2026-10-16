@@ -59,7 +59,7 @@ export default async function ProductsPage({ searchParams }) {
             <Link
               key={p}
               href={pageHref(p)}
-              className={`flex h-10 min-w-[40px] items-center justify-center rounded-full px-3 text-sm font-semibold transition ${p === data.page ? 'bg-clay text-[#1B1916]' : 'hover:bg-ink/5'}`}
+              className={`flex h-10 min-w-[40px] items-center justify-center rounded-full px-3 text-sm font-semibold transition ${p === data.page ? 'bg-clay text-white' : 'hover:bg-ink/5'}`}
             >
               {p}
             </Link>
