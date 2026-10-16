@@ -18,22 +18,17 @@ export default function FloatingUI() {
     <>
       <button
         onClick={onClick}
-        className="fixed bottom-5 right-5 z-40 flex animate-pulse-ring items-center gap-3 rounded-full bg-wa py-2.5 pl-2.5 pr-5 text-white shadow-[0_18px_40px_-12px_rgba(18,140,75,.65)] transition hover:-translate-y-0.5 hover:animate-none hover:bg-wa-dark sm:bottom-7 sm:right-7"
-        aria-label="WhatsApp"
+        className="fixed bottom-5 right-5 z-40 flex h-14 w-14 animate-pulse-ring items-center justify-center rounded-full bg-wa text-white shadow-[0_18px_40px_-12px_rgba(18,140,75,.65)] transition hover:-translate-y-0.5 hover:animate-none hover:bg-wa-dark sm:bottom-7 sm:right-7"
+        aria-label={count > 0 ? `Siparişi gönder (${formatPrice(total, settings.currency)})` : 'WhatsApp’tan yazın'}
+        title={count > 0 ? `Siparişi gönder — ${formatPrice(total, settings.currency)}` : 'WhatsApp’tan yazın'}
       >
-        <span key={bump} className="relative flex h-10 w-10 animate-pop items-center justify-center rounded-full bg-white/15">
-          <WhatsAppIcon className="h-6 w-6" />
+        <span key={bump} className="relative flex h-full w-full animate-pop items-center justify-center">
+          <WhatsAppIcon className="h-7 w-7" />
           {count > 0 && (
             <span className="absolute -right-1 -top-1 flex h-5 min-w-[20px] items-center justify-center rounded-full bg-white px-1 text-[11px] font-bold text-wa-dark">
               {count}
             </span>
           )}
-        </span>
-        <span className="text-left leading-tight">
-          <span className="block text-[13px] font-bold">{count > 0 ? 'Siparişi Gönder' : 'WhatsApp'}</span>
-          <span className="block text-[11px] text-white/85 tabular-nums">
-            {count > 0 ? formatPrice(total, settings.currency) : 'Bize yazın'}
-          </span>
         </span>
       </button>
 

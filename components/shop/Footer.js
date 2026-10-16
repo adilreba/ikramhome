@@ -13,16 +13,20 @@ export default function Footer({ settings, categories }) {
       <div className="pointer-events-none absolute inset-0 opacity-[0.07]" style={{ backgroundImage: 'radial-gradient(#fff 1.5px, transparent 1.5px)', backgroundSize: '22px 22px' }} />
       <div className="container-x relative grid grid-cols-3 gap-x-6 gap-y-10 py-16 md:grid-cols-12">
         <div className="col-span-3 md:col-span-5">
-          <p className="h-display text-4xl uppercase tracking-[0.06em] text-white">{settings.store_name}</p>
+          <div className="flex items-center justify-between gap-4">
+            <p className="h-display text-4xl uppercase tracking-[0.06em] text-white">{settings.store_name}</p>
+            <a
+              href={`https://wa.me/${normalizePhone(settings.whatsapp_number)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="WhatsApp’tan yazın"
+              title="WhatsApp’tan yazın"
+              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-wa text-white shadow-soft transition hover:bg-wa-dark"
+            >
+              <WhatsAppIcon className="h-6 w-6" />
+            </a>
+          </div>
           {settings.tagline && <p className="mt-3 max-w-sm text-sm leading-relaxed text-white/70">{settings.tagline}</p>}
-          <a
-            href={`https://wa.me/${normalizePhone(settings.whatsapp_number)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-wa mt-7"
-          >
-            <WhatsAppIcon /> WhatsApp’tan yazın
-          </a>
         </div>
 
         <div className="md:col-span-2">
