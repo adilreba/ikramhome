@@ -8,7 +8,7 @@ export default function LoginPage() {
           <p className="eyebrow mb-3">Yönetim Paneli</p>
           <h1 className="h-display text-5xl">Hoş geldiniz</h1>
           <p className="mt-2 text-sm text-ink-mute">Mağazanızı yönetmek için giriş yapın.</p>
-          <div className="card mt-8 p-7 shadow-soft">
+          <div className="mt-8">
             <SignIn
               routing="path"
               path="/admin/login"
@@ -28,7 +28,7 @@ export default function LoginPage() {
                 },
                 elements: {
                   rootBox: 'w-full',
-                  card: 'shadow-none p-0 bg-transparent w-full',
+                  card: 'border border-cream-line bg-cream rounded-2xl shadow-soft p-7 w-full',
                   header: 'hidden',
                   socialButtonsBlockButton: 'border border-cream-line bg-cream hover:bg-cream-deep transition rounded-xl py-2.5 text-sm font-semibold normal-case',
                   socialButtonsBlockButtonText: 'text-ink font-semibold',
