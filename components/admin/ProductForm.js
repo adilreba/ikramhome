@@ -94,13 +94,11 @@ export default function ProductForm({ productId }) {
     };
     for (const k of ['id', 'views', 'created_at', 'updated_at', 'category_name', 'category_slug', 'cover_image_id']) delete body[k];
     try {
-      const saved = productId
-        ? await api(`/api/admin/products/${productId}`, { method: 'PUT', body })
-        : await api('/api/admin/products', { method: 'POST', body });
+      if (productId) await api(`/api/admin/products/${productId}`, { method: 'PUT', body });
+      else await api('/api/admin/products', { method: 'POST', body });
       setDirty(false);
       notify(productId ? 'Değişiklikler kaydedildi' : 'Ürün eklendi');
-      if (!productId) router.replace('/admin/urunler');
-      else setForm((f) => ({ ...f, slug: saved.slug }));
+      router.replace('/admin/urunler');
     } catch (err) {
       setErrors(err.fields || {});
       notify(err.message, 'error');
