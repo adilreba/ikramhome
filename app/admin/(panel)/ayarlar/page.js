@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useClerk } from '@clerk/nextjs';
 import ImageUploader from '@/components/admin/ImageUploader';
 import { Field, PageHeader, Spinner, Toggle, useAdminUI } from '@/components/admin/AdminUI';
-import { WhatsAppIcon } from '@/components/Icons';
+import { BoxIcon, ImageIcon, PhoneIcon, SettingsIcon, WhatsAppIcon } from '@/components/Icons';
 import { api } from '@/lib/client-api';
 import { normalizePhone } from '@/lib/utils';
 
@@ -54,13 +54,23 @@ export default function SettingsPage() {
 
       <form onSubmit={save} className="space-y-6">
         <section className="card p-5">
-          <h2 className="flex items-center gap-2 font-semibold"><WhatsAppIcon className="h-5 w-5 text-wa" /> WhatsApp</h2>
-          <p className="mt-1 text-xs text-ink-mute">Siparişlerin gideceği numara. Ülke koduyla birlikte yazın.</p>
-          <div className="mt-4 grid gap-4 sm:grid-cols-2">
-            <Field label="WhatsApp numarası *" error={errors.whatsapp_number} hint={s.whatsapp_number ? `Bağlantı: wa.me/${normalizePhone(s.whatsapp_number)}` : 'Ör. 0532 123 45 67 veya 905321234567'}>
+          <div className="flex items-center gap-3">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-wa/10"><WhatsAppIcon className="h-5 w-5 text-wa" /></span>
+            <div>
+              <h2 className="font-semibold">WhatsApp</h2>
+              <p className="text-xs text-ink-mute">Siparişlerin gideceği numara. Ülke koduyla birlikte yazın.</p>
+            </div>
+          </div>
+          <div className="mt-4 flex flex-col gap-4 sm:flex-row">
+            <Field
+              label="WhatsApp numarası *"
+              error={errors.whatsapp_number}
+              hint={s.whatsapp_number ? `wa.me/${normalizePhone(s.whatsapp_number)}` : 'Ör. 905321234567'}
+              className="sm:w-48 sm:shrink-0"
+            >
               {input('whatsapp_number', { inputMode: 'tel', placeholder: '905321234567' })}
             </Field>
-            <Field label="Mesajın başlangıç cümlesi" error={errors.whatsapp_greeting}>
+            <Field label="Mesajın başlangıç cümlesi" error={errors.whatsapp_greeting} className="flex-1">
               {input('whatsapp_greeting')}
             </Field>
           </div>
@@ -72,32 +82,42 @@ export default function SettingsPage() {
         </section>
 
         <section className="card p-5">
-          <h2 className="font-semibold">Mağaza</h2>
-          <p className="mt-1 text-xs text-ink-mute">Sitenin üst kısmında ve başlıklarda görünür.</p>
-          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+          <div className="flex items-center gap-3">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-clay-light/60"><BoxIcon className="h-5 w-5 text-clay-dark" /></span>
             <div>
+              <h2 className="font-semibold">Mağaza</h2>
+              <p className="text-xs text-ink-mute">Sitenin üst kısmında ve başlıklarda görünür.</p>
+            </div>
+          </div>
+          <div className="mt-4 flex flex-col gap-5 sm:flex-row">
+            <div className="sm:w-[180px] sm:shrink-0">
               <span className="label">Logo (isteğe bağlı)</span>
               <ImageUploader single value={s.logo_image_id ? [s.logo_image_id] : []} onChange={(ids) => set('logo_image_id', ids[0] || null)} />
             </div>
-            <Field label="Mağaza adı *" error={errors.store_name}>{input('store_name')}</Field>
-            <Field label="Slogan" error={errors.tagline}>{input('tagline')}</Field>
-            <Field label="Duyuru çubuğu" error={errors.announcement} hint="Boş bırakırsanız gizlenir">{input('announcement')}</Field>
-            <Field label="Para birimi" error={errors.currency}>
-              <select className="input" value={s.currency} onChange={(e) => set('currency', e.target.value)}>
-                <option value="₺">₺ Türk Lirası</option>
-                <option value="$">$ Dolar</option>
-                <option value="€">€ Euro</option>
-              </select>
-            </Field>
-            <div className="flex items-end">
+            <div className="flex-1 space-y-4">
+              <Field label="Mağaza adı *" error={errors.store_name}>{input('store_name')}</Field>
+              <Field label="Slogan" error={errors.tagline}>{input('tagline')}</Field>
+              <Field label="Duyuru çubuğu" error={errors.announcement} hint="Boş bırakırsanız gizlenir">{input('announcement')}</Field>
+              <Field label="Para birimi" error={errors.currency}>
+                <select className="input" value={s.currency} onChange={(e) => set('currency', e.target.value)}>
+                  <option value="₺">₺ Türk Lirası</option>
+                  <option value="$">$ Dolar</option>
+                  <option value="€">€ Euro</option>
+                </select>
+              </Field>
               <Toggle checked={!!s.show_stock} onChange={(v) => set('show_stock', v)} label="Stok bilgisini göster" description="“Son 2 adet”, “Tükendi” gibi" />
             </div>
           </div>
         </section>
 
         <section className="card p-5">
-          <h2 className="font-semibold">Ana sayfa</h2>
-          <p className="mt-1 text-xs text-ink-mute">Kapak görseli seçmezseniz öne çıkan ürünlerden kolaj oluşturulur.</p>
+          <div className="flex items-center gap-3">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-clay-light/60"><ImageIcon className="h-5 w-5 text-clay-dark" /></span>
+            <div>
+              <h2 className="font-semibold">Ana sayfa</h2>
+              <p className="text-xs text-ink-mute">Kapak görseli seçmezseniz öne çıkan ürünlerden kolaj oluşturulur.</p>
+            </div>
+          </div>
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
             <Field label="Büyük başlık" error={errors.hero_title}>{input('hero_title')}</Field>
             <div>
@@ -114,8 +134,13 @@ export default function SettingsPage() {
         </section>
 
         <section className="card p-5">
-          <h2 className="font-semibold">İletişim</h2>
-          <p className="mt-1 text-xs text-ink-mute">Sitenin alt kısmında görünür.</p>
+          <div className="flex items-center gap-3">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-wa/10"><PhoneIcon className="h-5 w-5 text-wa-dark" /></span>
+            <div>
+              <h2 className="font-semibold">İletişim</h2>
+              <p className="text-xs text-ink-mute">Sitenin alt kısmında görünür.</p>
+            </div>
+          </div>
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
             <Field label="Adres" error={errors.address}>{input('address')}</Field>
             <Field label="Telefon" error={errors.phone}>{input('phone')}</Field>
@@ -131,8 +156,13 @@ export default function SettingsPage() {
       </form>
 
       <div className="card mt-10 p-5">
-        <h2 className="font-semibold">Hesap ve şifre</h2>
-        <p className="mt-1 text-xs text-ink-mute">Giriş bilgileriniz Clerk üzerinden yönetilir.</p>
+        <div className="flex items-center gap-3">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-cream-deep"><SettingsIcon className="h-5 w-5 text-ink-mute" /></span>
+          <div>
+            <h2 className="font-semibold">Hesap ve şifre</h2>
+            <p className="text-xs text-ink-mute">Giriş bilgileriniz Clerk üzerinden yönetilir.</p>
+          </div>
+        </div>
         <button type="button" onClick={() => openUserProfile()} className="btn-outline btn-sm mt-4">
           Hesap ayarlarını aç
         </button>
