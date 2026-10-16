@@ -171,8 +171,11 @@ function ProductsList() {
                   </td>
                   <td className="min-w-0 flex-1 md:py-3">
                     <Link href={`/admin/urunler/${p.id}`} className="flex items-center gap-3">
-                      <span className="h-14 w-11 shrink-0 overflow-hidden rounded-lg bg-cream-deep">
+                      <span className="relative h-14 w-11 shrink-0 overflow-hidden rounded-lg bg-cream-deep">
                         {p.cover_image_id && <img src={imageUrl(p.cover_image_id)} alt="" className="h-full w-full object-cover" />}
+                        {p.image_ids.length > 1 && (
+                          <span className="absolute right-0.5 top-0.5 rounded-full bg-ink/80 px-1 text-[9px] font-bold leading-[14px] text-white">{p.image_ids.length}</span>
+                        )}
                       </span>
                       <span className="min-w-0">
                         <span className="flex items-center gap-1.5 font-semibold">
