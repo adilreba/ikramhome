@@ -290,7 +290,7 @@ export default function ProductForm({ productId }) {
       </div>
 
       <div className="fixed inset-x-0 bottom-0 z-20 border-t border-cream-line bg-white/90 backdrop-blur lg:left-64">
-        <div className="mx-auto flex max-w-6xl items-center justify-end gap-3 px-4 py-3 sm:px-8">
+        <div className="flex items-center justify-end gap-3 px-4 py-3 sm:px-6">
           {dirty && <span className="mr-auto text-xs text-ink-mute">Kaydedilmemiş değişiklikler var</span>}
           <Link href="/admin/urunler" className="btn-outline btn-sm py-2.5">Vazgeç</Link>
           <button disabled={saving} className="btn-primary btn-sm px-6 py-2.5">{saving ? 'Kaydediliyor…' : productId ? 'Kaydet' : 'Ürünü ekle'}</button>

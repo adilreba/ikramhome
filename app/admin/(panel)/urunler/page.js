@@ -6,7 +6,7 @@ import { useSearchParams } from 'next/navigation';
 import { Empty, PageHeader, Pagination, Spinner, useAdminUI } from '@/components/admin/AdminUI';
 import { CopyIcon, EditIcon, ExternalIcon, PlusIcon, SearchIcon, StarIcon, TrashIcon } from '@/components/Icons';
 import { api } from '@/lib/client-api';
-import { formatPrice, imageUrl } from '@/lib/utils';
+import { colorToHex, formatPrice, imageUrl } from '@/lib/utils';
 
 const STATUS_TABS = [
   ['all', 'Tümü'],
@@ -185,6 +185,14 @@ function ProductsList() {
                         <span className="block truncate text-xs text-ink-mute">
                           {p.category_name || 'Kategorisiz'}{p.sku ? ` · ${p.sku}` : ''} · {p.image_ids.length} foto · {p.views} görüntülenme
                         </span>
+                        {p.variants?.length > 0 && (
+                          <span className="mt-1 flex items-center gap-1">
+                            {p.variants.slice(0, 6).map((v) => (
+                              <span key={v.id} className="h-3 w-3 shrink-0 rounded-full ring-1 ring-black/10" style={{ background: colorToHex(v.color) || '#D8D0C4' }} title={v.color} />
+                            ))}
+                            <span className="text-[11px] text-ink-mute">{p.variants.length} renk</span>
+                          </span>
+                        )}
                       </span>
                     </Link>
                   </td>
