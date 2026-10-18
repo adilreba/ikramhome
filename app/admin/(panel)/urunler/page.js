@@ -188,7 +188,12 @@ function ProductsList() {
                         {p.variants?.length > 0 && (
                           <span className="mt-1 flex items-center gap-1">
                             {p.variants.slice(0, 6).map((v) => (
-                              <span key={v.id} className="h-3 w-3 shrink-0 rounded-full ring-1 ring-black/10" style={{ background: colorToHex(v.color) || '#D8D0C4' }} title={v.color} />
+                              <span
+                                key={v.id}
+                                className={`h-3 w-3 shrink-0 rounded-full ring-1 ring-black/10 ${v.is_active === false ? 'opacity-30' : ''}`}
+                                style={{ background: colorToHex(v.color) || '#D8D0C4' }}
+                                title={`${v.color}${v.is_active === false ? ' (arşivde)' : ''}`}
+                              />
                             ))}
                             <span className="text-[11px] text-ink-mute">{p.variants.length} renk</span>
                           </span>

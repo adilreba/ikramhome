@@ -162,14 +162,14 @@ export default function ProductForm({ productId }) {
             <Field
               label="Stok adedi"
               error={errors.stock}
-              hint={form.variants.length ? 'Renk varyantı eklendiği için stok renklerden otomatik toplanır' : undefined}
+              hint={form.variants.length ? 'Stok, aktif renklerin toplamıdır (arşivlenenler sayılmaz)' : undefined}
             >
               <input
                 className="input tabular-nums disabled:bg-cream disabled:text-ink-mute"
                 type="number"
                 min="0"
                 disabled={form.variants.length > 0}
-                value={form.variants.length ? form.variants.reduce((s, v) => s + (Number(v.stock) || 0), 0) : form.stock}
+                value={form.variants.length ? form.variants.filter((v) => v.is_active !== false).reduce((s, v) => s + (Number(v.stock) || 0), 0) : form.stock}
                 onChange={(e) => set('stock', e.target.value)}
               />
             </Field>
@@ -180,7 +180,7 @@ export default function ProductForm({ productId }) {
               <h2 className="font-semibold">Renk varyantları</h2>
               <button
                 type="button"
-                onClick={() => set('variants', [...form.variants, { color: '', barcode: '', image_ids: [], stock: 0 }])}
+                onClick={() => set('variants', [...form.variants, { color: '', barcode: '', image_ids: [], stock: 0, is_active: true }])}
                 className="btn-outline btn-sm"
               >
                 + Renk ekle
@@ -194,47 +194,59 @@ export default function ProductForm({ productId }) {
               </p>
             ) : (
               <div className="space-y-4">
-                {form.variants.map((v, i) => (
-                  <div key={i} className="rounded-xl border border-cream-line p-3">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <input
-                        className="input min-w-[100px] flex-1 py-2 text-sm"
-                        placeholder="Ör. Kırmızı"
-                        value={v.color}
-                        onChange={(e) => set('variants', form.variants.map((x, idx) => (idx === i ? { ...x, color: e.target.value } : x)))}
-                      />
-                      <input
-                        className="input min-w-[100px] flex-1 py-2 text-sm"
-                        placeholder="Ör. 8690000123456"
-                        value={v.barcode || ''}
-                        onChange={(e) => set('variants', form.variants.map((x, idx) => (idx === i ? { ...x, barcode: e.target.value } : x)))}
-                      />
-                      <input
-                        className="input w-20 shrink-0 py-2 text-sm tabular-nums"
-                        type="number"
-                        min="0"
-                        value={v.stock}
-                        onChange={(e) => set('variants', form.variants.map((x, idx) => (idx === i ? { ...x, stock: e.target.value } : x)))}
-                      />
-                      <button
-                        type="button"
-                        onClick={() => set('variants', form.variants.filter((_, idx) => idx !== i))}
-                        className="shrink-0 rounded-lg p-2 text-ink-mute hover:bg-red-50 hover:text-red-600"
-                        aria-label="Rengi kaldır"
-                      >
-                        <CloseIcon className="h-4 w-4" />
-                      </button>
+                {form.variants.map((v, i) => {
+                  const isActive = v.is_active !== false;
+                  return (
+                    <div key={i} className={`rounded-xl border p-3 transition ${isActive ? 'border-cream-line' : 'border-cream-line bg-cream/60 opacity-70'}`}>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <input
+                          className="input min-w-[100px] flex-1 py-2 text-sm"
+                          placeholder="Ör. Kırmızı"
+                          value={v.color}
+                          onChange={(e) => set('variants', form.variants.map((x, idx) => (idx === i ? { ...x, color: e.target.value } : x)))}
+                        />
+                        <input
+                          className="input min-w-[100px] flex-1 py-2 text-sm"
+                          placeholder="Ör. 8690000123456"
+                          value={v.barcode || ''}
+                          onChange={(e) => set('variants', form.variants.map((x, idx) => (idx === i ? { ...x, barcode: e.target.value } : x)))}
+                        />
+                        <input
+                          className="input w-20 shrink-0 py-2 text-sm tabular-nums"
+                          type="number"
+                          min="0"
+                          value={v.stock}
+                          onChange={(e) => set('variants', form.variants.map((x, idx) => (idx === i ? { ...x, stock: e.target.value } : x)))}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => set('variants', form.variants.map((x, idx) => (idx === i ? { ...x, is_active: !isActive } : x)))}
+                          className={`shrink-0 rounded-lg px-2.5 py-2 text-xs font-semibold transition ${isActive ? 'bg-wa/10 text-wa-dark hover:bg-wa/20' : 'bg-ink/5 text-ink-mute hover:bg-ink/10'}`}
+                          title={isActive ? 'Bu rengi arşivle (sitede görünmez)' : 'Bu rengi tekrar aktif et'}
+                        >
+                          {isActive ? 'Aktif' : 'Arşivde'}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => set('variants', form.variants.filter((_, idx) => idx !== i))}
+                          className="shrink-0 rounded-lg p-2 text-ink-mute hover:bg-red-50 hover:text-red-600"
+                          aria-label="Rengi kaldır"
+                        >
+                          <CloseIcon className="h-4 w-4" />
+                        </button>
+                      </div>
+                      {!isActive && <p className="mt-2 text-xs text-ink-mute">Bu renk arşivde — müşteriler göremez, veriler korunur.</p>}
+                      <div className="mt-3">
+                        <ImageUploader
+                          compact
+                          max={8}
+                          value={v.image_ids || []}
+                          onChange={(ids) => set('variants', form.variants.map((x, idx) => (idx === i ? { ...x, image_ids: ids } : x)))}
+                        />
+                      </div>
                     </div>
-                    <div className="mt-3">
-                      <ImageUploader
-                        compact
-                        max={8}
-                        value={v.image_ids || []}
-                        onChange={(ids) => set('variants', form.variants.map((x, idx) => (idx === i ? { ...x, image_ids: ids } : x)))}
-                      />
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </section>
