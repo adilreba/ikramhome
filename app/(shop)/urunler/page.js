@@ -32,7 +32,7 @@ export default async function ProductsPage({ searchParams }) {
   };
 
   return (
-    <div className="container-x pt-3">
+    <div className="container-x pt-2">
       <div className="mb-3">
         <h1 className="h-display text-4xl sm:text-5xl">{current?.name || (sp.q ? `“${sp.q}”` : 'Tüm Ürünler')}</h1>
         {current?.description && <p className="mt-2 max-w-xl text-ink-mute">{current.description}</p>}
@@ -41,11 +41,11 @@ export default async function ProductsPage({ searchParams }) {
       <ShopFilters categories={categories} current={sp} />
 
       {data.items.length ? (
-        <div className="mt-10 grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 lg:grid-cols-4">
+        <div className="mt-5 grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 lg:grid-cols-4">
           {data.items.map((p, i) => <ProductCard key={p.id} product={p} priority={i < 4} />)}
         </div>
       ) : (
-        <div className="card mt-10 p-14 text-center">
+        <div className="card mt-5 p-14 text-center">
           <p className="h-display text-3xl">Sonuç bulunamadı</p>
           <p className="mt-2 text-sm text-ink-mute">Farklı bir arama veya kategori deneyin.</p>
           <Link href="/urunler" className="btn-outline mt-6">Filtreleri temizle</Link>

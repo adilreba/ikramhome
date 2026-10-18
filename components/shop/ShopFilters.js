@@ -1,8 +1,8 @@
 'use client';
 
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useState, useTransition } from 'react';
-import { SearchIcon } from '@/components/Icons';
+import { useState, useTransition } from 'react';
+import { ChevronDownIcon } from '@/components/Icons';
 
 const SORTS = [
   ['new', 'En yeni'],
@@ -16,11 +16,9 @@ export default function ShopFilters({ categories, current }) {
   const router = useRouter();
   const pathname = usePathname();
   const [pending, start] = useTransition();
-  const [q, setQ] = useState(current.q);
   const [min, setMin] = useState(current.min);
   const [max, setMax] = useState(current.max);
-
-  useEffect(() => setQ(current.q), [current.q]);
+  const [open, setOpen] = useState(false);
 
   const go = (patch) => {
     const next = { ...current, ...patch, page: '' };
@@ -29,8 +27,11 @@ export default function ShopFilters({ categories, current }) {
     start(() => router.push(`${pathname}${u.toString() ? `?${u}` : ''}`, { scroll: false }));
   };
 
+  const activeSort = SORTS.find(([v]) => v === current.sort)?.[1] || SORTS[0][1];
+  const hasPriceFilter = Boolean(current.min || current.max);
+
   return (
-    <div className={`space-y-4 transition ${pending ? 'opacity-60' : ''}`}>
+    <div className={`space-y-3 transition ${pending ? 'opacity-60' : ''}`}>
       <div className="no-scrollbar -mx-4 flex gap-2 overflow-x-auto px-4 sm:mx-0 sm:flex-wrap sm:px-0">
         <button onClick={() => go({ category: '' })} className={`chip ${!current.category ? 'chip-active' : ''}`}>Tümü</button>
         {categories.map((c) => (
@@ -40,26 +41,31 @@ export default function ShopFilters({ categories, current }) {
         ))}
       </div>
 
-      <div className="flex flex-col gap-3 border-y border-cream-line py-4 md:flex-row md:items-center">
-        <form onSubmit={(e) => { e.preventDefault(); go({ q: q.trim() }); }} className="relative md:w-80">
-          <SearchIcon className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-mute" />
-          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Bu listede ara…" className="input rounded-full pl-10" />
-        </form>
-
-        <form onSubmit={(e) => { e.preventDefault(); go({ min, max }); }} className="flex items-center gap-2">
-          <input value={min} onChange={(e) => setMin(e.target.value.replace(/[^\d]/g, ''))} inputMode="numeric" placeholder="En az ₺" className="input w-0 min-w-0 flex-1 rounded-full sm:w-28 sm:flex-none" />
-          <span className="shrink-0 text-ink-mute">–</span>
-          <input value={max} onChange={(e) => setMax(e.target.value.replace(/[^\d]/g, ''))} inputMode="numeric" placeholder="En çok ₺" className="input w-0 min-w-0 flex-1 rounded-full sm:w-28 sm:flex-none" />
-          <button className="btn-outline btn-sm shrink-0 py-2.5">Uygula</button>
-        </form>
-
-        <label className="flex items-center gap-2 text-sm md:ml-auto">
-          <span className="text-ink-mute">Sırala</span>
-          <select value={current.sort} onChange={(e) => go({ sort: e.target.value })} className="input w-auto rounded-full py-2 pr-8">
-            {SORTS.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
-          </select>
-        </label>
+      <div className="flex items-center justify-between border-y border-cream-line py-2.5">
+        <button onClick={() => setOpen((o) => !o)} className={`chip ${open || hasPriceFilter ? 'chip-active' : ''}`}>
+          Fiyat ve sıralama
+          <ChevronDownIcon className={`h-3.5 w-3.5 transition ${open ? 'rotate-180' : ''}`} />
+        </button>
+        <span className="text-xs text-ink-mute">{activeSort}</span>
       </div>
+
+      {open && (
+        <div className="card flex animate-fade-up flex-col gap-3 p-4 md:flex-row md:items-center">
+          <form onSubmit={(e) => { e.preventDefault(); go({ min, max }); }} className="flex items-center gap-2">
+            <input value={min} onChange={(e) => setMin(e.target.value.replace(/[^\d]/g, ''))} inputMode="numeric" placeholder="En az ₺" className="input w-0 min-w-0 flex-1 rounded-full sm:w-28 sm:flex-none" />
+            <span className="shrink-0 text-ink-mute">–</span>
+            <input value={max} onChange={(e) => setMax(e.target.value.replace(/[^\d]/g, ''))} inputMode="numeric" placeholder="En çok ₺" className="input w-0 min-w-0 flex-1 rounded-full sm:w-28 sm:flex-none" />
+            <button className="btn-outline btn-sm shrink-0 py-2.5">Uygula</button>
+          </form>
+
+          <label className="flex items-center gap-2 text-sm md:ml-auto">
+            <span className="text-ink-mute">Sırala</span>
+            <select value={current.sort} onChange={(e) => go({ sort: e.target.value })} className="input w-auto rounded-full py-2 pr-8">
+              {SORTS.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+            </select>
+          </label>
+        </div>
+      )}
     </div>
   );
 }
