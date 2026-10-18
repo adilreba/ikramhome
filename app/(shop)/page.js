@@ -90,7 +90,7 @@ export default async function HomePage() {
           <div className="no-scrollbar -mx-4 flex gap-5 overflow-x-auto px-4 pb-1 sm:mx-0 sm:grid sm:grid-cols-6 sm:gap-x-5 sm:gap-y-6 sm:overflow-visible sm:px-0 lg:grid-cols-8">
             {categories.map((c, i) => (
               <Reveal key={c.id} delay={i * 50} className="w-[72px] shrink-0 sm:w-auto">
-                <Link href={`/urunler?category=${c.slug}`} className="group flex flex-col items-center gap-2 text-center">
+                <Link href={`/urunler?category=${c.slug}`} aria-label={c.name} className="group flex flex-col items-center gap-2 text-center">
                   <span className="h-[72px] w-[72px] overflow-hidden rounded-full bg-cream-deep shadow-soft ring-1 ring-cream-line transition group-hover:ring-clay sm:h-20 sm:w-20">
                     {c.image_id ? (
                       <img src={imageUrl(c.image_id)} alt={c.name} className="h-full w-full object-cover transition duration-500 group-hover:scale-110" />
@@ -98,7 +98,6 @@ export default async function HomePage() {
                       <span className="flex h-full w-full items-center justify-center font-display text-2xl text-clay">{c.name[0]}</span>
                     )}
                   </span>
-                  <span className="text-xs font-medium sm:text-sm">{c.name}</span>
                 </Link>
               </Reveal>
             ))}
