@@ -99,7 +99,7 @@ export default async function ProductPage({ params }) {
         <section className="pt-24">
           <p className="eyebrow mb-2">Bunlar da ilginizi çekebilir</p>
           <h2 className="h-display mb-10 text-4xl sm:text-5xl">Benzer ürünler</h2>
-          <div className="grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-x-4 gap-y-6 sm:gap-x-6 lg:grid-cols-4">
             {related.map((p) => <ProductCard key={p.id} product={p} />)}
           </div>
         </section>

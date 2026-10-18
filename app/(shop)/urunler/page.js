@@ -41,7 +41,7 @@ export default async function ProductsPage({ searchParams }) {
       <ShopFilters categories={categories} current={sp} />
 
       {data.items.length ? (
-        <div className="mt-5 grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 lg:grid-cols-4">
+        <div className="mt-5 grid grid-cols-2 gap-x-4 gap-y-6 sm:gap-x-6 lg:grid-cols-4">
           {data.items.map((p, i) => <ProductCard key={p.id} product={p} priority={i < 4} />)}
         </div>
       ) : (
