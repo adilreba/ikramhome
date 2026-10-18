@@ -10,7 +10,7 @@ import { useAdminUI } from './AdminUI';
  * Çoklu fotoğraf yükleme + sürükle-bırak ile sıralama.
  * İlk fotoğraf ürünün kapak fotoğrafıdır (WhatsApp mesajında da bu gider).
  */
-export default function ImageUploader({ value = [], onChange, max = 12, single = false }) {
+export default function ImageUploader({ value = [], onChange, max = 12, single = false, compact = false }) {
   const inputRef = useRef(null);
   const { notify } = useAdminUI();
   const [progress, setProgress] = useState(null);
@@ -55,18 +55,24 @@ export default function ImageUploader({ value = [], onChange, max = 12, single =
       onDragLeave={() => setDragOver(false)}
       onDrop={(e) => { e.preventDefault(); setDragOver(false); if (dragIndex === null) handleFiles(e.dataTransfer.files); }}
       disabled={progress !== null}
-      className={`flex aspect-[4/5] w-full flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed text-center text-xs transition ${
+      className={`flex w-full flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed text-center text-xs transition ${compact ? 'aspect-square gap-1 p-1' : 'aspect-[4/5]'} ${
         dragOver ? 'border-clay bg-clay-light/40 text-clay-dark' : 'border-cream-line text-ink-mute hover:border-ink/30 hover:text-ink'
       }`}
     >
       {progress !== null ? (
-        <>
-          <span className="text-sm font-semibold tabular-nums">%{Math.round(progress * 100)}</span>
-          <span className="h-1 w-2/3 overflow-hidden rounded-full bg-cream-line">
-            <span className="block h-full bg-clay transition-all" style={{ width: `${progress * 100}%` }} />
-          </span>
-          <span>Yükleniyor…</span>
-        </>
+        compact ? (
+          <span className="text-[10px] font-semibold tabular-nums">%{Math.round(progress * 100)}</span>
+        ) : (
+          <>
+            <span className="text-sm font-semibold tabular-nums">%{Math.round(progress * 100)}</span>
+            <span className="h-1 w-2/3 overflow-hidden rounded-full bg-cream-line">
+              <span className="block h-full bg-clay transition-all" style={{ width: `${progress * 100}%` }} />
+            </span>
+            <span>Yükleniyor…</span>
+          </>
+        )
+      ) : compact ? (
+        <UploadIcon className="h-4 w-4" />
       ) : (
         <>
           <UploadIcon className="h-6 w-6" />
@@ -80,7 +86,7 @@ export default function ImageUploader({ value = [], onChange, max = 12, single =
   return (
     <div>
       <input ref={inputRef} type="file" accept="image/*" multiple={!single} hidden onChange={(e) => handleFiles(e.target.files)} />
-      <div className={`grid gap-3 ${single ? 'grid-cols-1 max-w-[180px]' : 'grid-cols-3 sm:grid-cols-4 lg:grid-cols-5'}`}>
+      <div className={`grid gap-3 ${single ? 'grid-cols-1 max-w-[180px]' : compact ? 'grid-cols-4 gap-2 sm:grid-cols-6' : 'grid-cols-3 sm:grid-cols-4 lg:grid-cols-5'}`}>
         {value.map((id, i) => (
           <div
             key={id}
@@ -89,17 +95,24 @@ export default function ImageUploader({ value = [], onChange, max = 12, single =
             onDragOver={(e) => e.preventDefault()}
             onDrop={(e) => { e.preventDefault(); if (dragIndex !== null) move(dragIndex, i); setDragIndex(null); }}
             onDragEnd={() => setDragIndex(null)}
-            className={`group relative aspect-[4/5] overflow-hidden rounded-xl bg-cream-deep ${!single ? 'cursor-grab active:cursor-grabbing' : ''} ${dragIndex === i ? 'opacity-40' : ''}`}
+            className={`group relative aspect-square overflow-hidden rounded-xl bg-cream-deep ${!compact ? 'aspect-[4/5]' : ''} ${!single ? 'cursor-grab active:cursor-grabbing' : ''} ${dragIndex === i ? 'opacity-40' : ''}`}
           >
             <img src={imageUrl(id)} alt="" className="h-full w-full object-cover" draggable={false} />
-            {i === 0 && !single && <span className="absolute left-2 top-2 rounded-full bg-clay px-2 py-0.5 text-[10px] font-bold text-white">Kapak</span>}
-            <button type="button" onClick={() => removeAt(i)} className="absolute right-1.5 top-1.5 rounded-full bg-white/90 p-1.5 text-ink shadow hover:bg-red-600 hover:text-white" aria-label="Kaldır">
-              <CloseIcon className="h-3.5 w-3.5" />
+            {i === 0 && !single && (
+              <span className={`absolute left-1 top-1 rounded-full bg-clay font-bold text-white ${compact ? 'px-1.5 py-0 text-[8px]' : 'px-2 py-0.5 text-[10px]'}`}>Kapak</span>
+            )}
+            <button
+              type="button"
+              onClick={() => removeAt(i)}
+              className={`absolute rounded-full bg-white/90 text-ink shadow hover:bg-red-600 hover:text-white ${compact ? 'right-0.5 top-0.5 p-1' : 'right-1.5 top-1.5 p-1.5'}`}
+              aria-label="Kaldır"
+            >
+              <CloseIcon className={compact ? 'h-3 w-3' : 'h-3.5 w-3.5'} />
             </button>
             {!single && value.length > 1 && (
-              <div className="absolute inset-x-1.5 bottom-1.5 flex justify-between opacity-100 transition sm:opacity-0 sm:group-hover:opacity-100">
-                <button type="button" onClick={() => move(i, i - 1)} disabled={i === 0} className="rounded-full bg-white/90 p-1.5 shadow disabled:invisible" aria-label="Sola taşı"><ArrowLeftIcon className="h-3.5 w-3.5" /></button>
-                <button type="button" onClick={() => move(i, i + 1)} disabled={i === value.length - 1} className="rounded-full bg-white/90 p-1.5 shadow disabled:invisible" aria-label="Sağa taşı"><ArrowRightIcon className="h-3.5 w-3.5" /></button>
+              <div className="absolute inset-x-1 bottom-1 flex justify-between opacity-100 transition sm:opacity-0 sm:group-hover:opacity-100">
+                <button type="button" onClick={() => move(i, i - 1)} disabled={i === 0} className={`rounded-full bg-white/90 shadow disabled:invisible ${compact ? 'p-1' : 'p-1.5'}`} aria-label="Sola taşı"><ArrowLeftIcon className={compact ? 'h-3 w-3' : 'h-3.5 w-3.5'} /></button>
+                <button type="button" onClick={() => move(i, i + 1)} disabled={i === value.length - 1} className={`rounded-full bg-white/90 shadow disabled:invisible ${compact ? 'p-1' : 'p-1.5'}`} aria-label="Sağa taşı"><ArrowRightIcon className={compact ? 'h-3 w-3' : 'h-3.5 w-3.5'} /></button>
               </div>
             )}
           </div>
@@ -111,7 +124,7 @@ export default function ImageUploader({ value = [], onChange, max = 12, single =
           </button>
         )}
       </div>
-      {!single && <p className="mt-2 text-xs text-ink-mute">İlk fotoğraf kapak olur ve WhatsApp mesajında gönderilir. Sürükleyerek sıralayabilirsiniz. Fotoğraflar otomatik küçültülür.</p>}
+      {!single && !compact && <p className="mt-2 text-xs text-ink-mute">İlk fotoğraf kapak olur ve WhatsApp mesajında gönderilir. Sürükleyerek sıralayabilirsiniz. Fotoğraflar otomatik küçültülür.</p>}
     </div>
   );
 }

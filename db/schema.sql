@@ -68,7 +68,6 @@ CREATE TABLE IF NOT EXISTS product_variants (
   product_id  INTEGER NOT NULL REFERENCES products(id) ON DELETE CASCADE,
   color       TEXT NOT NULL,
   barcode     TEXT,
-  image_id    UUID REFERENCES images(id) ON DELETE SET NULL,
   stock       INTEGER NOT NULL DEFAULT 0 CHECK (stock >= 0),
   sort_order  INTEGER NOT NULL DEFAULT 0,
   is_active   BOOLEAN NOT NULL DEFAULT TRUE,
@@ -76,6 +75,16 @@ CREATE TABLE IF NOT EXISTS product_variants (
 );
 CREATE INDEX IF NOT EXISTS product_variants_product_idx ON product_variants(product_id, sort_order);
 CREATE UNIQUE INDEX IF NOT EXISTS product_variants_barcode_idx ON product_variants(barcode) WHERE barcode IS NOT NULL;
+
+-- Her renk varyantının kendi fotoğraf galerisi olabilir (en fazla 8, sıralanabilir)
+CREATE TABLE IF NOT EXISTS product_variant_images (
+  id         SERIAL PRIMARY KEY,
+  variant_id INTEGER NOT NULL REFERENCES product_variants(id) ON DELETE CASCADE,
+  image_id   UUID    NOT NULL REFERENCES images(id)           ON DELETE CASCADE,
+  sort_order INTEGER NOT NULL DEFAULT 0,
+  UNIQUE (variant_id, image_id)
+);
+CREATE INDEX IF NOT EXISTS product_variant_images_variant_idx ON product_variant_images(variant_id, sort_order);
 
 -- Müşterinin WhatsApp butonuna basarak gönderdiği talepler (sepet)
 CREATE TABLE IF NOT EXISTS inquiries (

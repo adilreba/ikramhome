@@ -2,12 +2,12 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ImageUploader from './ImageUploader';
-import { Field, Spinner, Toggle, useAdminUI } from './AdminUI';
-import { ArrowLeftIcon, CloseIcon, ExternalIcon, ImageIcon, TrashIcon } from '@/components/Icons';
-import { api, uploadImages } from '@/lib/client-api';
-import { discountPercent, imageUrl, slugify } from '@/lib/utils';
+import { Field, Toggle, useAdminUI } from './AdminUI';
+import { ArrowLeftIcon, CloseIcon, ExternalIcon, TrashIcon } from '@/components/Icons';
+import { api } from '@/lib/client-api';
+import { discountPercent, slugify } from '@/lib/utils';
 
 const EMPTY = {
   name: '',
@@ -36,8 +36,6 @@ export default function ProductForm({ productId }) {
   const [tagInput, setTagInput] = useState('');
   const [dirty, setDirty] = useState(false);
   const [slugTouched, setSlugTouched] = useState(!!productId);
-  const [variantUploading, setVariantUploading] = useState(null);
-  const variantFileRefs = useRef([]);
 
   useEffect(() => {
     api('/api/admin/categories').then(setCategories).catch(() => {});
@@ -75,19 +73,6 @@ export default function ProductForm({ productId }) {
       return next;
     });
     setErrors((e) => ({ ...e, [key]: undefined }));
-  };
-
-  const uploadVariantImage = async (i, file) => {
-    if (!file) return;
-    setVariantUploading(i);
-    try {
-      const [saved] = await uploadImages([file]);
-      set('variants', form.variants.map((x, idx) => (idx === i ? { ...x, image_id: saved.id } : x)));
-    } catch (e) {
-      notify(e.message, 'error');
-    } finally {
-      setVariantUploading(null);
-    }
   };
 
   const addTag = () => {
@@ -195,78 +180,59 @@ export default function ProductForm({ productId }) {
               <h2 className="font-semibold">Renk varyantları</h2>
               <button
                 type="button"
-                onClick={() => set('variants', [...form.variants, { color: '', barcode: '', image_id: null, stock: 0 }])}
+                onClick={() => set('variants', [...form.variants, { color: '', barcode: '', image_ids: [], stock: 0 }])}
                 className="btn-outline btn-sm"
               >
                 + Renk ekle
               </button>
             </div>
-            <p className="mb-3 text-xs text-ink-mute">Her rengin kendi barkodu ve stoğu olur; fiyat tüm renklerde aynıdır.</p>
+            <p className="mb-3 text-xs text-ink-mute">Her rengin kendi barkodu, stoğu ve en fazla 8 fotoğrafı olur; fiyat tüm renklerde aynıdır.</p>
             {errors.variants && <p className="mb-2 text-xs text-red-600">{errors.variants}</p>}
             {form.variants.length === 0 ? (
               <p className="rounded-xl border border-dashed border-cream-line p-4 text-center text-xs text-ink-mute">
                 Renk eklenmemiş — ürün tek bir stok olarak satılır.
               </p>
             ) : (
-              <div className="space-y-2">
-                <div className="hidden items-center gap-2 px-1 text-xs font-semibold text-ink-mute sm:flex">
-                  <span className="w-11 shrink-0">Foto</span>
-                  <span className="flex-1">Renk</span>
-                  <span className="flex-1">Barkod</span>
-                  <span className="w-20 shrink-0">Stok</span>
-                  <span className="w-8 shrink-0" />
-                </div>
+              <div className="space-y-4">
                 {form.variants.map((v, i) => (
-                  <div key={i} className="flex flex-wrap items-center gap-2 rounded-xl border border-cream-line p-2 sm:flex-nowrap sm:border-0 sm:p-0">
-                    <button
-                      type="button"
-                      onClick={() => variantFileRefs.current[i]?.click()}
-                      disabled={variantUploading === i}
-                      className="relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-cream-line bg-cream-deep disabled:opacity-60"
-                      aria-label="Renk fotoğrafı seç"
-                    >
-                      {variantUploading === i ? (
-                        <Spinner className="h-4 w-4 text-ink-mute" />
-                      ) : v.image_id ? (
-                        <img src={imageUrl(v.image_id)} alt="" className="h-full w-full object-cover" />
-                      ) : (
-                        <ImageIcon className="h-4 w-4 text-ink-mute" />
-                      )}
+                  <div key={i} className="rounded-xl border border-cream-line p-3">
+                    <div className="flex flex-wrap items-center gap-2">
                       <input
-                        ref={(el) => { variantFileRefs.current[i] = el; }}
-                        type="file"
-                        accept="image/*"
-                        hidden
-                        onChange={(e) => { uploadVariantImage(i, e.target.files?.[0]); e.target.value = ''; }}
+                        className="input min-w-[100px] flex-1 py-2 text-sm"
+                        placeholder="Ör. Kırmızı"
+                        value={v.color}
+                        onChange={(e) => set('variants', form.variants.map((x, idx) => (idx === i ? { ...x, color: e.target.value } : x)))}
                       />
-                    </button>
-                    <input
-                      className="input min-w-[100px] flex-1 py-2 text-sm"
-                      placeholder="Ör. Kırmızı"
-                      value={v.color}
-                      onChange={(e) => set('variants', form.variants.map((x, idx) => (idx === i ? { ...x, color: e.target.value } : x)))}
-                    />
-                    <input
-                      className="input min-w-[100px] flex-1 py-2 text-sm"
-                      placeholder="Ör. 8690000123456"
-                      value={v.barcode || ''}
-                      onChange={(e) => set('variants', form.variants.map((x, idx) => (idx === i ? { ...x, barcode: e.target.value } : x)))}
-                    />
-                    <input
-                      className="input w-20 shrink-0 py-2 text-sm tabular-nums"
-                      type="number"
-                      min="0"
-                      value={v.stock}
-                      onChange={(e) => set('variants', form.variants.map((x, idx) => (idx === i ? { ...x, stock: e.target.value } : x)))}
-                    />
-                    <button
-                      type="button"
-                      onClick={() => set('variants', form.variants.filter((_, idx) => idx !== i))}
-                      className="shrink-0 rounded-lg p-2 text-ink-mute hover:bg-red-50 hover:text-red-600"
-                      aria-label="Rengi kaldır"
-                    >
-                      <CloseIcon className="h-4 w-4" />
-                    </button>
+                      <input
+                        className="input min-w-[100px] flex-1 py-2 text-sm"
+                        placeholder="Ör. 8690000123456"
+                        value={v.barcode || ''}
+                        onChange={(e) => set('variants', form.variants.map((x, idx) => (idx === i ? { ...x, barcode: e.target.value } : x)))}
+                      />
+                      <input
+                        className="input w-20 shrink-0 py-2 text-sm tabular-nums"
+                        type="number"
+                        min="0"
+                        value={v.stock}
+                        onChange={(e) => set('variants', form.variants.map((x, idx) => (idx === i ? { ...x, stock: e.target.value } : x)))}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => set('variants', form.variants.filter((_, idx) => idx !== i))}
+                        className="shrink-0 rounded-lg p-2 text-ink-mute hover:bg-red-50 hover:text-red-600"
+                        aria-label="Rengi kaldır"
+                      >
+                        <CloseIcon className="h-4 w-4" />
+                      </button>
+                    </div>
+                    <div className="mt-3">
+                      <ImageUploader
+                        compact
+                        max={8}
+                        value={v.image_ids || []}
+                        onChange={(ids) => set('variants', form.variants.map((x, idx) => (idx === i ? { ...x, image_ids: ids } : x)))}
+                      />
+                    </div>
                   </div>
                 ))}
               </div>
