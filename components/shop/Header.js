@@ -41,7 +41,7 @@ export default function Header({ settings, categories }) {
         </p>
       </div>
       <header className={`sticky top-0 z-40 bg-cream transition-shadow duration-300 ${scrolled ? 'shadow-soft' : ''}`}>
-        <div className="container-x flex h-16 items-center gap-2 border-b border-cream-line sm:h-20 sm:gap-4">
+        <div className="container-x flex h-14 items-center gap-2 border-b border-cream-line sm:h-16 sm:gap-4">
           <button className="btn-ghost -ml-3 shrink-0 lg:hidden" onClick={() => setMenu(true)} aria-label="Menü">
             <MenuIcon className="h-6 w-6" />
           </button>
