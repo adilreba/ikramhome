@@ -96,7 +96,7 @@ export default function Header({ settings, categories }) {
       {menu && (
         <div className="fixed inset-0 z-50 lg:hidden">
           <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setMenu(false)} />
-          <aside className="absolute inset-y-0 left-0 flex w-[82%] max-w-sm flex-col bg-cream p-6 shadow-lift" style={{ animation: 'fade-up .3s both' }}>
+          <aside className="absolute inset-y-0 left-0 flex w-[70%] max-w-xs flex-col bg-cream p-6 shadow-lift" style={{ animation: 'fade-up .3s both' }}>
             <div className="mb-8 flex items-center justify-between">
               <span className="h-display text-2xl">{settings.store_name}</span>
               <button className="btn-ghost -mr-3" onClick={() => setMenu(false)} aria-label="Kapat">
