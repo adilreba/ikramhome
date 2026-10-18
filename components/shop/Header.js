@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useCart } from './CartProvider';
 import { BagIcon, CloseIcon, MenuIcon, SearchIcon } from '@/components/Icons';
 import { imageUrl } from '@/lib/utils';
@@ -15,6 +15,21 @@ export default function Header({ settings, categories }) {
   const [q, setQ] = useState('');
   const router = useRouter();
   const pathname = usePathname();
+  const catWrapRef = useRef(null);
+  const catGroupRef = useRef(null);
+  const [catOverflow, setCatOverflow] = useState(false);
+
+  // Kategori şeridi sadece gerçekten taşıyorsa ikiye katlanıp kayar; sığıyorsa tek liste olarak durur
+  useEffect(() => {
+    const wrap = catWrapRef.current;
+    const group = catGroupRef.current;
+    if (!wrap || !group) return;
+    const check = () => setCatOverflow(group.scrollWidth > wrap.clientWidth);
+    check();
+    const ro = new ResizeObserver(check);
+    ro.observe(wrap);
+    return () => ro.disconnect();
+  }, [categories]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -74,18 +89,26 @@ export default function Header({ settings, categories }) {
           </div>
         </div>
 
-        <div className="relative hidden overflow-hidden border-b-2 border-clay shadow-[0_2px_14px_-2px_rgba(201,79,36,0.55)] lg:block">
-          <div className="flex w-max animate-marquee gap-10 py-2.5 text-sm font-medium text-ink-soft hover:[animation-play-state:paused]">
-            {[0, 1].map((dup) => (
-              <div key={dup} aria-hidden={dup === 1} className="flex shrink-0 gap-10 pl-6">
+        <div ref={catWrapRef} className="relative hidden overflow-hidden border-b-2 border-clay shadow-[0_2px_14px_-2px_rgba(201,79,36,0.55)] lg:block">
+          <div className={`flex gap-10 py-2.5 text-sm font-medium text-ink-soft ${catOverflow ? 'w-max animate-marquee pl-6 hover:[animation-play-state:paused]' : 'w-full justify-center'}`}>
+            <div ref={catGroupRef} className="flex shrink-0 gap-10">
+              <Link href="/urunler" className="shrink-0 whitespace-nowrap transition hover:text-clay">Tüm Ürünler</Link>
+              {categories.map((c) => (
+                <Link key={c.id} href={`/urunler?category=${c.slug}`} className="shrink-0 whitespace-nowrap transition hover:text-clay">
+                  {c.name}
+                </Link>
+              ))}
+            </div>
+            {catOverflow && (
+              <div aria-hidden className="flex shrink-0 gap-10">
                 <Link href="/urunler" className="shrink-0 whitespace-nowrap transition hover:text-clay">Tüm Ürünler</Link>
                 {categories.map((c) => (
-                  <Link key={c.id} href={`/urunler?category=${c.slug}`} className="shrink-0 whitespace-nowrap transition hover:text-clay">
+                  <Link key={`dup-${c.id}`} href={`/urunler?category=${c.slug}`} className="shrink-0 whitespace-nowrap transition hover:text-clay">
                     {c.name}
                   </Link>
                 ))}
               </div>
-            ))}
+            )}
           </div>
         </div>
 
