@@ -11,6 +11,8 @@ export default function ProductGallery({ images = [], name }) {
   const n = images.length;
   const go = (d) => setActive((a) => (a + d + n) % n);
 
+  useEffect(() => setActive(0), [images]);
+
   useEffect(() => {
     if (!zoom) return;
     const onKey = (e) => {

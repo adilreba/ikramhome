@@ -1,8 +1,9 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import ProductCard from '@/components/shop/ProductCard';
-import ProductGallery from '@/components/shop/ProductGallery';
+import ProductMediaGallery from '@/components/shop/ProductMediaGallery';
 import ProductActions from '@/components/shop/ProductActions';
+import { ProductVariantProvider } from '@/components/shop/ProductVariantContext';
 import { getProductBySlug, getRelatedProducts, getSettings } from '@/lib/queries';
 import { discountPercent, formatPrice, imageUrl } from '@/lib/utils';
 
@@ -47,53 +48,55 @@ export default async function ProductPage({ params }) {
         )}
       </nav>
 
-      <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
-        <div className="lg:col-span-7">
-          <ProductGallery images={product.image_ids} name={product.name} />
-        </div>
+      <ProductVariantProvider product={product} settings={settings}>
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-7">
+            <ProductMediaGallery product={product} />
+          </div>
 
-        <div className="lg:col-span-5">
-          <div className="lg:sticky lg:top-28">
-            {product.category_name && <p className="eyebrow mb-3">{product.category_name}</p>}
-            <h1 className="h-display text-4xl sm:text-5xl">{product.name}</h1>
+          <div className="lg:col-span-5">
+            <div className="lg:sticky lg:top-28">
+              {product.category_name && <p className="eyebrow mb-3">{product.category_name}</p>}
+              <h1 className="h-display text-4xl sm:text-5xl">{product.name}</h1>
 
-            <div className="mt-5 flex items-baseline gap-3">
-              <span className="text-3xl font-semibold tabular-nums">{formatPrice(product.price, settings.currency)}</span>
-              {off > 0 && (
-                <>
-                  <span className="text-lg text-ink-mute line-through tabular-nums">{formatPrice(product.old_price, settings.currency)}</span>
-                  <span className="rounded-full bg-clay px-2.5 py-1 text-xs font-bold text-white">%{off} indirim</span>
-                </>
+              <div className="mt-5 flex items-baseline gap-3">
+                <span className="text-3xl font-semibold tabular-nums">{formatPrice(product.price, settings.currency)}</span>
+                {off > 0 && (
+                  <>
+                    <span className="text-lg text-ink-mute line-through tabular-nums">{formatPrice(product.old_price, settings.currency)}</span>
+                    <span className="rounded-full bg-clay px-2.5 py-1 text-xs font-bold text-white">%{off} indirim</span>
+                  </>
+                )}
+              </div>
+              {product.sku && <p className="mt-2 text-xs text-ink-mute">Ürün kodu: {product.sku}</p>}
+              {settings.show_stock && (
+                <p className={`mt-3 text-sm font-medium ${product.stock > 0 ? 'text-emerald-700' : 'text-red-600'}`}>
+                  {product.stock > 0 ? (product.stock <= 3 ? `Son ${product.stock} adet` : 'Stokta') : 'Tükendi — WhatsApp’tan sorabilirsiniz'}
+                </p>
+              )}
+
+              <ProductActions product={product} />
+
+              {product.description && (
+                <div className="mt-10 border-t border-cream-line pt-8">
+                  <h2 className="mb-3 text-sm font-semibold">Ürün açıklaması</h2>
+                  <div className="whitespace-pre-line text-[15px] leading-relaxed text-ink-soft">{product.description}</div>
+                </div>
+              )}
+
+              {product.tags?.length > 0 && (
+                <div className="mt-6 flex flex-wrap gap-2">
+                  {product.tags.map((t) => (
+                    <Link key={t} href={`/urunler?q=${encodeURIComponent(t)}`} className="rounded-full bg-cream-deep px-3 py-1 text-xs text-ink-soft hover:bg-cream-line">
+                      #{t}
+                    </Link>
+                  ))}
+                </div>
               )}
             </div>
-            {product.sku && <p className="mt-2 text-xs text-ink-mute">Ürün kodu: {product.sku}</p>}
-            {settings.show_stock && (
-              <p className={`mt-3 text-sm font-medium ${product.stock > 0 ? 'text-emerald-700' : 'text-red-600'}`}>
-                {product.stock > 0 ? (product.stock <= 3 ? `Son ${product.stock} adet` : 'Stokta') : 'Tükendi — WhatsApp’tan sorabilirsiniz'}
-              </p>
-            )}
-
-            <ProductActions product={product} />
-
-            {product.description && (
-              <div className="mt-10 border-t border-cream-line pt-8">
-                <h2 className="mb-3 text-sm font-semibold">Ürün açıklaması</h2>
-                <div className="whitespace-pre-line text-[15px] leading-relaxed text-ink-soft">{product.description}</div>
-              </div>
-            )}
-
-            {product.tags?.length > 0 && (
-              <div className="mt-6 flex flex-wrap gap-2">
-                {product.tags.map((t) => (
-                  <Link key={t} href={`/urunler?q=${encodeURIComponent(t)}`} className="rounded-full bg-cream-deep px-3 py-1 text-xs text-ink-soft hover:bg-cream-line">
-                    #{t}
-                  </Link>
-                ))}
-              </div>
-            )}
           </div>
         </div>
-      </div>
+      </ProductVariantProvider>
 
       {related.length > 0 && (
         <section className="pt-[22px]">

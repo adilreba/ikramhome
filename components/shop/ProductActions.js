@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useCart } from './CartProvider';
+import { useProductVariant } from './ProductVariantContext';
 import { BagIcon, CheckIcon, CopyIcon, MinusIcon, PlusIcon, WhatsAppIcon } from '@/components/Icons';
 import { sendToWhatsApp } from '@/lib/whatsapp';
 
@@ -10,13 +11,8 @@ export default function ProductActions({ product }) {
   const [qty, setQty] = useState(1);
   const [busy, setBusy] = useState(false);
   const [copied, setCopied] = useState(false);
-  const activeVariants = (product.variants || []).filter((v) => v.is_active);
+  const { variantId, setVariantId, selectedVariant, activeVariants } = useProductVariant();
   const hasVariants = activeVariants.length > 0;
-  const [variantId, setVariantId] = useState(() => {
-    const firstInStock = activeVariants.find((v) => !settings.show_stock || v.stock > 0);
-    return (firstInStock || activeVariants[0])?.id ?? null;
-  });
-  const selectedVariant = hasVariants ? activeVariants.find((v) => v.id === variantId) : null;
   const soldOut = hasVariants
     ? settings.show_stock && (!selectedVariant || selectedVariant.stock <= 0)
     : settings.show_stock && product.stock <= 0;
