@@ -142,7 +142,7 @@ export default function ProductForm({ productId }) {
         <div className="space-y-6 lg:col-span-2">
           <section className="card space-y-4 p-5">
             <Field label="Ürün adı *" error={errors.name}>
-              <input className="input" value={form.name} onChange={(e) => set('name', e.target.value)} placeholder="Ör. El yapımı seramik kupa" autoFocus={!productId} />
+              <input required className="input" value={form.name} onChange={(e) => set('name', e.target.value)} placeholder="Ör. El yapımı seramik kupa" autoFocus={!productId} />
             </Field>
             <Field label="Açıklama" error={errors.description} hint="Malzeme, ölçü, renk seçenekleri, bakım bilgisi vb.">
               <textarea className="input min-h-[160px]" value={form.description} onChange={(e) => set('description', e.target.value)} />
@@ -161,7 +161,7 @@ export default function ProductForm({ productId }) {
 
           <section className="card grid gap-4 p-5 sm:grid-cols-3">
             <Field label="Satış fiyatı (₺) *" error={errors.price}>
-              <input className="input tabular-nums" inputMode="decimal" value={form.price} onChange={(e) => set('price', e.target.value.replace(',', '.').replace(/[^\d.]/g, ''))} placeholder="0" />
+              <input required className="input tabular-nums" inputMode="decimal" value={form.price} onChange={(e) => set('price', e.target.value.replace(',', '.').replace(/[^\d.]/g, ''))} placeholder="0" />
             </Field>
             <Field label="Eski fiyat (₺)" error={errors.old_price} hint={off > 0 ? `%${off} indirim olarak gösterilir` : 'İndirim göstermek için'}>
               <input className="input tabular-nums" inputMode="decimal" value={form.old_price} onChange={(e) => set('old_price', e.target.value.replace(',', '.').replace(/[^\d.]/g, ''))} placeholder="—" />
@@ -214,8 +214,9 @@ export default function ProductForm({ productId }) {
                     <div key={i} className={`rounded-xl border p-3 transition ${isActive ? 'border-cream-line' : 'border-cream-line bg-cream/60 opacity-70'}`}>
                       <div className="flex flex-wrap items-center gap-2">
                         <input
+                          required
                           className="input min-w-[100px] flex-1 py-2 text-sm"
-                          placeholder="Ör. Kırmızı"
+                          placeholder="Ör. Kırmızı (zorunlu)"
                           value={v.color}
                           onChange={(e) => set('variants', form.variants.map((x, idx) => (idx === i ? { ...x, color: e.target.value } : x)))}
                         />

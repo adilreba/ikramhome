@@ -68,7 +68,7 @@ export default function SettingsPage() {
               hint={s.whatsapp_number ? `wa.me/${normalizePhone(s.whatsapp_number)}` : 'Ör. 905321234567'}
               className="sm:w-48 sm:shrink-0"
             >
-              {input('whatsapp_number', { inputMode: 'tel', placeholder: '905321234567' })}
+              {input('whatsapp_number', { required: true, inputMode: 'tel', placeholder: '905321234567' })}
             </Field>
             <Field label="Mesajın başlangıç cümlesi" error={errors.whatsapp_greeting} className="flex-1">
               {input('whatsapp_greeting')}
@@ -95,7 +95,7 @@ export default function SettingsPage() {
               <ImageUploader single value={s.logo_image_id ? [s.logo_image_id] : []} onChange={(ids) => set('logo_image_id', ids[0] || null)} />
             </div>
             <div className="flex-1 space-y-4">
-              <Field label="Mağaza adı *" error={errors.store_name}>{input('store_name')}</Field>
+              <Field label="Mağaza adı *" error={errors.store_name}>{input('store_name', { required: true })}</Field>
               <Field label="Slogan" error={errors.tagline}>{input('tagline')}</Field>
               <Field label="Duyuru çubuğu" error={errors.announcement} hint="Boş bırakırsanız gizlenir">{input('announcement')}</Field>
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center">

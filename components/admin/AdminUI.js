@@ -87,9 +87,16 @@ export function PageHeader({ title, subtitle, children }) {
 }
 
 export function Field({ label, error, hint, children, className = '' }) {
+  const required = typeof label === 'string' && label.trim().endsWith('*');
+  const labelText = required ? label.trim().slice(0, -1).trim() : label;
   return (
     <label className={`block ${className}`}>
-      {label && <span className="label">{label}</span>}
+      {label && (
+        <span className="label">
+          {labelText}
+          {required && <span className="text-clay"> *</span>}
+        </span>
+      )}
       {children}
       {error ? <span className="mt-1 block text-xs text-red-600">{error}</span> : hint ? <span className="mt-1 block text-xs text-ink-mute">{hint}</span> : null}
     </label>

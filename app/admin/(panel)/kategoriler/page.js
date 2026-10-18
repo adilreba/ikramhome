@@ -107,7 +107,7 @@ export default function CategoriesPage() {
           <form onSubmit={save} className="relative max-h-[92vh] w-full max-w-lg animate-fade-up space-y-4 overflow-y-auto rounded-t-2xl bg-white p-6 sm:rounded-2xl">
             <h2 className="h-display text-3xl">{editing.id ? 'Kategoriyi düzenle' : 'Yeni kategori'}</h2>
             <Field label="Kategori adı *" error={errors.name}>
-              <input autoFocus className="input" value={editing.name} onChange={(e) => setEditing({ ...editing, name: e.target.value })} />
+              <input required autoFocus className="input" value={editing.name} onChange={(e) => setEditing({ ...editing, name: e.target.value })} />
             </Field>
             <Field label="Açıklama" error={errors.description}>
               <textarea className="input min-h-[80px]" value={editing.description} onChange={(e) => setEditing({ ...editing, description: e.target.value })} />
