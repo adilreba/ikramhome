@@ -28,7 +28,6 @@ export default async function HomePage() {
     listProducts({ limit: 8, sort: 'new' }),
   ]);
   const heroProducts = (featured.items.length ? featured.items : latest.items).filter((p) => p.cover_image_id).slice(0, 3);
-  const promoCategories = categories.filter((c) => c.image_id).slice(0, 2);
   const heroPhoto = settings.hero_image_id || (heroProducts.length > 0 && heroProducts.length < 3 ? heroProducts[0].cover_image_id : null);
 
   return (
@@ -115,30 +114,6 @@ export default async function HomePage() {
             {featured.items.map((p, i) => (
               <Reveal key={p.id} delay={i * 60}>
                 <ProductCard product={p} priority={i < 4} />
-              </Reveal>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* PROMOSYON KARTLARI */}
-      {promoCategories.length > 0 && (
-        <section className="container-x pt-14">
-          <div className="grid gap-6 sm:grid-cols-2">
-            {promoCategories.map((c, i) => (
-              <Reveal key={c.id} delay={i * 80}>
-                <Link
-                  href={`/urunler?category=${c.slug}`}
-                  className="group relative block aspect-[4/3] overflow-hidden rounded-[28px] shadow-soft sm:aspect-[16/11]"
-                >
-                  <img src={imageUrl(c.image_id)} alt={c.name} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
-                  <div className="absolute inset-x-0 bottom-0 p-7 sm:p-9">
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/80">Koleksiyon</p>
-                    <h3 className="h-display mt-2 text-3xl text-white sm:text-4xl">{c.name}</h3>
-                    <span className="btn-white mt-5 px-6 py-2.5 text-xs">Şimdi keşfet <ArrowRightIcon className="h-3.5 w-3.5" /></span>
-                  </div>
-                </Link>
               </Reveal>
             ))}
           </div>
