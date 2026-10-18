@@ -32,8 +32,8 @@ export default async function ProductsPage({ searchParams }) {
   };
 
   return (
-    <div className="container-x pt-6">
-      <div className="mb-5">
+    <div className="container-x pt-3">
+      <div className="mb-3">
         <h1 className="h-display text-4xl sm:text-5xl">{current?.name || (sp.q ? `“${sp.q}”` : 'Tüm Ürünler')}</h1>
         {current?.description && <p className="mt-2 max-w-xl text-ink-mute">{current.description}</p>}
       </div>
