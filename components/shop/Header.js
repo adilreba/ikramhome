@@ -54,18 +54,9 @@ export default function Header({ settings, categories }) {
             )}
           </Link>
 
-          <nav className="ml-8 hidden items-center gap-7 text-sm font-medium text-ink-soft lg:flex">
-            <Link href="/urunler" className="transition hover:text-clay">Tüm Ürünler</Link>
-            {categories.slice(0, 5).map((c) => (
-              <Link key={c.id} href={`/urunler?category=${c.slug}`} className="transition hover:text-clay">
-                {c.name}
-              </Link>
-            ))}
-          </nav>
-
           <form onSubmit={submit} className="relative ml-auto hidden w-64 shrink-0 xl:block">
             <SearchIcon className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-mute" />
-            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Ürün ara…" className="input rounded-full py-2.5 pl-9 text-sm" />
+            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Ürün ara…" className="input rounded-full border-cream-line bg-cream-deep py-2.5 pl-9 text-sm" />
           </form>
 
           <div className="ml-auto flex shrink-0 items-center gap-1 xl:ml-2">
@@ -81,6 +72,17 @@ export default function Header({ settings, categories }) {
               )}
             </button>
           </div>
+        </div>
+
+        <div className="hidden border-b border-cream-line lg:block">
+          <nav className="container-x no-scrollbar flex gap-6 overflow-x-auto py-2.5 text-sm font-medium text-ink-soft">
+            <Link href="/urunler" className="shrink-0 whitespace-nowrap transition hover:text-clay">Tüm Ürünler</Link>
+            {categories.map((c) => (
+              <Link key={c.id} href={`/urunler?category=${c.slug}`} className="shrink-0 whitespace-nowrap transition hover:text-clay">
+                {c.name}
+              </Link>
+            ))}
+          </nav>
         </div>
 
         {search && (

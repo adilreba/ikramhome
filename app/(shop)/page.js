@@ -29,14 +29,22 @@ export default async function HomePage() {
   ]);
   const heroProducts = (featured.items.length ? featured.items : latest.items).filter((p) => p.cover_image_id).slice(0, 3);
   const promoCategories = categories.filter((c) => c.image_id).slice(0, 2);
+  const heroPhoto = settings.hero_image_id || (heroProducts.length > 0 && heroProducts.length < 3 ? heroProducts[0].cover_image_id : null);
 
   return (
     <>
       {/* HERO */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-clay via-clay to-clay-dark text-white">
-        <div className="pointer-events-none absolute inset-0 opacity-[0.07]" style={{ backgroundImage: 'radial-gradient(#fff 1.5px, transparent 1.5px)', backgroundSize: '22px 22px' }} />
-        <div className="container-x relative grid items-center gap-10 py-14 lg:grid-cols-12 lg:gap-14 lg:py-20">
-          <div className="animate-fade-up lg:col-span-6">
+      <section className={`relative overflow-hidden text-white ${heroPhoto ? '' : 'bg-gradient-to-br from-clay via-clay to-clay-dark'}`}>
+        {heroPhoto ? (
+          <>
+            <img src={imageUrl(heroPhoto)} alt="" className="absolute inset-0 h-full w-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-r from-ink/85 via-ink/45 to-ink/10" />
+          </>
+        ) : (
+          <div className="pointer-events-none absolute inset-0 opacity-[0.07]" style={{ backgroundImage: 'radial-gradient(#fff 1.5px, transparent 1.5px)', backgroundSize: '22px 22px' }} />
+        )}
+        <div className={`container-x relative items-center gap-10 py-14 lg:gap-14 lg:py-20 ${heroPhoto ? 'flex min-h-[460px] sm:min-h-[560px] lg:min-h-[640px]' : 'grid lg:grid-cols-12'}`}>
+          <div className={`animate-fade-up max-w-xl ${heroPhoto ? '' : 'lg:col-span-6'}`}>
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/80">{settings.tagline || 'Yeni Koleksiyon'}</p>
             <h1 className="h-display mt-5 text-[42px] leading-[1.05] sm:text-6xl lg:text-[70px]">{settings.hero_title}</h1>
             {settings.hero_subtitle && <p className="mt-6 max-w-lg text-base leading-relaxed text-white/85 sm:text-lg">{settings.hero_subtitle}</p>}
@@ -48,33 +56,31 @@ export default async function HomePage() {
             </div>
           </div>
 
-          <div className="relative -mx-2 sm:mx-0 lg:col-span-6">
-            {settings.hero_image_id || (heroProducts.length > 0 && heroProducts.length < 3) ? (
-              <div className="aspect-[5/6] overflow-hidden rounded-[28px] shadow-lift sm:aspect-[4/3] lg:aspect-[5/6]">
-                <img src={imageUrl(settings.hero_image_id || heroProducts[0].cover_image_id)} alt="" className="h-full w-full object-cover" />
-              </div>
-            ) : heroProducts.length ? (
-              <div className="grid grid-cols-5 grid-rows-6 gap-3 sm:gap-4" style={{ aspectRatio: '1 / 1' }}>
-                {heroProducts.map((p, i) => (
-                  <Link
-                    key={p.id}
-                    href={`/urun/${p.slug}`}
-                    className={`group relative overflow-hidden rounded-[22px] shadow-lift ${
-                      i === 0 ? 'col-span-3 row-span-6' : 'col-span-2 row-span-3'
-                    }`}
-                    style={{ animation: `fade-up .7s ${0.1 + i * 0.12}s both` }}
-                  >
-                    <img src={imageUrl(p.cover_image_id)} alt={p.name} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
-                    <span className="absolute bottom-3 left-3 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-[#1B1916] backdrop-blur">{p.name}</span>
-                  </Link>
-                ))}
-              </div>
-            ) : (
-              <div className="grain flex aspect-square items-center justify-center rounded-[28px] bg-white/10 text-white/70">
-                Admin panelinden ürün ekleyin
-              </div>
-            )}
-          </div>
+          {!heroPhoto && (
+            <div className="relative -mx-2 sm:mx-0 lg:col-span-6">
+              {heroProducts.length ? (
+                <div className="grid grid-cols-5 grid-rows-6 gap-3 sm:gap-4" style={{ aspectRatio: '1 / 1' }}>
+                  {heroProducts.map((p, i) => (
+                    <Link
+                      key={p.id}
+                      href={`/urun/${p.slug}`}
+                      className={`group relative overflow-hidden rounded-[22px] shadow-lift ${
+                        i === 0 ? 'col-span-3 row-span-6' : 'col-span-2 row-span-3'
+                      }`}
+                      style={{ animation: `fade-up .7s ${0.1 + i * 0.12}s both` }}
+                    >
+                      <img src={imageUrl(p.cover_image_id)} alt={p.name} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+                      <span className="absolute bottom-3 left-3 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-[#1B1916] backdrop-blur">{p.name}</span>
+                    </Link>
+                  ))}
+                </div>
+              ) : (
+                <div className="grain flex aspect-square items-center justify-center rounded-[28px] bg-white/10 text-white/70">
+                  Admin panelinden ürün ekleyin
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </section>
 
