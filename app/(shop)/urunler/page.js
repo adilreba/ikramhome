@@ -53,7 +53,7 @@ export default async function ProductsPage({ searchParams }) {
       )}
 
       {data.pages > 1 && (
-        <nav className="mt-14 flex items-center justify-center gap-1.5">
+        <nav className="mt-8 flex items-center justify-center gap-1.5">
           {Array.from({ length: data.pages }, (_, i) => i + 1).map((p) => (
             <Link
               key={p}

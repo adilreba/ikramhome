@@ -151,7 +151,7 @@ export default async function HomePage() {
       </section>
 
       {/* YENİLER */}
-      <section className="container-x pt-10">
+      <section className="container-x pt-8">
         <Reveal>
           <SectionHead title="Son eklenenler" href="/urunler" />
         </Reveal>
@@ -169,7 +169,7 @@ export default async function HomePage() {
       </section>
 
       {/* GÜVEN ROZETLERİ */}
-      <section className="container-x pt-16">
+      <section className="container-x pt-8">
         <Reveal>
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
             {TRUST_ITEMS.map(([Icon, title]) => (
@@ -183,7 +183,7 @@ export default async function HomePage() {
       </section>
 
       {/* KAPANIŞ ÇAĞRISI */}
-      <section className="container-x pt-10">
+      <section className="container-x pt-8">
         <Reveal>
           <div className="relative overflow-hidden rounded-[32px] bg-gradient-to-br from-clay via-clay to-clay-dark px-6 py-14 text-center text-white sm:px-12">
             <div className="pointer-events-none absolute inset-0 opacity-[0.07]" style={{ backgroundImage: 'radial-gradient(#fff 1.5px, transparent 1.5px)', backgroundSize: '22px 22px' }} />
@@ -203,7 +203,7 @@ export default async function HomePage() {
 
       {/* HAKKIMIZDA */}
       {settings.about && (
-        <section className="container-x pt-16">
+        <section className="container-x pt-8">
           <Reveal>
             <div className="grid gap-8 lg:grid-cols-12">
               <p className="eyebrow lg:col-span-3">Hakkımızda</p>
