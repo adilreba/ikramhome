@@ -90,10 +90,10 @@ export default function Header({ settings, categories }) {
         </div>
 
         {search && (
-          <form onSubmit={submit} className="container-x animate-fade-up py-4 xl:hidden">
+          <form onSubmit={submit} className="container-x animate-fade-up py-2 xl:hidden">
             <div className="relative">
-              <SearchIcon className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-ink-mute" />
-              <input autoFocus value={q} onChange={(e) => setQ(e.target.value)} placeholder="Ürün, kategori veya etiket ara…" className="input rounded-full py-3.5 pl-12 text-base" />
+              <SearchIcon className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-mute" />
+              <input autoFocus value={q} onChange={(e) => setQ(e.target.value)} placeholder="Ürün, kategori veya etiket ara…" className="input rounded-full border-transparent bg-ink/[0.06] py-1.5 pl-9 text-sm focus:bg-cream focus:border-clay/50" />
             </div>
           </form>
         )}
