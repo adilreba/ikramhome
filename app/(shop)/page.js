@@ -48,7 +48,7 @@ export default async function HomePage() {
             </div>
           </div>
 
-          <div className="relative lg:col-span-6">
+          <div className="relative -mx-2 sm:mx-0 lg:col-span-6">
             {settings.hero_image_id || (heroProducts.length > 0 && heroProducts.length < 3) ? (
               <div className="aspect-[5/6] overflow-hidden rounded-[28px] shadow-lift sm:aspect-[4/3] lg:aspect-[5/6]">
                 <img src={imageUrl(settings.hero_image_id || heroProducts[0].cover_image_id)} alt="" className="h-full w-full object-cover" />
@@ -80,10 +80,7 @@ export default async function HomePage() {
 
       {/* KATEGORİYE GÖRE ALIŞVERİŞ */}
       {categories.length > 0 && (
-        <section className="container-x pt-12">
-          <Reveal>
-            <SectionHead title="Kategoriye göre alışveriş" href="/urunler" />
-          </Reveal>
+        <section className="container-x pt-6">
           <div className="no-scrollbar -mx-4 flex gap-5 overflow-x-auto px-4 pb-1 sm:mx-0 sm:grid sm:grid-cols-6 sm:gap-x-5 sm:gap-y-6 sm:overflow-visible sm:px-0 lg:grid-cols-8">
             {categories.map((c, i) => (
               <Reveal key={c.id} delay={i * 50} className="w-[72px] shrink-0 sm:w-auto">
@@ -105,7 +102,7 @@ export default async function HomePage() {
 
       {/* ÖNE ÇIKANLAR */}
       {featured.items.length > 0 && (
-        <section className="container-x pt-14">
+        <section className="container-x pt-8">
           <Reveal>
             <SectionHead title="Öne çıkanlar" href="/urunler?sort=featured" />
           </Reveal>
