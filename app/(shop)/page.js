@@ -171,11 +171,11 @@ export default async function HomePage() {
       {/* GÜVEN ROZETLERİ */}
       <section className="container-x pt-[22px]">
         <Reveal>
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             {TRUST_ITEMS.map(([Icon, title]) => (
-              <div key={title} className="flex flex-col items-center gap-2 rounded-2xl border border-cream-line bg-cream py-6 text-center">
-                <Icon className="h-7 w-7 text-clay" />
-                <p className="text-sm font-semibold">{title}</p>
+              <div key={title} className="flex flex-col items-center gap-1.5 rounded-xl border border-cream-line bg-cream py-3 text-center">
+                <Icon className="h-5 w-5 text-clay" />
+                <p className="text-xs font-semibold">{title}</p>
               </div>
             ))}
           </div>
