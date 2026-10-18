@@ -85,8 +85,13 @@ export default function ProductForm({ productId }) {
     e?.preventDefault();
     setSaving(true);
     setErrors({});
+    // Renk varyantı varsa kapak fotoğrafı üstteki alandan değil, ilk (aktif) rengin fotoğraflarından gelir
+    const coverVariant = form.variants.length
+      ? form.variants.find((v) => v.is_active !== false && v.image_ids?.length) || form.variants[0]
+      : null;
     const body = {
       ...form,
+      image_ids: form.variants.length ? coverVariant?.image_ids || [] : form.image_ids,
       price: form.price === '' ? undefined : Number(form.price),
       old_price: form.old_price === '' ? null : Number(form.old_price),
       stock: Number(form.stock) || 0,
@@ -144,13 +149,15 @@ export default function ProductForm({ productId }) {
             </Field>
           </section>
 
-          <section className="card p-5">
-            <h2 className="mb-1 font-semibold">Fotoğraflar</h2>
-            {errors.image_ids && <p className="mb-2 text-xs text-red-600">{errors.image_ids}</p>}
-            <div className="mt-3">
-              <ImageUploader value={form.image_ids} onChange={(v) => set('image_ids', v)} />
-            </div>
-          </section>
+          {form.variants.length === 0 && (
+            <section className="card p-5">
+              <h2 className="mb-1 font-semibold">Fotoğraflar</h2>
+              {errors.image_ids && <p className="mb-2 text-xs text-red-600">{errors.image_ids}</p>}
+              <div className="mt-3">
+                <ImageUploader value={form.image_ids} onChange={(v) => set('image_ids', v)} />
+              </div>
+            </section>
+          )}
 
           <section className="card grid gap-4 p-5 sm:grid-cols-3">
             <Field label="Satış fiyatı (₺) *" error={errors.price}>
@@ -180,13 +187,20 @@ export default function ProductForm({ productId }) {
               <h2 className="font-semibold">Renk varyantları</h2>
               <button
                 type="button"
-                onClick={() => set('variants', [...form.variants, { color: '', barcode: '', image_ids: [], stock: 0, is_active: true }])}
+                onClick={() => {
+                  // İlk renk eklenirken üst alana yüklenmiş fotoğraflar varsa kaybolmasın, o renge aktarılsın
+                  const carryOver = form.variants.length === 0 ? form.image_ids.slice(0, 8) : [];
+                  set('variants', [...form.variants, { color: '', barcode: '', image_ids: carryOver, stock: 0, is_active: true }]);
+                }}
                 className="btn-outline btn-sm"
               >
                 + Renk ekle
               </button>
             </div>
-            <p className="mb-3 text-xs text-ink-mute">Her rengin kendi barkodu, stoğu ve en fazla 8 fotoğrafı olur; fiyat tüm renklerde aynıdır.</p>
+            <p className="mb-3 text-xs text-ink-mute">
+              Her rengin kendi barkodu, stoğu ve en fazla 8 fotoğrafı olur; fiyat tüm renklerde aynıdır.
+              {form.variants.length > 0 && ' Ürünün kapak fotoğrafı (listede ve WhatsApp mesajında görünen) ilk rengin ilk fotoğrafından alınır.'}
+            </p>
             {errors.variants && <p className="mb-2 text-xs text-red-600">{errors.variants}</p>}
             {form.variants.length === 0 ? (
               <p className="rounded-xl border border-dashed border-cream-line p-4 text-center text-xs text-ink-mute">
