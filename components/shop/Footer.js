@@ -9,7 +9,7 @@ export default function Footer({ settings, categories }) {
   const catCol1 = catLinks.slice(0, mid);
   const catCol2 = catLinks.slice(mid);
   return (
-    <footer className="relative mt-10 overflow-hidden bg-gradient-to-br from-clay via-clay to-clay-dark text-white/85">
+    <footer className="relative mt-[30px] overflow-hidden bg-gradient-to-br from-clay via-clay to-clay-dark text-white/85">
       <div className="pointer-events-none absolute inset-0 opacity-[0.07]" style={{ backgroundImage: 'radial-gradient(#fff 1.5px, transparent 1.5px)', backgroundSize: '22px 22px' }} />
       <div className="container-x relative grid grid-cols-3 gap-x-6 gap-y-10 py-16 md:grid-cols-12">
         <div className="col-span-3 md:col-span-5">

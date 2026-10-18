@@ -96,9 +96,9 @@ export default async function ProductPage({ params }) {
       </div>
 
       {related.length > 0 && (
-        <section className="pt-8">
+        <section className="pt-[22px]">
           <p className="eyebrow mb-2">Bunlar da ilginizi çekebilir</p>
-          <h2 className="h-display mb-6 text-4xl sm:text-5xl">Benzer ürünler</h2>
+          <h2 className="h-display mb-[14px] text-4xl sm:text-5xl">Benzer ürünler</h2>
           <div className="grid grid-cols-2 gap-x-4 gap-y-6 sm:gap-x-6 lg:grid-cols-4">
             {related.map((p) => <ProductCard key={p.id} product={p} />)}
           </div>
