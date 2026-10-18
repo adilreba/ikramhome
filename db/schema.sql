@@ -68,6 +68,7 @@ CREATE TABLE IF NOT EXISTS product_variants (
   product_id  INTEGER NOT NULL REFERENCES products(id) ON DELETE CASCADE,
   color       TEXT NOT NULL,
   barcode     TEXT,
+  image_id    UUID REFERENCES images(id) ON DELETE SET NULL,
   stock       INTEGER NOT NULL DEFAULT 0 CHECK (stock >= 0),
   sort_order  INTEGER NOT NULL DEFAULT 0,
   is_active   BOOLEAN NOT NULL DEFAULT TRUE,
