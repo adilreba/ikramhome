@@ -24,6 +24,7 @@ function ProductsList() {
   const [categories, setCategories] = useState([]);
   const [selected, setSelected] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [duplicatingId, setDuplicatingId] = useState(null);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -70,12 +71,16 @@ function ProductsList() {
   };
 
   const duplicate = async (p) => {
+    if (duplicatingId) return;
+    setDuplicatingId(p.id);
     try {
       const copy = await api(`/api/admin/products/${p.id}/duplicate`, { method: 'POST' });
       notify(`Kopya oluşturuldu (gizli): ${copy.name}`);
       load();
     } catch (e) {
       notify(e.message, 'error');
+    } finally {
+      setDuplicatingId(null);
     }
   };
 
@@ -227,7 +232,7 @@ function ProductsList() {
                         <StarIcon className={`h-4 w-4 ${p.is_featured ? 'fill-amber-400 text-amber-500' : ''}`} />
                       </button>
                       <a href={`/urun/${p.slug}`} target="_blank" className="rounded-lg p-2 text-ink-mute hover:bg-cream hover:text-ink" title="Sitede gör"><ExternalIcon className="h-4 w-4" /></a>
-                      <button onClick={() => duplicate(p)} className="rounded-lg p-2 text-ink-mute hover:bg-cream hover:text-ink" title="Kopyala"><CopyIcon className="h-4 w-4" /></button>
+                      <button onClick={() => duplicate(p)} disabled={duplicatingId === p.id} className="rounded-lg p-2 text-ink-mute hover:bg-cream hover:text-ink disabled:opacity-40" title="Kopyala"><CopyIcon className="h-4 w-4" /></button>
                       <Link href={`/admin/urunler/${p.id}`} className="rounded-lg p-2 text-ink-mute hover:bg-cream hover:text-ink" title="Düzenle"><EditIcon className="h-4 w-4" /></Link>
                       <button onClick={() => remove(p)} className="rounded-lg p-2 text-ink-mute hover:bg-red-50 hover:text-red-600" title="Sil"><TrashIcon className="h-4 w-4" /></button>
                     </div>
