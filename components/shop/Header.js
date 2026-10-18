@@ -56,7 +56,7 @@ export default function Header({ settings, categories }) {
 
           <form onSubmit={submit} className="relative ml-auto hidden w-64 shrink-0 xl:block">
             <SearchIcon className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-mute" />
-            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Ürün ara…" className="input rounded-full border-transparent bg-ink/[0.06] py-2.5 pl-9 text-sm focus:bg-cream focus:border-clay/50" />
+            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Ürün ara…" className="input rounded-full border-transparent bg-ink/[0.06] py-1.5 pl-9 text-sm focus:bg-cream focus:border-clay/50" />
           </form>
 
           <div className="ml-auto flex shrink-0 items-center gap-1 xl:ml-2">
@@ -74,15 +74,19 @@ export default function Header({ settings, categories }) {
           </div>
         </div>
 
-        <div className="relative hidden border-b-2 border-clay shadow-[0_2px_14px_-2px_rgba(201,79,36,0.55)] lg:block">
-          <nav className="container-x no-scrollbar flex gap-6 overflow-x-auto py-2.5 text-sm font-medium text-ink-soft">
-            <Link href="/urunler" className="shrink-0 whitespace-nowrap transition hover:text-clay">Tüm Ürünler</Link>
-            {categories.map((c) => (
-              <Link key={c.id} href={`/urunler?category=${c.slug}`} className="shrink-0 whitespace-nowrap transition hover:text-clay">
-                {c.name}
-              </Link>
+        <div className="relative hidden overflow-hidden border-b-2 border-clay shadow-[0_2px_14px_-2px_rgba(201,79,36,0.55)] lg:block">
+          <div className="flex w-max animate-marquee gap-10 py-2.5 text-sm font-medium text-ink-soft hover:[animation-play-state:paused]">
+            {[0, 1].map((dup) => (
+              <div key={dup} aria-hidden={dup === 1} className="flex shrink-0 gap-10 pl-6">
+                <Link href="/urunler" className="shrink-0 whitespace-nowrap transition hover:text-clay">Tüm Ürünler</Link>
+                {categories.map((c) => (
+                  <Link key={c.id} href={`/urunler?category=${c.slug}`} className="shrink-0 whitespace-nowrap transition hover:text-clay">
+                    {c.name}
+                  </Link>
+                ))}
+              </div>
             ))}
-          </nav>
+          </div>
         </div>
 
         {search && (

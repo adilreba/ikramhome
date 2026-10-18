@@ -38,6 +38,7 @@ module.exports = {
           '100%': { boxShadow: '0 0 0 14px rgba(37,211,102,0)' },
         },
         'reveal-up': { '0%': { opacity: 0, transform: 'translateY(28px)' }, '100%': { opacity: 1, transform: 'none' } },
+        marquee: { '0%': { transform: 'translateX(0)' }, '100%': { transform: 'translateX(-50%)' } },
       },
       animation: {
         'fade-up': 'fade-up .6s cubic-bezier(.2,.7,.2,1) both',
@@ -45,6 +46,7 @@ module.exports = {
         pop: 'pop .35s ease',
         'pulse-ring': 'pulse-ring 2.2s cubic-bezier(.4,0,.6,1) infinite',
         'reveal-up': 'reveal-up .7s cubic-bezier(.2,.7,.2,1) both',
+        marquee: 'marquee 22s linear infinite',
       },
     },
   },
