@@ -36,12 +36,12 @@ export default function Header({ settings, categories }) {
   return (
     <>
       <div className="bg-ink text-cream">
-        <p className="container-x py-2 text-center text-[12px] tracking-wide text-cream/80">
+        <p className="container-x py-1.5 text-center text-[12px] tracking-wide text-cream/80">
           {settings.announcement || 'Siparişleriniz WhatsApp üzerinden hızlıca onaylanır'}
         </p>
       </div>
       <header className={`sticky top-0 z-40 bg-cream transition-shadow duration-300 ${scrolled ? 'shadow-soft' : ''}`}>
-        <div className="container-x flex h-14 items-center gap-2 border-b border-cream-line sm:h-16 sm:gap-4">
+        <div className="container-x flex h-12 items-center gap-2 border-b border-cream-line sm:h-14 sm:gap-4">
           <button className="btn-ghost -ml-3 shrink-0 lg:hidden" onClick={() => setMenu(true)} aria-label="Menü">
             <MenuIcon className="h-6 w-6" />
           </button>
