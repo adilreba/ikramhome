@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { ClockIcon, InstagramIcon, PhoneIcon, PinIcon, WhatsAppIcon } from '@/components/Icons';
-import { normalizePhone } from '@/lib/utils';
+import { imageUrl, normalizePhone } from '@/lib/utils';
 
 export default function Footer({ settings, categories }) {
   const ig = settings.instagram ? settings.instagram.replace(/^@/, '').replace(/^https?:\/\/(www\.)?instagram\.com\//, '').replace(/\/$/, '') : '';
@@ -14,7 +14,14 @@ export default function Footer({ settings, categories }) {
       <div className="container-x relative grid grid-cols-3 gap-x-6 gap-y-10 py-16 md:grid-cols-12">
         <div className="col-span-3 md:col-span-5">
           <div className="flex items-center justify-between gap-4">
-            <p className="h-display text-4xl uppercase tracking-[0.06em] text-white">{settings.store_name}</p>
+            <div className="flex min-w-0 items-center gap-3">
+              {settings.logo_image_id && (
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white p-1.5 shadow-soft">
+                  <img src={imageUrl(settings.logo_image_id)} alt={settings.store_name} className="h-full w-full object-contain" />
+                </span>
+              )}
+              <p className="h-display truncate text-4xl uppercase tracking-[0.06em] text-white">{settings.store_name}</p>
+            </div>
             <a
               href={`https://wa.me/${normalizePhone(settings.whatsapp_number)}`}
               target="_blank"
