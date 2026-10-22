@@ -85,12 +85,12 @@ export default async function HomePage() {
 
       {/* KATEGORİYE GÖRE ALIŞVERİŞ */}
       {categories.length > 0 && (
-        <section className="container-x pt-4">
-          <div className="no-scrollbar -mx-4 flex gap-2.5 overflow-x-auto px-4 sm:mx-0 sm:px-0">
+        <section className="container-x pt-8">
+          <div className="no-scrollbar -mx-4 flex gap-2.5 overflow-x-auto px-4 py-1 sm:mx-0 sm:px-0">
             {categories.map((c, i) => (
               <Reveal key={c.id} delay={i * 50} className="shrink-0">
                 <Link href={`/urunler?category=${c.slug}`} aria-label={c.name} className="group flex flex-col items-center gap-2 text-center">
-                  <span className="h-[72px] w-[72px] overflow-hidden rounded-full bg-cream-deep shadow-soft ring-2 ring-clay transition group-hover:ring-clay-dark sm:h-20 sm:w-20">
+                  <span className="h-16 w-16 overflow-hidden rounded-full bg-cream-deep shadow-soft ring-2 ring-clay transition group-hover:ring-clay-dark sm:h-[72px] sm:w-[72px]">
                     {c.image_id ? (
                       <img src={imageUrl(c.image_id)} alt={c.name} className="h-full w-full object-cover transition duration-500 group-hover:scale-110" />
                     ) : (
