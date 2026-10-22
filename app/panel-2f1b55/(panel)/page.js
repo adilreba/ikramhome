@@ -24,17 +24,17 @@ export default function Dashboard() {
   return (
     <>
       <PageHeader title="Genel Bakış" subtitle="Mağazanızın son durumu">
-        <Link href="/admin/urunler/yeni" className="btn-primary btn-sm py-2.5"><PlusIcon className="h-4 w-4" /> Yeni ürün</Link>
+        <Link href="/panel-2f1b55/urunler/yeni" className="btn-primary btn-sm py-2.5"><PlusIcon className="h-4 w-4" /> Yeni ürün</Link>
       </PageHeader>
 
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-        <Stat label="Yeni talepler" value={s.inquiries.new} tone="clay" href="/admin/talepler?status=new" />
+        <Stat label="Yeni talepler" value={s.inquiries.new} tone="clay" href="/panel-2f1b55/talepler?status=new" />
         <Stat label="Satışa dönen" value={`${s.inquiries.sold}`} sub={`%${conversion} dönüşüm`} tone="wa" />
         <Stat label="Satış tutarı" value={formatPrice(s.inquiries.sold_total)} sub="“Satıldı” işaretlenenler" tone="wa" />
         <Stat label="Ürün görüntülenme" value={s.total_views.toLocaleString('tr-TR')} tone="clay" />
-        <Stat label="Aktif ürün" value={`${s.active_products} / ${s.products}`} tone="wa" href="/admin/urunler" />
-        <Stat label="Stokta olmayan" value={s.out_of_stock} tone="red" href="/admin/urunler?status=out_of_stock" />
-        <Stat label="Kategori" value={s.categories} tone="clay" href="/admin/kategoriler" />
+        <Stat label="Aktif ürün" value={`${s.active_products} / ${s.products}`} tone="wa" href="/panel-2f1b55/urunler" />
+        <Stat label="Stokta olmayan" value={s.out_of_stock} tone="red" href="/panel-2f1b55/urunler?status=out_of_stock" />
+        <Stat label="Kategori" value={s.categories} tone="clay" href="/panel-2f1b55/kategoriler" />
         <Stat label="Son 30 gün talep" value={s.inquiries.last30} tone="clay" />
       </div>
 
@@ -58,7 +58,7 @@ export default function Dashboard() {
         <section className="card p-5 lg:col-span-2">
           <div className="flex items-center justify-between">
             <h2 className="font-semibold">Son talepler</h2>
-            <Link href="/admin/talepler" className="text-xs font-semibold text-clay">Tümü →</Link>
+            <Link href="/panel-2f1b55/talepler" className="text-xs font-semibold text-clay">Tümü →</Link>
           </div>
           <ul className="mt-3 divide-y divide-cream-line">
             {s.recent.length === 0 && <li className="py-6 text-center text-sm text-ink-mute">Henüz talep yok.</li>}
@@ -80,7 +80,7 @@ export default function Dashboard() {
           <ul className="mt-3 space-y-3">
             {s.top_viewed.map((p) => (
               <li key={p.id}>
-                <Link href={`/admin/urunler/${p.id}`} className="flex items-center gap-3 rounded-xl p-1 hover:bg-cream">
+                <Link href={`/panel-2f1b55/urunler/${p.id}`} className="flex items-center gap-3 rounded-xl p-1 hover:bg-cream">
                   <span className="h-12 w-10 shrink-0 overflow-hidden rounded-lg bg-cream-deep">
                     {p.cover_image_id && <img src={imageUrl(p.cover_image_id)} alt="" className="h-full w-full object-cover" />}
                   </span>

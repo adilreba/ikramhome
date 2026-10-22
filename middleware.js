@@ -2,8 +2,8 @@ import { NextResponse } from 'next/server';
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 
 const isApiAdminRoute = createRouteMatcher(['/api/admin(.*)']);
-const isAdminPageRoute = createRouteMatcher(['/admin(.*)']);
-const isLoginRoute = createRouteMatcher(['/admin/login(.*)']);
+const isAdminPageRoute = createRouteMatcher(['/panel-2f1b55(.*)']);
+const isLoginRoute = createRouteMatcher(['/panel-2f1b55/login(.*)']);
 
 export default clerkMiddleware(async (auth, req) => {
   if (isApiAdminRoute(req)) {
@@ -20,5 +20,5 @@ export default clerkMiddleware(async (auth, req) => {
 });
 
 export const config = {
-  matcher: ['/admin/:path*', '/api/admin/:path*'],
+  matcher: ['/panel-2f1b55/:path*', '/api/admin/:path*'],
 };

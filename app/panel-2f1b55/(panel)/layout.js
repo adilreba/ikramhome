@@ -10,7 +10,7 @@ export const metadata = { title: 'Yönetim Paneli', robots: { index: false, foll
 
 export default async function PanelLayout({ children }) {
   const { userId } = await auth();
-  if (!userId) redirect('/admin/login');
+  if (!userId) redirect('/panel-2f1b55/login');
   const user = await currentUser();
   const email = user?.primaryEmailAddress?.emailAddress || '';
 
@@ -19,7 +19,7 @@ export default async function PanelLayout({ children }) {
       <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-cream px-6 text-center">
         <p className="h-display text-3xl">Yetkiniz yok</p>
         <p className="max-w-sm text-sm text-ink-mute">{email} hesabının yönetim paneline erişim yetkisi bulunmuyor.</p>
-        <SignOutButton redirectUrl="/admin/login">
+        <SignOutButton redirectUrl="/panel-2f1b55/login">
           <button className="btn-outline">Çıkış yap</button>
         </SignOutButton>
       </div>

@@ -103,7 +103,7 @@ function ProductsList() {
   return (
     <>
       <PageHeader title="Ürünler" subtitle={data ? `${data.total} ürün` : ' '}>
-        <Link href="/admin/urunler/yeni" className="btn-primary btn-sm py-2.5"><PlusIcon className="h-4 w-4" /> Yeni ürün</Link>
+        <Link href="/panel-2f1b55/urunler/yeni" className="btn-primary btn-sm py-2.5"><PlusIcon className="h-4 w-4" /> Yeni ürün</Link>
       </PageHeader>
 
       <div className="card mb-4 flex flex-col gap-3 p-3 lg:flex-row lg:items-center">
@@ -151,7 +151,7 @@ function ProductsList() {
         <div className="flex justify-center py-20 text-ink-mute"><Spinner className="h-8 w-8" /></div>
       ) : items.length === 0 ? (
         <Empty title="Ürün bulunamadı" text="Filtreleri değiştirin veya ilk ürününüzü ekleyin.">
-          <Link href="/admin/urunler/yeni" className="btn-primary">Ürün ekle</Link>
+          <Link href="/panel-2f1b55/urunler/yeni" className="btn-primary">Ürün ekle</Link>
         </Empty>
       ) : (
         <div className={`card overflow-hidden transition ${loading ? 'opacity-60' : ''}`}>
@@ -175,7 +175,7 @@ function ProductsList() {
                     <input type="checkbox" checked={selected.includes(p.id)} onChange={() => setSelected((s) => (s.includes(p.id) ? s.filter((x) => x !== p.id) : [...s, p.id]))} className="accent-clay" />
                   </td>
                   <td className="min-w-0 flex-1 md:py-3">
-                    <Link href={`/admin/urunler/${p.id}`} className="flex items-center gap-3">
+                    <Link href={`/panel-2f1b55/urunler/${p.id}`} className="flex items-center gap-3">
                       <span className="relative h-14 w-11 shrink-0 overflow-hidden rounded-lg bg-cream-deep">
                         {p.cover_image_id && <img src={imageUrl(p.cover_image_id)} alt="" className="h-full w-full object-cover" />}
                         {p.image_ids.length > 1 && (
@@ -233,7 +233,7 @@ function ProductsList() {
                       </button>
                       <a href={`/urun/${p.slug}`} target="_blank" className="rounded-lg p-2 text-ink-mute hover:bg-cream hover:text-ink" title="Sitede gör"><ExternalIcon className="h-4 w-4" /></a>
                       <button onClick={() => duplicate(p)} disabled={duplicatingId === p.id} className="rounded-lg p-2 text-ink-mute hover:bg-cream hover:text-ink disabled:opacity-40" title="Kopyala"><CopyIcon className="h-4 w-4" /></button>
-                      <Link href={`/admin/urunler/${p.id}`} className="rounded-lg p-2 text-ink-mute hover:bg-cream hover:text-ink" title="Düzenle"><EditIcon className="h-4 w-4" /></Link>
+                      <Link href={`/panel-2f1b55/urunler/${p.id}`} className="rounded-lg p-2 text-ink-mute hover:bg-cream hover:text-ink" title="Düzenle"><EditIcon className="h-4 w-4" /></Link>
                       <button onClick={() => remove(p)} className="rounded-lg p-2 text-ink-mute hover:bg-red-50 hover:text-red-600" title="Sil"><TrashIcon className="h-4 w-4" /></button>
                     </div>
                   </td>

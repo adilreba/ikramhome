@@ -103,7 +103,7 @@ export default function ProductForm({ productId }) {
       else await api('/api/admin/products', { method: 'POST', body });
       setDirty(false);
       notify(productId ? 'Değişiklikler kaydedildi' : 'Ürün eklendi');
-      router.replace('/admin/urunler');
+      router.replace('/panel-2f1b55/urunler');
     } catch (err) {
       setErrors(err.fields || {});
       notify(err.message, 'error');
@@ -118,7 +118,7 @@ export default function ProductForm({ productId }) {
       await api(`/api/admin/products/${productId}`, { method: 'DELETE' });
       setDirty(false);
       notify('Ürün silindi');
-      router.replace('/admin/urunler');
+      router.replace('/panel-2f1b55/urunler');
     } catch (e) {
       notify(e.message, 'error');
     }
@@ -131,7 +131,7 @@ export default function ProductForm({ productId }) {
   return (
     <form onSubmit={save} className="pb-24">
       <div className="mb-6 flex flex-wrap items-center gap-3">
-        <Link href="/admin/urunler" className="btn-ghost -ml-3"><ArrowLeftIcon className="h-4 w-4" /> Ürünler</Link>
+        <Link href="/panel-2f1b55/urunler" className="btn-ghost -ml-3"><ArrowLeftIcon className="h-4 w-4" /> Ürünler</Link>
         <h1 className="h-display w-full text-4xl sm:w-auto">{productId ? 'Ürünü düzenle' : 'Yeni ürün'}</h1>
         {productId && form.slug && (
           <a href={`/urun/${form.slug}`} target="_blank" className="btn-outline btn-sm sm:ml-auto"><ExternalIcon className="h-4 w-4" /> Sitede gör</a>
@@ -319,7 +319,7 @@ export default function ProductForm({ productId }) {
       <div className="fixed inset-x-0 bottom-0 z-20 border-t border-cream-line bg-white/90 backdrop-blur lg:left-64">
         <div className="flex items-center justify-end gap-3 px-4 py-3 sm:px-6">
           {dirty && <span className="mr-auto text-xs text-ink-mute">Kaydedilmemiş değişiklikler var</span>}
-          <Link href="/admin/urunler" className="btn-outline btn-sm py-2.5">Vazgeç</Link>
+          <Link href="/panel-2f1b55/urunler" className="btn-outline btn-sm py-2.5">Vazgeç</Link>
           <button disabled={saving} className="btn-primary btn-sm px-6 py-2.5">{saving ? 'Kaydediliyor…' : productId ? 'Kaydet' : 'Ürünü ekle'}</button>
         </div>
       </div>

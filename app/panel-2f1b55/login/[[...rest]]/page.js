@@ -11,8 +11,8 @@ export default function LoginPage() {
           <div className="mt-8 text-left">
             <SignIn
               routing="path"
-              path="/admin/login"
-              fallbackRedirectUrl="/admin"
+              path="/panel-2f1b55/login"
+              fallbackRedirectUrl="/panel-2f1b55"
               appearance={{
                 variables: {
                   colorPrimary: '#C94F24',

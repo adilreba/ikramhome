@@ -9,11 +9,11 @@ import { BoxIcon, CloseIcon, ExternalIcon, GridIcon, InboxIcon, LogoutIcon, Menu
 import { api } from '@/lib/client-api';
 
 const NAV = [
-  { href: '/admin', label: 'Genel Bakış', icon: GridIcon, exact: true },
-  { href: '/admin/urunler', label: 'Ürünler', icon: BoxIcon },
-  { href: '/admin/kategoriler', label: 'Kategoriler', icon: TagIcon },
-  { href: '/admin/talepler', label: 'WhatsApp Talepleri', icon: InboxIcon, badge: true },
-  { href: '/admin/ayarlar', label: 'Ayarlar', icon: SettingsIcon },
+  { href: '/panel-2f1b55', label: 'Genel Bakış', icon: GridIcon, exact: true },
+  { href: '/panel-2f1b55/urunler', label: 'Ürünler', icon: BoxIcon },
+  { href: '/panel-2f1b55/kategoriler', label: 'Kategoriler', icon: TagIcon },
+  { href: '/panel-2f1b55/talepler', label: 'WhatsApp Talepleri', icon: InboxIcon, badge: true },
+  { href: '/panel-2f1b55/ayarlar', label: 'Ayarlar', icon: SettingsIcon },
 ];
 
 export default function AdminShell({ admin, storeName, children }) {
@@ -39,7 +39,7 @@ export default function AdminShell({ admin, storeName, children }) {
     };
   }, [pathname]);
 
-  const logout = () => signOut({ redirectUrl: '/admin/login' });
+  const logout = () => signOut({ redirectUrl: '/panel-2f1b55/login' });
 
   const isActive = (item) => (item.exact ? pathname === item.href : pathname.startsWith(item.href));
 
@@ -98,7 +98,7 @@ export default function AdminShell({ admin, storeName, children }) {
             <button onClick={() => setOpen(true)} className="btn-ghost -ml-2"><MenuIcon className="h-6 w-6" /></button>
             <span className="h-display text-xl">{storeName}</span>
             {newCount > 0 && (
-              <Link href="/admin/talepler" className="ml-auto rounded-full bg-clay px-2.5 py-1 text-xs font-bold text-white">{newCount} yeni</Link>
+              <Link href="/panel-2f1b55/talepler" className="ml-auto rounded-full bg-clay px-2.5 py-1 text-xs font-bold text-white">{newCount} yeni</Link>
             )}
           </header>
           <main className="px-4 py-6 sm:px-6">{children}</main>
