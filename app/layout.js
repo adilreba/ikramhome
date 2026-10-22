@@ -4,7 +4,7 @@ import { siteUrl } from '@/lib/site';
 
 export const metadata = {
   metadataBase: new URL(siteUrl()),
-  title: { default: 'Vitrin', template: '%s' },
+  title: { default: 'İkramhome', template: '%s' },
 };
 
 export const viewport = {
