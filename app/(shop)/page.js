@@ -219,7 +219,7 @@ export default async function HomePage() {
 function SectionHead({ title, href }) {
   return (
     <div className="mb-6 flex items-end justify-between gap-6">
-      <h2 className="h-display text-3xl sm:text-4xl">{title}</h2>
+      <h2 className="h-display text-xl sm:text-3xl">{title}</h2>
       {href && (
         <Link href={href} className="group hidden items-center gap-2 text-sm font-semibold sm:flex">
           Tümünü gör <ArrowRightIcon className="h-4 w-4 transition group-hover:translate-x-1" />
