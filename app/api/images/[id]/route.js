@@ -4,7 +4,7 @@ const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/
 
 // GET /api/images/:id → veritabanındaki görseli döndürür (uzun süre önbelleğe alınır)
 export async function GET(_req, { params }) {
-  const id = String(params.id || '').replace(/\.(webp|jpe?g|png|gif|svg)$/i, '');
+  const id = String(params.id || '').replace(/\.(webp|jpe?g|png|gif|svg|avif)$/i, '');
   if (!UUID_RE.test(id)) return new Response('Bulunamadı', { status: 404 });
   try {
     const img = await getImage(id);

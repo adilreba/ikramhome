@@ -3,15 +3,16 @@ import Header from '@/components/shop/Header';
 import Footer from '@/components/shop/Footer';
 import CartDrawer from '@/components/shop/CartDrawer';
 import FloatingUI from '@/components/shop/FloatingUI';
-import { getSettings, listCategories } from '@/lib/queries';
-import { imageUrl } from '@/lib/utils';
+import { getImageMeta, getSettings, listCategories } from '@/lib/queries';
+import { ogImage } from '@/lib/utils';
 
 export const dynamic = 'force-dynamic';
 
 export async function generateMetadata() {
   const s = await getSettings();
   const previewImageId = s.logo_image_id || s.hero_image_id;
-  const previewImage = previewImageId ? [{ url: imageUrl(previewImageId), width: 500, height: 500, alt: s.store_name }] : undefined;
+  const preview = previewImageId ? ogImage(previewImageId, await getImageMeta(previewImageId), s.store_name) : undefined;
+  const previewImage = preview ? [preview] : undefined;
   return {
     title: { default: `${s.store_name}${s.tagline ? ' — ' + s.tagline : ''}`, template: `%s · ${s.store_name}` },
     description: s.hero_subtitle || s.tagline || undefined,

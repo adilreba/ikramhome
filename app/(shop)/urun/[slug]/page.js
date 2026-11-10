@@ -4,8 +4,8 @@ import ProductCard from '@/components/shop/ProductCard';
 import ProductMediaGallery from '@/components/shop/ProductMediaGallery';
 import ProductActions from '@/components/shop/ProductActions';
 import { ProductVariantProvider } from '@/components/shop/ProductVariantContext';
-import { getProductBySlug, getRelatedProducts, getSettings } from '@/lib/queries';
-import { discountPercent, formatPrice, imageUrl } from '@/lib/utils';
+import { getImageMeta, getProductBySlug, getRelatedProducts, getSettings } from '@/lib/queries';
+import { discountPercent, formatPrice, ogImage } from '@/lib/utils';
 
 export const dynamic = 'force-dynamic';
 
@@ -15,6 +15,7 @@ export async function generateMetadata({ params }) {
   const s = await getSettings();
   const desc = (p.description || `${p.name} — ${formatPrice(p.price, s.currency)}`).slice(0, 180);
   // WhatsApp'ta link paylaşıldığında bu görsel ve başlık önizleme olarak görünür
+  const cover = p.cover_image_id ? ogImage(p.cover_image_id, await getImageMeta(p.cover_image_id), p.name) : undefined;
   return {
     title: p.name,
     description: desc,
@@ -22,9 +23,9 @@ export async function generateMetadata({ params }) {
       title: `${p.name} · ${formatPrice(p.price, s.currency)}`,
       description: desc,
       type: 'website',
-      images: p.cover_image_id ? [{ url: imageUrl(p.cover_image_id), alt: p.name }] : [],
+      images: cover ? [cover] : [],
     },
-    twitter: { card: 'summary_large_image' },
+    twitter: { card: 'summary_large_image', images: cover ? [cover] : undefined },
   };
 }
 
